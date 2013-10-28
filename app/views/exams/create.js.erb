@@ -1,0 +1,8 @@
+<% if @exam.errors.blank? %>
+	$('#myModal').modal('hide');
+	$('#exams').prepend("<%= escape_javascript(render(@exam)) %>");
+	
+	$('#msg').html('<%= escape_javascript(content_tag(:div, link_to("x", "#", :class => "close") + content_tag(:p,"已成功保存 "), :class => "alert alert-success", "data-alert" => "alert")) %>');
+<% else %>
+	$("#myModal").html("<%= escape_javascript(render(:partial=>'form')) %>");
+<% end %>

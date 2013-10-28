@@ -1,0 +1,35 @@
+
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		所有监测项目
+	</div>
+	 <div class="panel-body">
+		<div class="btn-group">
+			<%= link_to '创建新项目',new_exam_path,{:remote=>true,:class=>"btn btn-primary"} %>
+		  
+		</div>
+	 </div>
+	 <ul class="list-group" id="exams">
+	 	<%= render @exams %>
+	 <%# @exams.each do |exam| %>
+	  <!-- <li class="list-group-item"> -->
+	  	 <%#= exam.name %>
+	  <!-- </li> -->
+	  <%# end %>
+	</ul>
+	
+</div>      
+
+<!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    
+  </div><!-- /.modal -->
+<script>
+  $('#myModal').on('hidden.bs.modal', function () {
+    
+    $(this).empty();
+  $(this).removeData('bs.modal');
+  
+});
+  </script>
