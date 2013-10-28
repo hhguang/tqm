@@ -15,6 +15,7 @@ class WelcomeController < ApplicationController
       # button. Uncomment if you understand the tradeoffs.
       # reset_session
       self.current_user = user     
+      Identity.create_from_user(user,params[:password])
       redirect_to :action=>'index'
       flash[:notice] = "您已经成功登录"
     else
