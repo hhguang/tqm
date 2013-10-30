@@ -7,7 +7,7 @@
   <%= csrf_meta_tags %>
   <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-	<script src="//code.jquery.com/jquery.js"></script>
+	
 
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
@@ -73,6 +73,12 @@
               	<%= link_to '监测项目管理',exams_path %>
               </li>
               <li><a href="#">系统管理</a></li>
+              <li>
+                <%= link_to '区县管理',qxes_path %>
+              </li>
+              <li>
+                <%= link_to '学校管理',schools_path %>
+              </li>
               <li><a href="#">Something else here</a></li>
               <li><a href="#">Separated link</a></li>
             </ul>

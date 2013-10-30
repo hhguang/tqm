@@ -1,4 +1,5 @@
 class QxesController < ApplicationController
+  before_action :set_qx, only: [:show, :edit, :update, :destroy]
   # before_filter :login_required
   # GET /qxes
   # GET /qxes.xml
@@ -13,8 +14,7 @@ class QxesController < ApplicationController
 
   # GET /qxes/1
   # GET /qxes/1.xml
-  def show
-    @qx = Qx.find(params[:id])
+  def show    
 
     respond_to do |format|
       format.html # show.html.erb
@@ -35,13 +35,13 @@ class QxesController < ApplicationController
 
   # GET /qxes/1/edit
   def edit
-    @qx = Qx.find(params[:id])
+    
   end
 
   # POST /qxes
   # POST /qxes.xml
   def create
-    @qx = Qx.new(params[:qx])
+    @qx = Qx.new(qx_params)
 
     respond_to do |format|
       if @qx.save
@@ -56,11 +56,10 @@ class QxesController < ApplicationController
 
   # PUT /qxes/1
   # PUT /qxes/1.xml
-  def update
-    @qx = Qx.find(params[:id])
+  def update    
 
     respond_to do |format|
-      if @qx.update_attributes(params[:qx])
+      if @qx.update_attributes(qx_params)
         format.html { redirect_to(@qx, :notice => 'Qx was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -72,13 +71,22 @@ class QxesController < ApplicationController
 
   # DELETE /qxes/1
   # DELETE /qxes/1.xml
-  def destroy
-    @qx = Qx.find(params[:id])
+  def destroy    
     @qx.destroy
-
     respond_to do |format|
       format.html { redirect_to(qxes_url) }
       format.xml  { head :ok }
     end
   end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_qx
+      @qx = Qx.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def qx_params
+      params.require(:qx).permit(:code, :name)
+    end
 end

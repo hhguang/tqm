@@ -1,0 +1,19 @@
+<%= simple_form_for(@school) do |f| %>
+  <%= f.error_notification %>
+
+  <p>
+    <%= f.label :code,"学校代码" %><br />
+    <%= f.text_field :code %>
+  </p>
+  <p>
+    <%= f.label :name,"学校名称" %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :qx_id,"区县" %><br />
+    <%= f.collection_select :qx_id,Qx.all,:id,:name %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>

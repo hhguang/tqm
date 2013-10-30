@@ -1,4 +1,6 @@
 Tqm::Application.routes.draw do
+  resources :schools
+
   get "welcome/index"
   get "welcome/new"
   post "welcome/create"
