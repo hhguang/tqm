@@ -1,0 +1,23 @@
+<div class="row-fluid">
+  <div class="span3">
+    <%#= render :partial=>'/admin/left'  %>
+  </div>
+  <div class="span9">
+    <div class="page-header">
+      <h1>区县管理</h1>
+    </div>
+<p>
+  <b>Code:</b>
+  <%=h @qx.code %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @qx.name %>
+</p>
+
+
+<%= link_to 'Edit', edit_qx_path(@qx) %> |
+<%= link_to 'Back', qxes_path %>
+  </div>
+</div>

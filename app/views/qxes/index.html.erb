@@ -1,0 +1,32 @@
+<div class="row-fluid">
+  <div class="span3">
+    <%#= render :partial=>'/admin/left'  %>
+  </div>
+  <div class="span9">
+    <div class="page-header">
+      <h1>区县管理</h1>
+    </div>
+
+<%= link_to '定义区县', new_qx_path,{:class=>'btn btn-primary'} %>
+<table class="table table-striped">
+  <tr>
+    <th>代码</th>
+    <th>名称</th>
+  </tr>
+
+<% @qxes.each do |qx| %>
+  <tr>
+    <td><%=h qx.code %></td>
+    <td><%=h qx.name %></td>
+    <td><%= link_to 'Show', qx %></td>
+    <td><%= link_to 'Edit', edit_qx_path(qx) %></td>
+    <td><%= link_to 'Destroy', qx, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+
+  </div>
+</div>

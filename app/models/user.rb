@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
 	accepts_nested_attributes_for :authentications
 
 	def self.from_auth(auth)
-	    locate_auth(auth) || locate_email(auth) || create_with_auth(auth)
+	    locate_auth(auth) 
 	end
 
 	def self.locate_auth(auth)

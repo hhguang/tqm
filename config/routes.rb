@@ -8,6 +8,7 @@ Tqm::Application.routes.draw do
   get "/auth/failure", to: "sessions#failure"
 
   resources :exams
+  resources :qxes
   # faye_server '/faye', :timeout => 25
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
