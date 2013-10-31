@@ -1,0 +1,57 @@
+<div class="page-header">
+  <h1>用户管理 <small>Subtext for header</small></h1>
+</div>
+<div>
+  <div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+      <%= link_to '创建用户',new_user_path,{:class=>"btn btn-primary"} %>
+    </div>
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+        角色
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href="#">市局管理员</a></li>
+        <li><a href="#">区局管理员</a></li>
+        <li><a href="#">学校管理员</a></li>
+      </ul>
+    </div>
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+        选择区
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href="#">市直属</a></li>
+        <li><a href="#">龙湖</a></li>
+        <li><a href="#">金平</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div>
+	<table class="table">
+		<thead>
+        <tr>
+          <th>用户名</th>
+          <th>姓名</th>
+          <th>学校</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.login %></td>
+            <td><%= user.name %></td>
+            <td><%#= user.school.name if user.school %></td>
+            <td>
+              <a href="/admin/user_edit/<%= user.id %>">编辑</a> |
+              <%= link_to '删除', user, method: :delete, data: { confirm: '确定要删除吗?' } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+	</table>
+</div>
