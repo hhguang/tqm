@@ -10,7 +10,11 @@ Tqm::Application.routes.draw do
   post "/auth/:provider/callback", :to => 'sessions#create'
   get "/auth/failure", to: "sessions#failure"
 
-  resources :exams
+  resources :exams do
+    resources :paper_orders do
+      resources :order_items
+    end
+  end
   resources :qxes
   resources :users
   # faye_server '/faye', :timeout => 25

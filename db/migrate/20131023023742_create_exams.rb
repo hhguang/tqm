@@ -6,7 +6,7 @@ class CreateExams < ActiveRecord::Migration
       t.text :brief
       t.integer :user_id
       t.integer :qx_id
-
+      t.string :exam_type
       t.timestamps
     end
   end

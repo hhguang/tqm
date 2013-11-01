@@ -1,4 +1,5 @@
 class ExamsController < ApplicationController
+	before_action :set_exam, only: [:show, :edit, :update, :destroy]
 	def index
 		@exams=Exam.all
 	end
@@ -33,5 +34,15 @@ class ExamsController < ApplicationController
 		@exam=Exam.find(params[:id])
 	end
 
+	private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_exam
+      @exam = Exam.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def exam_params
+      params.require(:exam).permit(:code, :name,:qx_id)
+    end
 
 end

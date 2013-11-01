@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20131025024548) do
     t.text     "brief"
     t.integer  "user_id"
     t.integer  "qx_id"
+    t.string   "exam_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -83,6 +84,7 @@ ActiveRecord::Schema.define(version: 20131025024548) do
     t.string   "name"
     t.integer  "item_type"
     t.boolean  "state"
+    t.integer  "exam_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

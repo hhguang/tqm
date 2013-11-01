@@ -45,6 +45,7 @@ class Import < ActiveRecord::Migration
     t.string   "name"
     t.integer  "item_type"
     t.boolean  "state"
+    t.integer   "exam_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
