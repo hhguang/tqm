@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
 	REST_AUTH_SITE_KEY         = 'dffec9f93a1e566d545fc11590b50bd408e40624'
 	REST_AUTH_DIGEST_STRETCHES = 10
 
+	attr_accessor :password,:password_confirmation
+
 	accepts_nested_attributes_for :authentications
 
 	def self.from_auth(auth)
@@ -31,7 +33,6 @@ class User < ActiveRecord::Base
                               ).attributes
       ])
 	  end
-
 	  
 
 	  def self.authenticate(login, password)
