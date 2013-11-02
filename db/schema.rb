@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20131025024548) do
     t.text     "brief"
     t.integer  "user_id"
     t.integer  "qx_id"
-    t.string   "exam_type"
+    t.integer  "exam_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

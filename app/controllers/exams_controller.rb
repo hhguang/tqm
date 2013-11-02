@@ -14,11 +14,16 @@ class ExamsController < ApplicationController
 	end
 
 	def create
-		params.permit!
-		@exam=Exam.new(params[:exam])
+		# params.permit!
+		@exam=Exam.new(exam_params)
 
 		respond_to do |format|
 			if @exam.save
+				@exam.create_paper_order(
+					:name=>@exam.name,
+					:item_type=>@exam.exam_type,
+					:state=>false
+					)
 		        format.html { redirect_to(exams_url, :notice => '考试已成功创建') }
 		        format.xml  { render :xml => @exam, :status => :created, :location => @exam }
 		        format.js
@@ -42,7 +47,7 @@ class ExamsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def exam_params
-      params.require(:exam).permit(:code, :name,:qx_id)
+      params.require(:exam).permit(:exam_type, :name,:brief)
     end
 
 end

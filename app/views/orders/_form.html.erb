@@ -1,0 +1,99 @@
+<%= form_for(:order_item,:url=>{:action=>'create'},:html=>{:class=>'form-horizontal'}) do |f| %>
+  <%#= f.error_messages %>
+  <%= f.hidden_field :paper_order_id,:value=>@paper_order.id %>
+  <%#= f.hidden_field :school_id,:value=>@school.id %>
+  <div class="form-group">
+  <label class="col-sm-3 control-label" for="inputEmail">学校</label>
+  <div class="col-sm-9">
+  <%= collection_select :order_item, :school_id,School.all, :id,:name,{:include_blank =>true},:class=>"form-control" %>
+  </div>
+  </div>
+  <span>高一 （输入数量为试卷份数）</span>
+  <div class="form-group">
+<label class="col-sm-3 control-label" for="inputEmail">语文</label>
+<div class="col-sm-9">
+<input class="form-control"type="text" id="inputEmail" placeholder="试卷份数" name="order_item[g1yw]" />
+</div>
+</div>
+  <div class="form-group">
+<label class="col-sm-3 control-label" for="inputEmail">数学</label>
+<div class="col-sm-9">
+<input class="form-control"type="text" id="inputEmail" placeholder="试卷份数" name="order_item[g1sx]" />
+</div>
+</div>
+  <div class="form-group">
+<label class="col-sm-3 control-label" for="inputEmail">英语</label>
+<div class="col-sm-9">
+<input class="form-control"type="text" id="inputEmail" placeholder="试卷份数" name="order_item[g1yy]" />
+</div>
+</div>
+  <div class="form-group">
+<label class="col-sm-3 control-label" for="inputEmail">物理</label>
+<div class="col-sm-9">
+<input class="form-control"type="text" id="inputEmail" placeholder="试卷份数" name="order_item[g1wl]" />
+</div>
+</div>
+  <div class="form-group">
+<label class="col-sm-3 control-label" for="inputEmail">化学</label>
+<div class="col-sm-9">
+<input class="form-control"type="text" id="inputEmail" placeholder="试卷份数" name="order_item[g1hx]" />
+</div>
+</div>
+  <div class="form-group">
+<label class="col-sm-3 control-label" for="inputEmail">生物</label>
+<div class="col-sm-9">
+<input class="form-control"type="text" id="inputEmail" placeholder="试卷份数" name="order_item[g1sw]" />
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-3 control-label" for="inputEmail">政治</label>
+<div class="col-sm-9">
+<input class="form-control"type="text" id="inputEmail" placeholder="试卷份数" name="order_item[g1zz]" />
+</div>
+</div>
+  <div class="form-group">
+<label class="col-sm-3 control-label" for="inputEmail">历史</label>
+<div class="col-sm-9">
+<input class="form-control"type="text" id="inputEmail" placeholder="试卷份数" name="order_item[g1ls]" />
+</div>
+</div>
+  <div class="form-group">
+<label class="col-sm-3 control-label" for="inputEmail">地理</label>
+<div class="col-sm-9">
+<input class="form-control"type="text" id="inputEmail" placeholder="试卷份数" name="order_item[g1dl]" />
+</div>
+</div>
+  <span>
+    高二 (输入数量为考生人数）
+  </span>
+
+<div class="form-group">
+<label class="col-sm-3 control-label" for="inputEmail">文科</label>
+<div class="col-sm-9">
+<input class="form-control"type="text" id="inputEmail" placeholder="人数" name="order_item[g2w]" />
+</div>
+</div>
+  <div class="form-group">
+<label class="col-sm-3 control-label" for="inputEmail">理科</label>
+<div class="col-sm-9">
+<input class="form-control"type="text" id="inputEmail" placeholder="人数" name="order_item[g2l]" />
+</div>
+</div>
+  <span>经办人信息</span>
+  <div class="form-group">
+<label class="col-sm-3 control-label" for="inputEmail">经办人</label>
+<div class="col-sm-9">
+  <%= f.text_field :handler,:placeholder=>'姓名',class: "form-control" %>
+</div>
+  </div>
+  <div class="form-group">
+<label class="col-sm-3 control-label" for="inputEmail">电话</label>
+<div class="col-sm-9">
+  <%= f.text_field :telephone,:placeholder=>'电话号码',class: "form-control"  %>
+</div>
+</div>
+      <div class="form-actions">
+    <button type="submit" class="btn btn-primary">提交订单</button>
+    <button type="button" class="btn">取消</button>
+    </div>
+<% end %>

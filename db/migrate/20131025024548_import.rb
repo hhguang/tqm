@@ -44,7 +44,7 @@ class Import < ActiveRecord::Migration
   create_table "paper_orders", :force => true do |t|
     t.string   "name"
     t.integer  "item_type"
-    t.boolean  "state"
+    t.boolean  "state",:default=>false
     t.integer   "exam_id"
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -1,5 +1,11 @@
 Tqm::Application.routes.draw do
   
+  get "orders/new"
+  get "orders/show"
+  get "orders/edit"
+  post "orders/create"
+  get "exams/:id/orders"=>"orders#new"
+
   resources :schools
 
   get "welcome/index"
@@ -10,6 +16,8 @@ Tqm::Application.routes.draw do
   post "/auth/:provider/callback", :to => 'sessions#create'
   get "/auth/failure", to: "sessions#failure"
 
+  
+
   resources :exams do
     resources :paper_orders do
       resources :order_items
@@ -17,6 +25,8 @@ Tqm::Application.routes.draw do
   end
   resources :qxes
   resources :users
+
+
   # faye_server '/faye', :timeout => 25
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

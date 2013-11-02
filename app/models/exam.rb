@@ -8,9 +8,5 @@ class Exam < ActiveRecord::Base
 
   	# accepts_nested_attributes_for :paper_order
 
-  	def save_init
-  		save
-		PaerOrder.create!(:name=>name,
-						:)  		
-  	end
+  	
 end
