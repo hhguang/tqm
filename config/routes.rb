@@ -1,10 +1,11 @@
 Tqm::Application.routes.draw do
   
-  get "orders/new"
-  get "orders/show"
-  get "orders/edit"
-  post "orders/create"
-  get "exams/:id/orders"=>"orders#new"
+  # get "orders/new"
+  # get "orders/show"
+  # get "orders/edit"
+  # post "exams/:id/orders"=> "orders#create",as: :exam_orders
+  # get "exams/:id/orders"=>"orders#new"
+  # post "exams/:id/orders/:order_item_id"=>"orders#update"
 
   resources :schools
 
@@ -19,6 +20,7 @@ Tqm::Application.routes.draw do
   
 
   resources :exams do
+    resources :orders
     resources :paper_orders do
       resources :order_items
     end

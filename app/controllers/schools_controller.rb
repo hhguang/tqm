@@ -1,6 +1,6 @@
 class SchoolsController < ApplicationController
   before_action :set_school, only: [:show, :edit, :update, :destroy]
-  authorize_resource
+  # authorize_resource
 
   # GET /schools
   # GET /schools.json

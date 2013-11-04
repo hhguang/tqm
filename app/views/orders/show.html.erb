@@ -1,2 +1,161 @@
-<h1>Orders#show</h1>
-<p>Find me in app/views/orders/show.html.erb</p>
+<% if @order_item.confirmed?  %>
+<div>
+  <div class="alert alert-block">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <h4>注意!</h4>
+  您的订单已确认，请打印纸质订单并在打印的纸质订单上加盖学校印章，区属学校上报所属区（县）教育局教研室，市直学校上报市教育局教研室。
+</div>
+  <a href="#" onclick="pr();"  >打印</a>
+</div>
+<% else %>
+<div class="alert alert-danger alert-block">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <h4>注意!</h4>
+  一旦点选“确认并进入打印页面”，即视学校确认试卷订单，将不能修改试卷订数并直接打印纸质订单。请在打印的纸质订单上加盖学校印章，区属学校上报所属区（县）教育局教研室，市直学校上报市教育局教研室。
+</div>
+    
+      <%= form_for(:order_item,:url=>{:action=>"update",:order_item_id=>@order_item.id,:id=>@exam.id}) do |f| %>
+      <%= f.hidden_field :confirmed,:value=>true %>
+      <button class="btn" type="submit">确认并进入打印页面</button>
+      <%= link_to "修改订单",:action=>"edit",:id=>@order_item %>
+      <% end %>
+
+    
+<% end %>
+<!--startprint1-->
+<div class="" id="print">
+  
+  <h3 style="text-align: center;">
+    <%= @order_item.paper_order.name %>
+  </h3>
+<h3 style="text-align: center;">教学质量监测方案试题订单</h3>
+<style type="text/css">
+<!--
+.table th, .table td {
+  text-align: center;
+}
+-->
+</style>
+
+<table class="table table-bordered" >
+  <tr>
+    <th>年级</th>
+    <th>类别</th>
+    <th>语文</th>
+    <th>数学</th>
+    <th>英语</th>
+    <th>物理</th>
+    <th>化学</th>
+    <th>生物</th>
+    <th>政治</th>
+    <th>历史</th>
+    <th>地理</th>
+  </tr>
+  <tr>
+    <th>高一</th>
+    <th>份数</th>
+    <td>
+      <%= @order_item.g1yw %>
+    </td>
+    <td>
+      <%= @order_item.g1sx %>
+    </td>
+    <td>
+      <%= @order_item.g1yy %>
+    </td>
+    <td>
+      <%= @order_item.g1wl %>
+    </td>
+    <td>
+      <%= @order_item.g1hx %>
+    </td>
+    <td>
+      <%= @order_item.g1sw %>
+    </td>
+    <td>
+      <%= @order_item.g1zz %>
+    </td>
+    <td>
+      <%= @order_item.g1ls %>
+    </td>
+    <td>
+      <%= @order_item.g1dl %>
+    </td>
+  </tr>
+</table>
+<table class="table table-bordered" >
+  <tr>
+    <th>年级</th>
+    <th>类别</th>
+    <th>语文</th>
+    <th>文科数学</th>
+    <th>理科数学</th>
+    <th>英语</th>
+    <th>物理</th>
+    <th>化学</th>
+    <th>生物</th>
+    <th>政治</th>
+    <th>历史</th>
+    <th>地理</th>
+  </tr>
+  <tr>
+    <th>高二</th>
+    <th>份数</th>
+    <td>
+      <%= @order_item.g2yw %>
+    </td>
+    <td>
+      <%= @order_item.g2sxw %>
+    </td>
+    <td>
+      <%= @order_item.g2sxl %>
+    </td>
+    <td>
+      <%= @order_item.g2yy %>
+    </td>
+    <td>
+      <%= @order_item.g2wl %>
+    </td>
+    <td>
+      <%= @order_item.g2hx %>
+    </td>
+    <td>
+      <%= @order_item.g2sw %>
+    </td>
+    <td>
+      <%= @order_item.g2zz %>
+    </td>
+    <td>
+      <%= @order_item.g2ls %>
+    </td>
+    <td>
+      <%= @order_item.g2dl %>
+    </td>
+  </tr>
+</table>
+<div style="padding: 10px;">
+<table width="90%">
+  <tr>
+    <td width="40%">
+      单位：   <%= @order_item.school.name %>
+    </td>
+    <td width="30%">
+      经办人： <%= @order_item.handler %>
+    </td>
+    <td width="30%">
+       联系电话: <%= @order_item.telephone %>
+    </td>
+  </tr>
+</table>
+</div>
+</div>
+<!--startprint1-->
+<script>
+  
+function pr(){
+  bdhtml=window.document.body.innerHTML;
+  window.document.body.innerHTML=$('#print').html();
+  window.print();
+  window.document.body.innerHTML=bdhtml;
+}
+</script>
