@@ -1,6 +1,7 @@
+<%=  render '/exams/nav' %>
 <% if @order_item.confirmed?  %>
 <div>
-  <div class="alert alert-block">
+  <div class="alert alert-block alert-success">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
   <h4>注意!</h4>
   您的订单已确认，请打印纸质订单并在打印的纸质订单上加盖学校印章，区属学校上报所属区（县）教育局教研室，市直学校上报市教育局教研室。
@@ -14,7 +15,7 @@
   一旦点选“确认并进入打印页面”，即视学校确认试卷订单，将不能修改试卷订数并直接打印纸质订单。请在打印的纸质订单上加盖学校印章，区属学校上报所属区（县）教育局教研室，市直学校上报市教育局教研室。
 </div>
     
-      <%= form_for(:order_item,:url=>{:action=>"update",:order_item_id=>@order_item.id,:id=>@exam.id}) do |f| %>
+      <%= form_for(:order_item,:url=>{:action=>"update",:id=>@order_item.id,:exam_id=>@exam.id},html: {method: "patch"}) do |f| %>
       <%= f.hidden_field :confirmed,:value=>true %>
       <button class="btn" type="submit">确认并进入打印页面</button>
       <%= link_to "修改订单",:action=>"edit",:id=>@order_item %>

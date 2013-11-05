@@ -21,10 +21,11 @@ Tqm::Application.routes.draw do
 
   resources :exams do
     resources :orders
-    resources :paper_orders do
-      resources :order_items
+    resources :order_items do
+      put 'cancel', on: :member
     end
   end
+  
   resources :qxes
   resources :users
 

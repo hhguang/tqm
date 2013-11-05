@@ -1,4 +1,4 @@
-<%= form_for(:order_item,:url=>{:action=>'create',:exam_id=>@exam},:html=>{:method=>"patch",:class=>'form-horizontal'}) do |f| %>
+<%= form_for([@exam,@order_item],:html=>{:method=>"patch",:class=>'form-horizontal'}) do |f| %>
   <%#= f.error_messages %>
 
   <%= f.hidden_field :paper_order_id,:value=>@paper_order.id %>

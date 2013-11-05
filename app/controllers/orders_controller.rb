@@ -1,5 +1,13 @@
 class OrdersController < ApplicationController
-  before_action :set_exam, only: [:new,:create,:show,:update,:edit]
+  before_action :set_exam, only: [:index,:new,:create,:show,:update,:edit]
+
+  def index
+    if current_user.is_school? && @order_item = OrderItem.find_by(paper_order_id: @paper_order.id,school_id: current_user.school_id) 
+      redirect_to exam_order_path(@exam,@order_item)
+    else
+      redirect_to new_exam_order_path(@exam)
+    end
+  end
   
   def new
   	# @exam=Exam.find(params[:id])
@@ -8,12 +16,13 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @order_item = OrderItem.find(params[:order_item_id]) if params[:order_item_id]
+    @order_item = OrderItem.find(params[:id]) 
 
   end
 
   def edit
-    @order_item = OrderItem.find(params[:order_item_id]) if params[:order_item_id]    
+    # @order_item = OrderItem.find(params[:order_item_id]) if params[:order_item_id]    
+     @order_item = OrderItem.find(params[:id]) 
   end
 
   def create
@@ -35,12 +44,12 @@ class OrdersController < ApplicationController
 
   def update
     params.permit!
-    @order_item = OrderItem.find(params[:order_item_id])
+    @order_item = OrderItem.find(params[:id])
     # @school=current_user.school
     respond_to do |format|
       if @order_item.update_attributes(params[:order_item])
         
-        format.html { redirect_to(:action=>'show',:id=>@order_item) }
+        format.html { redirect_to(:action=>'show',:id=>@order_item,:exam_id=>@exam) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -55,7 +64,7 @@ class OrdersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_exam
-      @exam = Exam.find(params[:id])
+      @exam = Exam.find(params[:exam_id])
       @paper_order=@exam.paper_order
     end
 

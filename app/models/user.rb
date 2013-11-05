@@ -13,7 +13,13 @@ class User < ActiveRecord::Base
 	accepts_nested_attributes_for :authentications
 
 	def is_school?
-		return false
+		! school_id.nil?
+	end
+
+	
+
+	def is_qx_admin?
+		is_admin? && (! qx_id.nil?)
 	end
 
 	def self.from_auth(auth)

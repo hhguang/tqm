@@ -14,7 +14,9 @@
 		  <!-- Collect the nav links, forms, and other content for toggling -->
 		  <div class="collapse navbar-collapse navbar-ex1-collapse">
 		    <ul class="nav navbar-nav">		      
-		      <li><a href="#">试卷</a></li>
+		      <li>
+		      	<%= link_to '试卷订单',exam_orders_path(@exam) %>
+		      </li>
           <li><a href="#">考试</a></li>
           <li><a href="#">成绩</a></li>          
 		      <li class="dropdown">
@@ -49,7 +51,9 @@
 		          	<%= link_to '所有项目',exams_path %>
 		          	
 		          </li>
-		          <li><a href="#">试卷订单管理</a></li>
+		          <li>
+		          	<%= link_to '试卷订单管理',exam_order_items_path(@exam) %>
+		          </li>
 		          <li><a href="#">Something else here</a></li>
 		          <li><a href="#">Separated link</a></li>
 		        </ul>
