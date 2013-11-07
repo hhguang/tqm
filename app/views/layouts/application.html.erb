@@ -62,9 +62,9 @@
                 <li><a href="#">One more separated link</a></li>
               </ul>
             </li> -->
-            <li class="active"><a href="#">首页</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li <%= "class=active" if ['welcome'].include?(controller_name) && ['index'].include?(action_name) %>><a href="/">首页</a></li>
+            <li <%= "class=active" if ['welcome'].include?(controller_name) && ['help'].include?(action_name) %>><a href="/welcome/help">帮助</a></li>
+            
           </ul>
 
           <ul class="nav navbar-nav navbar-right">

@@ -14,6 +14,8 @@ Tqm::Application.routes.draw do
   post "welcome/create"
   get "welcome/destroy"
   root to: "welcome#index"
+  get "welcome/help"
+
   # root to: "sessions#new"
   post "/auth/:provider/callback", :to => 'sessions#create'
   get "/auth/failure", to: "sessions#failure"
@@ -21,6 +23,7 @@ Tqm::Application.routes.draw do
   
 
   resources :exams do
+    get 'start', on: :member
     resources :orders
     resources :order_items do
       put 'cancel', on: :member

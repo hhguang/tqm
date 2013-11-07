@@ -36,6 +36,7 @@
 		        <a href="#" class="dropdown-toggle" data-toggle="dropdown">设置 <b class="caret"></b></a>
 		        <ul class="dropdown-menu">
 		          <li>		          	
+		          	<%= link_to (@exam.closed? ? '启动监测项目' : '关闭监测项目'),start_exam_path(@exam) %>
 		          	<a href="#">关闭监测项目</a></li>
 		          </li>
 		          <li><a href="#">关闭试卷订单提交</a></li>

@@ -1,5 +1,5 @@
 class ExamsController < ApplicationController
-	before_action :set_exam, only: [:show, :edit, :update, :destroy]
+	before_action :set_exam, only: [:start,:show, :edit, :update, :destroy]
 	def index
 		@exams=Exam.all
 	end
@@ -37,6 +37,13 @@ class ExamsController < ApplicationController
 
 	def show
 		@exam=Exam.find(params[:id])
+	end
+
+	def start
+		@exam.update(:closed=>!@exam.closed?)
+		redirect_to(exam_url(@exam), :notice => "监测项目已#{@exam.closed? ? '关闭' : '启动'}")
+		
+
 	end
 
 	private

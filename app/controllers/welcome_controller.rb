@@ -34,5 +34,8 @@ class WelcomeController < ApplicationController
     redirect_to :action=>'new'
   end
 
+  def help
+  end
+
 
 end

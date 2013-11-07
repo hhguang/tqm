@@ -1,0 +1,101 @@
+<div>
+  <h1 style="text-align: center">提交文件流程及注意事项</h1>
+  <ul class="nav nav-tabs" id="myTab">
+  <li class="active"><a href="#home" data-toggle="tab">一、下载模板</a></li>
+  <li><a href="#profile" data-toggle="tab">二、填充数据</a></li>
+  <li><a href="#messages" data-toggle="tab">三、上传文件</a></li>
+  <li><a href="#settings" data-toggle="tab">四、文件检测，核查数据</a></li>
+  <li><a href="#s5" data-toggle="tab">五、确认数据</a></li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="home">
+    <div class="well">
+  <h3>一、下载模板</h3>
+
+  <ol>
+    <li>
+      点击”成绩文件上传“按钮进入操作界面。
+    </li>
+    <li>
+      请选择年级下载相应模板，各个年级模板不同。
+    </li>
+  </ol>
+  <%#= image_tag "7.png",:class=>"img-polaroid" %>
+  <%= image_tag "1.png",:class=>"img-polaroid" %>
+</div>
+  </div>
+  <div class="tab-pane" id="profile">
+    <div class="well">
+  <h3>二、填充数据</h3>
+
+  <ol>
+    <li>
+      下载模板后直接用EXCEL或wps打开,填充数据，不要另外新建文件。
+    </li>
+    <li>
+      不要更改第一行的列标题和顺序。
+    </li>
+    <li>
+      缺考成绩留空。0视作0分。各科不能超过满分值。
+    </li>
+    <li>
+      如需复制数据，请使用右键菜单-选择性粘贴，在弹出窗口中选择“数值”
+    </li>
+  </ol>
+  <%= image_tag "4.png",:class=>"img-polaroid" %>
+  <%= image_tag "5.png",:class=>"img-polaroid" %>
+</div>
+  </div>
+  <div class="tab-pane" id="messages">
+    <div class="well">
+  <h3>三、上传文件</h3>
+  <%#*<span class="label label-warning">注意事项</span>%>
+  <ol>
+    <li>
+      将文件保存为“.csv”文件上传。不能上传xls文件。
+    </li>
+    <li>
+      保存为”.csv"文件时会提示“是否保持这种格式“，选择是
+    </li>
+    <li>
+     大小不能超过5M
+    </li>
+  </ol>
+<%= image_tag "6.png",:class=>"img-polaroid" %>
+</div>
+  </div>
+  <div class="tab-pane" id="settings">
+    <div class="well">
+  <h3>四、文件检测，核查数据</h3>
+
+  <ol>
+    <li>
+      文件上传成功后将自动进行文件检测，请等候。
+    </li>
+    <li>
+      检测结果将显示文件中包含记录总数及错误的数据数。成绩列表将显示读取到的数据情况
+    </li>
+    <li>
+      如文件检测有错，请修改文件数据后重新上传。
+    </li>
+  </ol>
+  <%= image_tag "2.png",:class=>"img-polaroid" %>
+</div>
+  </div>
+  <div class="tab-pane" id="s5">
+    <div class="well">
+  <h3>五、确认数据。</h3>
+  <ol>
+    <li>
+      如文件检测没有错误，并核对系统所读取记录数量，数据。如正确无误，请点击按钮<button class="btn btn-success ">确认</button>
+    </li>
+    <li>
+      确认后将不能再改，如确有必要修改需联系管理员。
+    </li>
+  </ol>
+  <%= image_tag "3.png",:class=>"img-polaroid" %>
+</div>
+  </div>
+</div>
+</div>
