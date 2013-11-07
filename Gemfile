@@ -52,3 +52,7 @@ gem 'cancan'
 # gem 'faye-rails'
 gem 'thin'
 gem 'simple_form', "3.0.0"
+
+group :production do
+ gem 'mysql'
+end

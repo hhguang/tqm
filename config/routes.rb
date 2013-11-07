@@ -13,7 +13,8 @@ Tqm::Application.routes.draw do
   get "welcome/new"
   post "welcome/create"
   get "welcome/destroy"
-  root to: "sessions#new"
+  root to: "welcome#index"
+  # root to: "sessions#new"
   post "/auth/:provider/callback", :to => 'sessions#create'
   get "/auth/failure", to: "sessions#failure"
 
