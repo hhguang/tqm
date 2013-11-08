@@ -77,6 +77,10 @@
             </a>
             <ul class="dropdown-menu">
               <li>
+                <%= link_to '用户信息',person_path(current_user) %>
+              </li>
+              <li role="presentation" class="divider">
+              <li>
               	<%= link_to '监测项目管理',exams_path %>
               </li>
               <li><a href="#">系统管理</a></li>

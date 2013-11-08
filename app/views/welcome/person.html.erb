@@ -1,0 +1,59 @@
+<div class="page-header">
+      <h1>用户信息</h1>
+    </div>
+    
+<%= form_for :user, :url =>{:action=>'person_update',:id=>@user},:html=>{:class=>'well'} do |f| -%>
+<% if @user.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h2><%= pluralize(@user.errors.count, "error") %> 保存出错:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+    <fieldset>
+    <legend>编辑用户</legend>
+    
+    <div class="form-group">
+      <label class="form-label" for="login">姓名</label>
+      <div class="forms">
+        <%= f.text_field :name,:class=>'input-xlarge form-control'%>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="tel">手机号码</label>
+      <div class="forms">
+        <%= f.text_field :telephone,:class=>'input-xlarge form-control'%>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="login">密码</label>
+      <div class="forms">
+        <%= f.password_field :password ,class: 'form-control'%>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="login">密码确认</label>
+      <div class="forms">
+        <%= f.password_field :password_confirmation,class: 'form-control' %>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label class="form-label" for="login">邮箱</label>
+      <div class="forms">
+        <%= f.text_field :email,:class=>'input-xlarge form-control'%>
+      </div>
+    </div>
+    
+    <div class="form-actions">
+            <button type="submit" class="btn btn-primary">保存修改</button>
+            <a class="btn" href="/admin/users">取消</a>
+          </div>
+
+
+    </fieldset>
+<% end -%>

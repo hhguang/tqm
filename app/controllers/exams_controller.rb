@@ -6,6 +6,7 @@ class ExamsController < ApplicationController
 
 	def new
 		@exam=Exam.new
+		
 		respond_to do |format|
 	      format.html # show.html.erb
 	      format.json { render json: @goods_stock }
@@ -37,6 +38,7 @@ class ExamsController < ApplicationController
 
 	def show
 		@exam=Exam.find(params[:id])
+
 	end
 
 	def start

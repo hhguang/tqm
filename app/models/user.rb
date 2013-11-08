@@ -12,6 +12,19 @@ class User < ActiveRecord::Base
 
 	accepts_nested_attributes_for :authentications
 
+	before_save :encrypt_password
+
+	def encrypt_password
+        return if password.blank?
+        self.salt = self.class.make_token if new_record?
+        self.crypted_password = encrypt(password)
+      end
+    
+
+    def make_token
+      secure_digest(Time.now, (1..10).map{ rand.to_s })
+    end
+
 	def is_school?
 		! school_id.nil?
 	end

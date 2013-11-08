@@ -1,4 +1,5 @@
 class WelcomeController < ApplicationController
+  before_filter :login_required,:except=>['help','new','create','destroy']
   def index
   	@exams=Exam.where(:closed=>false)
   end
@@ -35,6 +36,30 @@ class WelcomeController < ApplicationController
   end
 
   def help
+  end
+
+  def person
+    @user=User.find(params[:id])
+    unless @user && current_user.id==@user.id
+      flash[:error]='您没有权限'
+      redirect_to '/'
+    end
+  end
+
+  def person_update
+    params.permit!
+    @user =User.find(params[:id])
+    respond_to do |format|
+      if @user.update_attributes(params[:user])
+        flash[:notice]='用户已经成功更新'
+        format.html { redirect_to :action=>'person',:id=>@user }
+        format.xml  { head :ok }
+      else
+        flash[:error]='用户更新出错'
+        format.html { render :action => "person" }
+        format.xml  { render :xml => @exam.errors, :status => :unprocessable_entity }
+      end
+    end
   end
 
 

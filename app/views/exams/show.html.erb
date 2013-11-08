@@ -2,61 +2,88 @@
       <div class="row">
       	
       	<div class="col-md-3">
-      		<div class="panel panel-default">
-			  <div class="panel-heading">最新动态</div>
+      		<div class="panel panel-info">
+			  <div class="panel-heading">试卷订单</div>
 			  <div class="panel-body">
-			    Panel content
-			  </div>
-			</div>
-      	</div>
-      	<div class="col-md-3">
-      		<div class="panel panel-default">			  
-			  <div class="panel-body">
-			    <%= link_to '试卷订单',exam_orders_path(@exam),{:class=>"btn btn-primary btn-lg btn-block"} %>
+			    <% if current_user.is_school?  %>
+			    <% @order_item = OrderItem.find_by(paper_order_id: @exam.paper_order.id,school_id: current_user.school_id) %>
+			    	<h3>流程</h3>
+			          <ol>
+			          	<% if @order_item %>
+						  <li>步骤一：新建订单。<span class="glyphicon glyphicon-ok"></span></li>
+						  <% if @order_item.confirmed? %>
+							  <li>步骤二：确认或修改订单。<span class="glyphicon glyphicon-ok"></span></li>
+							  <li><p class="text-danger">步骤三：查看打印订单</p></li>
+							  </ol>
+							  <%= link_to '打印订单',exam_orders_path(@exam),{:class=>"btn btn-primary btn-lg btn-block"} %> 
+						  <% else %>
+						  		<li><p class="text-danger">步骤二：确认或修改订单。</li>
+						  		<li>步骤三：查看打印订单</li>
+						  		</ol>
+						  		<%= link_to '确认或修改订单',edit_exam_order_item_path(@exam,@order_item),{:class=>"btn btn-primary btn-lg btn-block"} %> 
+						  <% end  %>
+						 <% else %>
+						 	<li><p class="text-danger">步骤一：新建订单。</p></li>
+						 	<li>步骤二：确认或修改订单。</li>
+						 	<li>步骤三：查看打印订单</li>
+						 	</ol>
+						 	<%= link_to '创建订单',new_exam_order_item_path(@exam),{:class=>"btn btn-primary btn-lg btn-block"} %> 
+						 <% end %>
+						  
+						  
+						
+			        
+			    <% else %>
 			          <h3>流程</h3>
 			          <ol>
-						  <li>点击”新建订单“按钮进入操作界面。</li>
-						  <li>高一订单填写每科试卷份数，高二订单填写文理科考生人数。</li>
-						  <li>经办人和电话必须填写。</li>
-						  <li>点击“提交订单”按钮进入下一步骤“确认订单”</li>
+						  <li>步骤一：新建订单。</li>
+						  <li>步骤二：确认或修改订单。</li>
+						  <li>步骤三：查看打印订单</li>
+						  
 						</ol>
-			         
-			          <p><a class="btn btn-default" href="#">详细帮助 &raquo;</a></p>
+			       <%= link_to '创建订单',new_exam_order_item_path(@exam),{:class=>"btn btn-primary btn-lg btn-block"} %>  
+			    <% end %>
+			       <hr/>
+			          <a class="btn btn-default" href="#">详细帮助 &raquo;</a>
 			  </div>
 			</div>
       	</div>
+
       	<div class="col-md-3">
       		<div class="panel panel-default">
-			  
-			  <div class="panel-body">
-			  <%= link_to '考试','',{:class=>"btn btn-primary btn-lg btn-block"} %>
-			          <h3>流程</h3>
-			          <ol>
-						  <li>点击”新建订单“按钮进入操作界面。</li>
-						  <li>高一订单填写每科试卷份数，高二订单填写文理科考生人数。</li>
-						  <li>经办人和电话必须填写。</li>
-						  <li>点击“提交订单”按钮进入下一步骤“确认订单”</li>
-						</ol>
-			         
-			          <p><a class="btn btn-default" href="#">详细帮助 &raquo;</a></p>
+			  <div class="panel-heading">考场信息</div>
+			  <div class="panel-body" style="min-height:276px;">
+			    
+			          <h2>未开始请等候</h2>
+			       <hr/>
+			          <a class="btn btn-default" href="#">详细帮助 &raquo;</a>
 			  </div>
 			</div>
       	</div>
+
       	<div class="col-md-3">
       		<div class="panel panel-default">
-			  
-			  <div class="panel-body">
-			    <%= link_to '上传成绩','',{:class=>"btn btn-primary btn-lg btn-block"} %>
-			          <h3>流程</h3>
-			          <ol>
-						  <li>点击”新建订单“按钮进入操作界面。</li>
-						  <li>高一订单填写每科试卷份数，高二订单填写文理科考生人数。</li>
-						  <li>经办人和电话必须填写。</li>
-						  <li>点击“提交订单”按钮进入下一步骤“确认订单”</li>
-						</ol>
-			         
-			          <p><a class="btn btn-default" href="#">详细帮助 &raquo;</a></p>
+			  <div class="panel-heading">成绩上传</div>
+			  <div class="panel-body" style="min-height:276px;">
+			    
+			          <h2>未开始请等候</h2>
+			       <hr/>
+			          <a class="btn btn-default" href="#">详细帮助 &raquo;</a>
 			  </div>
 			</div>
       	</div>
-      </div>
+
+      	<div class="col-md-3">
+      		<div class="panel panel-default">
+			  <div class="panel-heading">成绩分析</div>
+			  <div class="panel-body" style="min-height:276px;">
+			    
+			          <h2>未开始请等候</h2>
+			       <hr/>
+			          <a class="btn btn-default" href="#">详细帮助 &raquo;</a>
+			  </div>
+			</div>
+      	</div>
+
+      	
+ </div>

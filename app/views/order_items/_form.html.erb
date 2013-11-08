@@ -1,67 +1,76 @@
-<%= form_for([@exam,@order_item],:html=>{:method=>"patch",:class=>'form-horizontal'}) do |f| %>
+<%= form_for([@exam,@order_item],:html=>{:class=>'form-horizontal'}) do |f| %>
   <%#= f.error_messages %>
 
   <%= f.hidden_field :paper_order_id,:value=>@paper_order.id %>
-  <%#= f.hidden_field :school_id,:value=>@school.id %>
+  
+
   <div class="form-group">
   <label class="col-sm-3 control-label" for="inputEmail">学校</label>
   <div class="col-sm-9">
-  <%= collection_select :order_item, :school_id,School.all, :id,:name,{:include_blank =>true},:class=>"form-control" %>
+    <% if current_user.is_school? %>
+      <p class="form-control-static"><%= School.find(current_user.school_id).name %></p>
+      <%= f.hidden_field :school_id,:value=>current_user.school_id %>
+    <% else %>
+      <%= f.collection_select  :school_id,School.all, :id,:name,{:include_blank =>true},:class=>"form-control" %>
+    <% end %>
   </div>
   </div>
+
   <span>高一 （输入数量为试卷份数）</span>
   <div class="form-group">
 <label class="col-sm-3 control-label" for="inputEmail">语文</label>
 <div class="col-sm-9">
-<input class="form-control"type="text" id="inputEmail" placeholder="试卷份数" name="order_item[g1yw]" />
+  <%= f.text_field :g1yw,class: "form-control",placeholder: "试卷份数"  %>
+  <!-- <input class="form-control"type="text" id="inputEmail" placeholder="试卷份数" name="order_item[g1yw]" /> -->
 </div>
 </div>
   <div class="form-group">
 <label class="col-sm-3 control-label" for="inputEmail">数学</label>
 <div class="col-sm-9">
-<input class="form-control"type="text" id="inputEmail" placeholder="试卷份数" name="order_item[g1sx]" />
+  <%= f.text_field :g1sx,class: "form-control",placeholder: "试卷份数"  %>
+  
 </div>
 </div>
   <div class="form-group">
 <label class="col-sm-3 control-label" for="inputEmail">英语</label>
 <div class="col-sm-9">
-<input class="form-control"type="text" id="inputEmail" placeholder="试卷份数" name="order_item[g1yy]" />
+  <%= f.text_field :g1yy,class: "form-control",placeholder: "试卷份数"  %>
 </div>
 </div>
   <div class="form-group">
 <label class="col-sm-3 control-label" for="inputEmail">物理</label>
 <div class="col-sm-9">
-<input class="form-control"type="text" id="inputEmail" placeholder="试卷份数" name="order_item[g1wl]" />
+  <%= f.text_field :g1wl,class: "form-control",placeholder: "试卷份数"  %>
 </div>
 </div>
   <div class="form-group">
 <label class="col-sm-3 control-label" for="inputEmail">化学</label>
 <div class="col-sm-9">
-<input class="form-control"type="text" id="inputEmail" placeholder="试卷份数" name="order_item[g1hx]" />
+  <%= f.text_field :g1hx,class: "form-control",placeholder: "试卷份数"  %>
 </div>
 </div>
   <div class="form-group">
 <label class="col-sm-3 control-label" for="inputEmail">生物</label>
 <div class="col-sm-9">
-<input class="form-control"type="text" id="inputEmail" placeholder="试卷份数" name="order_item[g1sw]" />
+  <%= f.text_field :g1sw,class: "form-control",placeholder: "试卷份数"  %>
 </div>
 </div>
 <div class="form-group">
 <label class="col-sm-3 control-label" for="inputEmail">政治</label>
 <div class="col-sm-9">
-<input class="form-control"type="text" id="inputEmail" placeholder="试卷份数" name="order_item[g1zz]" />
+  <%= f.text_field :g1zz,class: "form-control",placeholder: "试卷份数"  %>
 </div>
 </div>
   <div class="form-group">
 <label class="col-sm-3 control-label" for="inputEmail">历史</label>
 <div class="col-sm-9">
-<input class="form-control"type="text" id="inputEmail" placeholder="试卷份数" name="order_item[g1ls]" />
+  <%= f.text_field :g1ls,class: "form-control",placeholder: "试卷份数"  %>
 </div>
 </div>
   <div class="form-group">
 <label class="col-sm-3 control-label" for="inputEmail">地理</label>
 <div class="col-sm-9">
-<input class="form-control"type="text" id="inputEmail" placeholder="试卷份数" name="order_item[g1dl]" />
+  <%= f.text_field :g1dl,class: "form-control",placeholder: "试卷份数"  %>
 </div>
 </div>
   <span>
@@ -71,13 +80,13 @@
 <div class="form-group">
 <label class="col-sm-3 control-label" for="inputEmail">文科</label>
 <div class="col-sm-9">
-<input class="form-control"type="text" id="inputEmail" placeholder="人数" name="order_item[g2w]" />
+  <%= f.text_field :g2w,class: "form-control",placeholder: "试卷份数"  %>
 </div>
 </div>
   <div class="form-group">
 <label class="col-sm-3 control-label" for="inputEmail">理科</label>
 <div class="col-sm-9">
-<input class="form-control"type="text" id="inputEmail" placeholder="人数" name="order_item[g2l]" />
+  <%= f.text_field :g2l,class: "form-control",placeholder: "试卷份数"  %>
 </div>
 </div>
   <span>经办人信息</span>
