@@ -39,7 +39,7 @@
     }
     -->
     </style>
-
+    <% if @paper_order.item_type==1 %>
     <table class="table table-bordered" >
       <tr>
         <th>年级</th>
@@ -136,6 +136,45 @@
         </td>
       </tr>
     </table>
+    <% elsif @paper_order.item_type==2
+       %>
+       <table class="table table-bordered" >
+      <tr>
+        <th>年级</th>
+        <th>类别</th>
+        <th>语文</th>
+        <th>文科数学</th>
+        <th>理科数学</th>
+        <th>英语</th>
+        <th>理科综合</th>
+        <th>文科综合</th>
+        
+      </tr>
+      <tr>
+        <th>高三</th>
+        <th>份数</th>
+        <td>
+          <%= @order_item.g3yw %>
+        </td>
+        <td>
+          <%= @order_item.g3sxw %>
+        </td>
+        <td>
+          <%= @order_item.g3sxl %>
+        </td>
+        <td>
+          <%= @order_item.g3yy %>
+        </td>
+        <td>
+          <%= @order_item.g3lz %>
+        </td>
+        <td>
+          <%= @order_item.g3wz %>
+        </td>
+        
+      </tr>
+    </table>
+    <% end %>
     <div style="padding: 10px;">
     <table width="90%">
       <tr>

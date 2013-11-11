@@ -31,7 +31,7 @@ production:
   # timeout: 5000
   adapter: mysql
   database: tqm
-  host: localhost
-  username: root
-  password: 123456
+  host: 10.3.3.227
+  username: dev
+  password: dev
   encoding: utf8

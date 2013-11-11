@@ -26,10 +26,12 @@ Tqm::Application.routes.draw do
 
   resources :exams do
     get 'start', on: :member
+    get 'order_on_off', on: :member
     resources :orders
     resources :order_items do
       put 'cancel', on: :member
       put 'confirm',on: :member
+      get 'gather',on: :collection
     end
   end
   

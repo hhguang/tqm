@@ -38,14 +38,19 @@ class ExamsController < ApplicationController
 
 	def show
 		@exam=Exam.find(params[:id])
-
+		@paper_order=@exam.paper_order
 	end
 
 	def start
 		@exam.update(:closed=>!@exam.closed?)
-		redirect_to(exam_url(@exam), :notice => "监测项目已#{@exam.closed? ? '关闭' : '启动'}")
-		
+		redirect_to(exam_url(@exam), :notice => "监测项目已#{@exam.closed? ? '关闭' : '启动'}")	
 
+	end
+
+	def order_on_off
+		@paper_order=@exam.paper_order
+		@paper_order.update :state=>!@paper_order.state?
+		redirect_to(exam_url(@exam), :notice => "试卷订单已#{@paper_order.state? ? '关闭' : '启动'}")	
 	end
 
 	private

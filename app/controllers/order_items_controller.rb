@@ -11,7 +11,7 @@ class OrderItemsController < ApplicationController
       @schools=@qx.schools
       @order_items=@paper_order.order_items.find_all_by_school_id(@schools.map{|s|s.id}).to_a
       @unorders=@schools-@order_items.collect{|i| i.school }
-    elsif current_user.is_admin?
+    elsif current_user.is_s_admin?
       @order_items = @paper_order.order_items
       @unorders=School.all-@order_items.collect{|i| i.school }
     end
@@ -22,7 +22,7 @@ class OrderItemsController < ApplicationController
   # GET /order_items/1.xml
   def show
     @order_item = OrderItem.find(params[:id])
-
+    authorize! :read, @order_item
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @order_item }
@@ -119,11 +119,33 @@ class OrderItemsController < ApplicationController
     end
   end
 
+  def gather    
+    
+    if current_user.qx_id
+    @qx=Qx.find(current_user.qx_id)
+    @schools=@qx.schools
+    @order_items=@paper_order.order_items.find_all_by_school_id(@schools.map{|s|s.id}).to_a
+    @school_orders=@order_items.index_by{|item| item.school_id }
+    else
+      @schools=School.all
+      @order_items = @paper_order.order_items
+      @school_orders=@order_items.index_by{|item| item.school_id }
+    end
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @paper_orders }
+    end
+  end
+
   protected
 
   def find_paper_order
     
     @exam=Exam.find(params[:exam_id])
-    @paper_order=@exam.paper_order
+    @paper_order=@exam.paper_order || @exam.create_paper_order(
+          :name=>@exam.name,
+          :item_type=>@exam.exam_type,
+          :state=>false
+          )
   end
 end

@@ -3,7 +3,7 @@
   <div class="panel-body">
     <div style="padding: 10px;"  class="btn-group">
       <%= link_to '订单列表',exam_order_items_path(@exam),:class=>'btn btn-default' %>
-      <%#= link_to '订单汇总',{:controller=>'paper_orders',:action=>'qx',:id=>@paper_order},{:class=>'btn'} %>
+      <%= link_to '订单汇总',gather_exam_order_items_path(@exam),{:class=>'btn btn-default'} %>
     </div>
   </div>
   <ul class="nav nav-tabs" id="myTab">
@@ -32,17 +32,22 @@
 
         <td><%=h order_item.school.qx.name %></td>
         <td><%=h order_item.school_name %></td>
-        <td><%= link_to '查看', exam_order_item_path(@exam,order_item) %></td>
+        
+          <% if order_item.confirmed? %>        
         <td>
-          <% if order_item.confirmed? %>
             <%= form_for :order_item,:url=>cancel_exam_order_item_path(@exam,order_item),:html => { :method => :put } do |f| %>
             <%= f.hidden_field :confirmed,:value=>false %>
             <%= f.submit '取消确认' %>
             <% end %>
+          </td>
+          <td><%= link_to '查看并打印', exam_order_item_path(@exam,order_item) %></td>
           <% else %>
+          <td>
           <span class='label label-danger'>未确认</span>
+          </td>
+          <td><%= link_to '查看并确认', edit_exam_order_item_path(@exam,order_item) %></td>
           <% end %>
-        </td>
+        
         <td><%= link_to '删除', exam_order_item_path(@exam,order_item), :confirm => 'Are you sure?', :method => :delete %></td>
       </tr>
     <% end %>

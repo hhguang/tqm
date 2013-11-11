@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
 
 	def encrypt_password
         return if password.blank?
-        self.salt = self.class.make_token if new_record?
+        self.salt = self.make_token if new_record?
         self.crypted_password = encrypt(password)
       end
     
@@ -29,7 +29,9 @@ class User < ActiveRecord::Base
 		! school_id.nil?
 	end
 
-	
+	def is_s_admin?
+		is_admin? && qx_id.nil?
+	end
 
 	def is_qx_admin?
 		is_admin? && (! qx_id.nil?)

@@ -15,7 +15,7 @@
     <% end %>
   </div>
   </div>
-
+  <% if @paper_order.item_type==1 %>
   <span>高一 （输入数量为试卷份数）</span>
   <div class="form-group">
 <label class="col-sm-3 control-label" for="inputEmail">语文</label>
@@ -89,6 +89,25 @@
   <%= f.text_field :g2l,class: "form-control",placeholder: "试卷份数"  %>
 </div>
 </div>
+<% elsif @paper_order.item_type==2
+   %>
+   <span>
+    高三 (输入数量为考生人数）
+  </span>
+
+<div class="form-group">
+<label class="col-sm-3 control-label" for="inputEmail">文科</label>
+<div class="col-sm-9">
+  <%= f.text_field :g3w,class: "form-control",placeholder: "试卷份数"  %>
+</div>
+</div>
+  <div class="form-group">
+<label class="col-sm-3 control-label" for="inputEmail">理科</label>
+<div class="col-sm-9">
+  <%= f.text_field :g3l,class: "form-control",placeholder: "试卷份数"  %>
+</div>
+</div>
+<% end %>
   <span>经办人信息</span>
   <div class="form-group">
 <label class="col-sm-3 control-label" for="inputEmail">经办人</label>

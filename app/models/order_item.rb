@@ -32,6 +32,24 @@ class OrderItem < ActiveRecord::Base
       self.g2yw=self.g2w+self.g2l
       self.g2yy=self.g2w+self.g2l
     end
+    if self.g3w
+      self.g3sxw=self.g3w
+      self.g3wz=self.g3w
+      self.g3yw=self.g3w
+      self.g3yy=self.g3w
+    end
+    if self.g3l
+      self.g3sxl=g3l
+      self.g3lz=g3l      
+      self.g3yw=self.g3l
+      self.g3yy=self.g3l
+      self
+    end
+    if self.g3w && self.g3l
+      self.g3yw=self.g3w+self.g3l
+      self.g3yy=self.g3w+self.g3l
+    end
+
   end
 
 end

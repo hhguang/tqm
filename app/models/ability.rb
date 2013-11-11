@@ -32,8 +32,11 @@ class Ability
     if user.blank? 
         # not logged in
         cannot :manage, :all
-    # elsif user.admin?
-    #     can :manage, :all
+    elsif user.is_s_admin?
+         can :manage, :all
+    elsif user.is_qx_admin?
+        can :create,Exam
+        can :manage,OrderItem,:school=>{:id=>Qx.find(user.qx_id).schools.map { |s| s.id  }}  
     else
         cannot :manage, :all
     end

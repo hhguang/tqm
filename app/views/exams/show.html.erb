@@ -3,8 +3,19 @@
       	
       	<div class="col-md-3">
       		<div class="panel panel-info">
-			  <div class="panel-heading">试卷订单</div>
-			  <div class="panel-body">
+			  <div class="panel-heading">试卷订单
+			  	<% if current_user && current_user.is_s_admin? %>
+				  	<%= link_to order_on_off_exam_path(@exam),title: (@paper_order.state? ? "开启" : "关闭") do %>
+				  		<span class="glyphicon glyphicon-<%= (@paper_order.state? ? "play" : "stop") %> " ></span>
+				  	<% end %>
+			  	<% end %>
+			  	<% if current_user && current_user.is_admin? %>
+				  	<%= link_to exam_order_items_path(@exam) ,title: '管理订单' do %>
+				  		<span class="glyphicon glyphicon-wrench pull-right" ></span>
+				  	<% end %>
+			  	<% end %>
+			  </div>
+			  <div class="panel-body" style="min-height:276px;">
 			    <% if current_user.is_school?  %>
 			    <% @order_item = OrderItem.find_by(paper_order_id: @exam.paper_order.id,school_id: current_user.school_id) %>
 			    	<h3>流程</h3>
@@ -44,7 +55,7 @@
 			       <%= link_to '创建订单',new_exam_order_item_path(@exam),{:class=>"btn btn-primary btn-lg btn-block"} %>  
 			    <% end %>
 			       <hr/>
-			          <a class="btn btn-default" href="#">详细帮助 &raquo;</a>
+			          <a class="btn btn-default" href="/welcome/help#order">详细帮助 &raquo;</a>
 			  </div>
 			</div>
       	</div>
