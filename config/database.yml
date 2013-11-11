@@ -29,7 +29,7 @@ production:
   # database: db/production.sqlite3
   # pool: 5
   # timeout: 5000
-  adapter: mysql
+  adapter: mysql2
   database: tqm
   host: 10.3.3.227
   username: dev
