@@ -13,6 +13,11 @@
 
 		  <!-- Collect the nav links, forms, and other content for toggling -->
 		  <div class="collapse navbar-collapse navbar-ex1-collapse">
+		  	<p class=" text-danger navbar-text">状态：
+		  		<%= link_to (@exam.closed? ? '已关闭' : '已启动'),start_exam_path(@exam),title: '点击切换状态' %>
+
+		  	</p>
+
 		    <ul class="nav navbar-nav">		      
 		      
 		    </ul>
@@ -23,12 +28,12 @@
 			        <a href="#" class="dropdown-toggle" data-toggle="dropdown">设置 <b class="caret"></b></a>
 			        <ul class="dropdown-menu">
 			          <li>		          	
-			          	<%= link_to (@exam.closed? ? '启动监测项目' : '关闭监测项目'),start_exam_path(@exam) %>
-			          	<a href="#">关闭监测项目</a></li>
+			          	<%= link_to (@exam.closed? ? '启动监测项目' : '关闭监测项目'),start_exam_path(@exam) %>		          	
 			          </li>
-			          <li><a href="#">关闭试卷订单提交</a></li>
-			          <li><a href="#">关闭成绩提交</a></li>
-			          <li><a href="#">Separated link</a></li>
+			          <li>
+			          	<%= link_to (@paper_order.state? ? '启动试卷订单提交' : '关闭试卷订单提交'),order_on_off_exam_path(@exam) %>
+			          	
+				  		</li>
 			        </ul>
 			    </li>
 		    <% end %>
@@ -37,14 +42,12 @@
 		        <a href="#" class="dropdown-toggle" data-toggle="dropdown">管理 <b class="caret"></b></a>
 		        <ul class="dropdown-menu">
 		          <li>
-		          	<%= link_to '所有项目',exams_path %>
-		          	
+		          	<%= link_to '所有项目',exams_path %>		          	
 		          </li>
+		          <li role="presentation" class="divider">
 		          <li>
 		          	<%= link_to '试卷订单管理',exam_order_items_path(@exam) %>
 		          </li>
-		          <li><a href="#">Something else here</a></li>
-		          <li><a href="#">Separated link</a></li>
 		        </ul>
 		      </li>
 		    <% end %>

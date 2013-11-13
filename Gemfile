@@ -54,5 +54,5 @@ gem 'thin'
 gem 'simple_form', "3.0.0"
 
 group :production do
- gem 'mysql2'
+ #gem 'mysql2'
 end

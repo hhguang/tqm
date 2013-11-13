@@ -1,7 +1,7 @@
 class ExamsController < ApplicationController
-	before_action :set_exam, only: [:start,:show, :edit, :update, :destroy]
+	before_action :set_exam, only: [:start,:order_on_off,:show, :edit, :update, :destroy]
 	def index
-		@exams=Exam.all
+		@exams=Exam.all.order 'created_at desc'
 	end
 
 	def new
