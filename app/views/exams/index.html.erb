@@ -6,8 +6,9 @@
 	</div>
 	 <div class="panel-body">
 		<div class="btn-group">
+			<% if can? :create, @exam %>
 			<%= link_to '创建新项目',new_exam_path,{:remote=>true,:class=>"btn btn-primary"} %>
-		  
+		  	<% end %>
 		</div>
 	 </div>
 	 <ul class="list-group" id="exams">

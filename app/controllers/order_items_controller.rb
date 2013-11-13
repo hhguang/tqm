@@ -1,6 +1,7 @@
 class OrderItemsController < ApplicationController
-  # before_filter :login_required,:require_admin
+  
   before_filter :find_paper_order
+  authorize_resource
   # GET /order_items
   # GET /order_items.xml
   def index

@@ -1,5 +1,6 @@
 class ExamsController < ApplicationController
 	before_action :set_exam, only: [:start,:order_on_off,:show, :edit, :update, :destroy]
+	authorize_resource
 	def index
 		@exams=Exam.all.order 'created_at desc'
 	end
