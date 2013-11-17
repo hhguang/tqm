@@ -1,5 +1,6 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
+	validates :login, :presence => true
 	validates :name, :presence => true
   	validates :email, :presence => true, :uniqueness => true
 	has_many :authentications

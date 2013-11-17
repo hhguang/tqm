@@ -37,6 +37,7 @@ class Ability
     elsif user.is_qx_admin?
         can :read,Exam
         can :manage,OrderItem,:school=>{:id=>Qx.find(user.qx_id).schools.map { |s| s.id  }}  
+        can :update,User,:user=>{:school_id=>Qx.find(user.qx_id).schools.map { |s| s.id  }}
     elsif user.is_school?
         can :read,Exam
         can [:read,:create,:update,:confirm],OrderItem,:school=>{:id=>user.school_id}
