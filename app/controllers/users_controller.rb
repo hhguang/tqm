@@ -4,7 +4,12 @@ class UsersController < ApplicationController
   authorize_resource
 
   def index
-  	@users=User.all
+    if current_user.is_qx_admin?
+      @users=User.where(:school_id=>Qx.find(current_user.qx_id).schools.map { |s| s.id  })
+    elsif current_user.is_s_admin?
+  	 @users=User.all
+    end
+
   end
 
   def new

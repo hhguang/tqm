@@ -1,7 +1,7 @@
 <div class="well" >
 <%= form_for @user ,:html=>{:class=>' form-horizontal'} do |f| -%>
     <fieldset>
-    <legend>创建用户</legend>
+    <legend>用户信息</legend>
     <div class="form-group">
       <label class="col-sm-2 control-label " for="login">用户名</label>
       <div class="col-sm-10">
@@ -27,6 +27,19 @@
       </div>
     </div>
     <div class="form-group">
+      <label class="col-sm-2 control-label " for="login">邮箱</label>
+      <div class="col-sm-10">
+        <%= f.text_field :email,:class=>'input-xlarge form-control'%>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="tel">手机号码</label>
+      <div class="col-sm-10">
+        <%= f.text_field :telephone,:class=>'input-xlarge form-control'%>
+      </div>
+    </div>
+    <% if current_user.is_s_admin? %>
+    <div class="form-group">
       <label class="col-sm-2 control-label " for="login">学校</label>
       <div class="col-sm-10">
         <%= collection_select :user, :school_id,School.all, :id,:name,{:include_blank =>true},:class=>"form-control" %>
@@ -34,12 +47,7 @@
       </div>
 
     </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label " for="login">邮箱</label>
-      <div class="col-sm-10">
-        <%= f.text_field :email,:class=>'input-xlarge form-control'%>
-      </div>
-    </div>
+    
     <div class="form-group">
             <label class="col-sm-2 control-label " for="optionsCheckbox">是否管理员</label>
             <div class="col-sm-10">
@@ -56,10 +64,11 @@
         <p class="help-block">此选项系统管理员留空，区县教研室账号必须选</p>
       </div>
     </div>
+    <% end %>
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-primary">新建用户</button>
-            <a class="btn" href="/admin/users">Cancel</a>
+            <button type="submit" class="btn btn-primary">保存</button>
+            <%= link_to '取消',users_path %>
       </div>
     </div>
 

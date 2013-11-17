@@ -1,7 +1,8 @@
 <div class="page-header">
-  <h1>用户管理 <small>Subtext for header</small></h1>
+  <h1>用户管理 <small><%= Qx.find(current_user.qx_id).name if current_user.is_qx_admin? %></small></h1>
 </div>
 <div>
+  <% if current_user && current_user.is_s_admin? %>
   <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
       <%= link_to '创建用户',new_user_path,{:class=>"btn btn-primary"} %>
@@ -29,6 +30,7 @@
       </ul>
     </div>
   </div>
+  <% end %>
 </div>
 <div>
 	<table class="table">
