@@ -101,12 +101,15 @@
               <li>
                 <%= link_to '用户管理',users_path %>
               </li>
+              <% if current_user.is_s_admin? %>
               <li>
                 <%= link_to '区县管理',qxes_path %>
               </li>
+
               <li>
                 <%= link_to '学校管理',schools_path %>
               </li>
+              <% end %>
               
             </ul>
           </li>

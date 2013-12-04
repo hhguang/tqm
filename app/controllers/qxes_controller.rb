@@ -1,5 +1,6 @@
 class QxesController < ApplicationController
   before_action :set_qx, only: [:show, :edit, :update, :destroy]
+  authorize_resource
   # before_filter :login_required
   # GET /qxes
   # GET /qxes.xml
