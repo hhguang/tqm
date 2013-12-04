@@ -48,6 +48,7 @@ gem 'omniauth-identity'
 gem 'bcrypt-ruby', '~> 3.1.0'
 gem 'cancan'
 
+gem 'carrierwave'
 
 # gem 'faye-rails'
 gem 'thin'
