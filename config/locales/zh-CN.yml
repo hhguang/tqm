@@ -119,6 +119,7 @@ zh-CN:
       too_long: 过长（最长为 %{count} 个字符）
       too_short: 过短（最短为 %{count} 个字符）
       wrong_length: 长度非法（必须为 %{count} 个字符）
+      extension_white_list_error: 类型不被允许
     template:
       body: 如下字段出现错误：
       header:

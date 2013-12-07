@@ -1,5 +1,6 @@
 Tqm::Application.routes.draw do
   
+  
   # get "orders/new"
   # get "orders/show"
   # get "orders/edit"
@@ -33,8 +34,11 @@ Tqm::Application.routes.draw do
       put 'confirm',on: :member
       get 'gather',on: :collection
     end
+    resources :score_files
   end
   
+  get "/exams/:exam_id/school/:school_id/score_files"=>'score_files#by_school'
+
   resources :qxes
   resources :users
 

@@ -1,0 +1,37 @@
+<%= render '/exams/nav' %>
+
+
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#">高一</a></li>
+  <li><a href="#">高二理科</a></li>
+  <li><a href="#">高三文科</a></li>
+</ul>
+<div class="well" style="margin:5px;">
+  <p class="help-block"><a href="/0.csv">下载高一模板</a></p>
+<%= form_for(@score_file,:url=>exam_score_files_path(@exam.id),:html=>{ :multipart => true} ) do |f| %>
+          <%#= f.error_messages %>
+<% if @score_file.errors.any? %>
+  <div id="error_explanation">
+    <div class="alert alert-error">
+      提交文件出现 <%= pluralize(@score_file.errors.count, "error") %>.
+    </div>
+    <ul>
+    <% @score_file.errors.full_messages.each do |msg| %>
+      <li>* <%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+          <%= f.hidden_field :exam_id,:value=>@exam.id %>
+          <%= f.hidden_field :school_id,:value=>@school.id %>
+    <div class="form-group">
+    <label for="exampleInputFile"></label>
+    <%= f.file_field :filename %>
+    
+  	</div>
+          <%#= f.hidden_field :f_type,:value=>@f_type %>
+          
+    <button type="submit" class="btn btn-primary" data-loading-text="请稍候，文件上传中...">上传文件</button>
+
+<% end %>
+</div>

@@ -1,4 +1,5 @@
 class Exam < ActiveRecord::Base
+	has_many :score_files
 	has_one :paper_order
 	validates :name ,:presence => true
 	EXAM_TYPES=[

@@ -14,7 +14,11 @@
 		  <!-- Collect the nav links, forms, and other content for toggling -->
 		  <div class="collapse navbar-collapse navbar-ex1-collapse">
 		  	<p class=" text-danger navbar-text">状态：
+		  		<% if can? :manage,@exam %>
 		  		<%= link_to (@exam.closed? ? '已关闭' : '已启动'),start_exam_path(@exam),title: '点击切换状态' %>
+		  		<% else %>
+		  		<%= (@exam.closed? ? '已关闭' : '已启动') %>
+		  		<% end %>
 
 		  	</p>
 

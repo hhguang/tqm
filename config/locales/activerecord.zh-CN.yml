@@ -1,0 +1,9 @@
+## YAML Template.
+---
+zh-CN:
+  activerecord:
+    models:
+      score_file: "成绩文件"         
+    attributes:
+      score_file:
+        filename: "文件"
