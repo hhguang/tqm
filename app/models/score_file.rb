@@ -2,14 +2,20 @@ require "digest/md5"
 
 class ScoreFile < ActiveRecord::Base
 
-  mount_uploader :filename, SfUploader
+  mount_uploader :file, SfUploader
   belongs_to :exam
   belongs_to :school
   belongs_to :user
   
-  validates_presence_of  :filename
-  # validates_length_of :filename, :maximum => 255
-  validates_length_of :disk_filename, :maximum => 255
+  # validates_presence_of  :filename
+  # # validates_length_of :filename, :maximum => 255
+  # validates_length_of :disk_filename, :maximum => 255
+  
+
+  before_save :update_asset_attributes
+  
+  
+  
   
 
   # cattr_accessor :storage_path
@@ -690,13 +696,15 @@ class ScoreFile < ActiveRecord::Base
     col_count=ScoreFile::EXCELCONFIG[exam_type][:columns].size
     puts col_count
     i=0
-    CSV::Reader.parse(File.open(self.diskfile)) do |row|
+  # CSV::Reader.parse(File.open(self.diskfile)) do |row|
+    CSV.foreach(self.file.current_path,:encoding => 'gbk:utf-8') do |row|
       col=0
       col_status=[]
       row_status = true
       while col<col_count
         if i==0
-          if row[col] and Iconv.conv('utf-8//IGNORE','gbk//IGNORE',row[col])==ScoreFile::EXCELCONFIG[exam_type][:columns][col]['name']
+          # if row[col] and Iconv.conv('utf-8//IGNORE','gbk//IGNORE',row[col])==ScoreFile::EXCELCONFIG[exam_type][:columns][col]['name']
+          if row[col] and row[col]==ScoreFile::EXCELCONFIG[exam_type][:columns][col]['name']
             #conv是危险语句，需用异常包装
             col_status[col]= true
           else
@@ -717,17 +725,17 @@ class ScoreFile < ActiveRecord::Base
             col_status[col]= true
 
             if row[col]
-              if !(row[col].data.to_f >=0 && row[col].data.to_f<=ScoreFile::EXCELCONFIG[exam_type][:columns][col]['max'] )
+              if !(row[col].to_f >=0 && row[col].to_f<=ScoreFile::EXCELCONFIG[exam_type][:columns][col]['max'] )
                 col_status[col] = false
                 error+=1
-              elsif col>2 and exam_type==0 and col.odd? and row[col-1] and row[col].data.to_f>row[col-1].data.to_f
+              elsif col>2 and exam_type==0 and col.odd? and row[col-1] and row[col].to_f>row[col-1].to_f
                 col_status[col] = false
                 error+=1
               elsif col>2 and exam_type>0
-                if col<6 and col.odd? and row[col-1] and row[col].data.to_f>row[col-1].data.to_f
+                if col<6 and col.odd? and row[col-1] and row[col].to_f>row[col-1].to_f
                   col_status[col] = false
                   error+=1
-                elsif col>9 and col.even? and row[col-1] and row[col].data.to_f>row[col-1].data.to_f
+                elsif col>9 and col.even? and row[col-1] and row[col].to_f>row[col-1].to_f
                   col_status[col] = false
                   error+=1
                 end
@@ -753,25 +761,25 @@ class ScoreFile < ActiveRecord::Base
   end
 
 
-  def file=(incoming_file)
-    unless incoming_file.nil?
-      @temp_file = incoming_file
-      if @temp_file.size > 0
-        self.filename = sanitize_filename(@temp_file.original_filename)
-        self.disk_filename = ScoreFile.disk_filename(filename)
-        self.content_type = @temp_file.content_type.to_s.chomp
-        if content_type.blank?
-          self.content_type = Redmine::MimeType.of(filename)
-        end
-        self.filesize = @temp_file.size
+  # def file=(incoming_file)
+  #   unless incoming_file.nil?
+  #     @temp_file = incoming_file
+  #     if @temp_file.size > 0
+  #       self.filename = sanitize_filename(@temp_file.original_filename)
+  #       self.disk_filename = ScoreFile.disk_filename(filename)
+  #       self.content_type = @temp_file.content_type.to_s.chomp
+  #       if content_type.blank?
+  #         self.content_type = Redmine::MimeType.of(filename)
+  #       end
+  #       self.filesize = @temp_file.size
         
-      end
-    end
-  end
+  #     end
+  #   end
+  # end
 
-  def file
-    nil
-  end
+  # def file
+  #   nil
+  # end
 
   # Copies the temporary file to its final location
   # and computes its MD5 hash
@@ -877,6 +885,14 @@ class ScoreFile < ActiveRecord::Base
   end
 
 private
+
+  def update_asset_attributes
+    if file.present? && file_changed?
+      self.content_type = file.file.content_type
+      self.filesize = file.file.size
+      self.disk_filename=file.filename
+    end
+  end
 
   def check_col(cell)
     cell>=0 && cell<=ScoreFile::EXCELCONFIG[0][:columns][column]['max']

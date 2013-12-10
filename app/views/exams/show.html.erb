@@ -78,8 +78,19 @@
       	</div>
 
       	<div class="col-md-3">
-      		<div class="panel panel-default">
-			  <div class="panel-heading">成绩上传</div>
+      		<div class="panel panel-<%= (@exam.upload_started? ? 'info' : 'default') %>">
+			  <div class="panel-heading">成绩上传
+			  	<% if current_user && current_user.is_s_admin? %>
+				  	<%= link_to set_upload_started_exam_path(@exam),title: (@exam.upload_started? ? "关闭" : "开启") do %>
+				  		<span class="glyphicon glyphicon-<%= (@exam.upload_started? ? "stop" : "play") %> " ></span>
+				  	<% end %>
+			  	<% end %>
+			  	<% if current_user && current_user.is_admin? %>
+				  	<%= link_to exam_score_files_path(@exam) ,title: '管理成绩文件' do %>
+				  		<span class="glyphicon glyphicon-wrench pull-right" ></span>
+				  	<% end %>
+			  	<% end %>
+			  </div>
 			  <div class="panel-body" style="min-height:276px;">
 			    
 			          <h2>未开始请等候</h2>

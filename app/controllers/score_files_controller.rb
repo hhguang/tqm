@@ -2,6 +2,7 @@ class ScoreFilesController < ApplicationController
 	before_action :set_exam, only: [:index,:new,:create,:show,:update,:edit,:by_school]
 
   def index
+    @score_files=@exam.score_files
   end
 
   def show
@@ -9,8 +10,28 @@ class ScoreFilesController < ApplicationController
   end
 
   def by_school
-  	@school=School.find(params[:school_id])
-  	@score_file=ScoreFile.new
+  	
+  	
+    @f_type=params[:f_type] || '0'
+    if current_user.is_school?
+      @school=current_user.school
+      @score_file = ScoreFile.find(:first,
+      :conditions=>{:exam_id=>@exam,:school_id=>current_user.school,:f_type=>@f_type}
+      )
+    #@score_file =current_user.school.score_file_for(@exam) || ScoreFile.new
+      if @score_file        
+
+         @csv_data=@score_file.csv_data
+         @error=@csv_data[:error]
+         @data=@csv_data[:rows]
+      else
+        
+        @score_file= ScoreFile.new
+      end
+    else
+      @school=School.find(params[:school_id])
+      @score_file= ScoreFile.new
+    end
   end
 
   def new
@@ -26,6 +47,7 @@ class ScoreFilesController < ApplicationController
   	params.permit!
   	@school=School.find(params[:score_file][:school_id])
   	@score_file=ScoreFile.new(params[:score_file])
+    @score_file.user_id=current_user.id
   	if @score_file.save
   	 redirect_to :action=>'by_school',:exam_id=>@exam.id,:school_id=>@school.id
     else

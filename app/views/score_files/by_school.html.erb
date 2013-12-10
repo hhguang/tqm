@@ -2,36 +2,119 @@
 
 
 <ul class="nav nav-tabs">
-  <li class="active"><a href="#">高一</a></li>
-  <li><a href="#">高二理科</a></li>
-  <li><a href="#">高三文科</a></li>
+  <li <%= 'class="active"'.html_safe if @f_type=='0' %> >
+    <a href="?f_type=0">
+      高一
+    </a>
+  </li>
+  <li <%= "class='active'".html_safe if @f_type=='1' %> ><a href="?f_type=1">高二理科</a></li>
+  <li <%= "class='active'".html_safe if @f_type=='2' %> ><a href="?f_type=2">高二文科</a></li>
 </ul>
 <div class="well" style="margin:5px;">
-  <p class="help-block"><a href="/0.csv">下载高一模板</a></p>
+  <p>
+        <a href="/<%= @f_type %>.csv" class="btn">下载<%= ScoreFile::EXCELCONFIG[@f_type.to_i][:name] %>模板<i class="icon-download-alt"></i></a>
+  </p>
+  
 <%= form_for(@score_file,:url=>exam_score_files_path(@exam.id),:html=>{ :multipart => true} ) do |f| %>
           <%#= f.error_messages %>
-<% if @score_file.errors.any? %>
-  <div id="error_explanation">
-    <div class="alert alert-error">
-      提交文件出现 <%= pluralize(@score_file.errors.count, "error") %>.
+  <% if @score_file.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-error">
+        提交文件出现 <%= pluralize(@score_file.errors.count, "error") %>.
+      </div>
+      <ul>
+      <% @score_file.errors.full_messages.each do |msg| %>
+        <li>* <%= msg %></li>
+      <% end %>
+      </ul>
     </div>
-    <ul>
-    <% @score_file.errors.full_messages.each do |msg| %>
-      <li>* <%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
+  <% end %>
           <%= f.hidden_field :exam_id,:value=>@exam.id %>
           <%= f.hidden_field :school_id,:value=>@school.id %>
+          <%= f.hidden_field :f_type,:value=>@f_type %>
+
     <div class="form-group">
     <label for="exampleInputFile"></label>
-    <%= f.file_field :filename %>
+    <%= f.file_field :file %>
     
   	</div>
-          <%#= f.hidden_field :f_type,:value=>@f_type %>
+          
           
     <button type="submit" class="btn btn-primary" data-loading-text="请稍候，文件上传中...">上传文件</button>
 
 <% end %>
 </div>
+
+
+<% if !@score_file.new_record? and @score_file.errors.size==0 %>
+    <div class="page-header">
+      <h3>已经上传文件：<%=  @score_file.filename  %>
+      </h3>
+    </div>
+
+    <% if @file_error.nil? %>
+              <span class="label label-info">文件检测结果：</span>
+              <% if @error && @error>0 %>
+              上传的文件检测到<span class="badge badge-warning"><%= @error %></span>个错误。详情请看下面列表。
+              请更正后重新上传文件。
+              <% else %>
+              <p>
+                上传的文件未检测到错误，请核对下面已读入的文件数据,如无错误请点击下面的按钮确认
+              </p>
+                <%= form_for(:score_file,:url=>{:action=>'update',:id=>@score_file},:html=>{ :multipart => true,:class=>'form-inline'} ) do |f| %>
+                  <%= f.hidden_field :confirmed,:value=>true %>
+                 <button type="submit" class="btn btn-success ">确认数据无误</button>
+                 <% end %>
+              <% end %>
+    <% end %>
+
+    <table class="table">
+              <thead >
+                <tr>
+                  <th>#</th>
+                  <% ScoreFile::EXCELCONFIG[@f_type.to_i][:columns].each do |column| %>
+                  <th>
+                    <%= column['name'] %>
+                  </th>
+                  <% end %>
+                </tr>
+              </thead>
+      </table>
+
+    <table class="table">
+              <%#*<thead >%>
+                <%#*<tr>%>
+                  <%#*<th>#</th>%>
+                  <%# ScoreFile::EXCELCONFIG[@f_type.to_i][:columns].each do |column| %>
+                  <%#*<th>%>
+                    <%#= column['name'] %>
+                  <%#*</th>%>
+                  <%# end %>
+                <%#*</tr>%>
+              <%#*</thead>%>
+              <tbody>
+                 <% i=0 %>
+                <% @data.each do |row| %>
+                <% col=0 %>
+                <%# if i>=1 %>
+
+                <tr  <%= 'class="error"' if !row[:row_status] %> >
+                  <td><%=  i %></td>
+                  <% while col<ScoreFile::EXCELCONFIG[@f_type.to_i][:columns].size %>
+                  <td>
+                    <%#= Iconv.conv('utf-8//IGNORE','gbk//IGNORE',row[:row][col]) %>
+                    <%= (row[:row][col]) %>
+                    <%= '<span class="label label-warning">错误</span>'.html_safe  if ! row[:col_status][col].nil? && ! row[:col_status][col] %>
+                    <% col+=1 %>
+                  </td>
+                  <% end %>
+                </tr>
+                <%# end %>
+                <% i+=1 %>
+                <% end %>
+                
+              </tbody>
+            </table>  
+<% end %>
+
+   

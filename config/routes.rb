@@ -28,6 +28,7 @@ Tqm::Application.routes.draw do
   resources :exams do
     get 'start', on: :member
     get 'order_on_off', on: :member
+    get 'set_upload_started', on: :member
     resources :orders
     resources :order_items do
       put 'cancel', on: :member

@@ -35,7 +35,7 @@
 			          	<%= link_to (@exam.closed? ? '启动监测项目' : '关闭监测项目'),start_exam_path(@exam) %>		          	
 			          </li>
 			          <li>
-			          	<%= link_to (@paper_order.state? ? '启动试卷订单提交' : '关闭试卷订单提交'),order_on_off_exam_path(@exam) %>
+			          	<%= link_to (@exam.paper_order.state? ? '启动试卷订单提交' : '关闭试卷订单提交'),order_on_off_exam_path(@exam) %>
 			          	
 				  		</li>
 			        </ul>

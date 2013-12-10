@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131025024548) do
+ActiveRecord::Schema.define(version: 20131210014312) do
 
   create_table "authentications", force: true do |t|
     t.string   "provider"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20131025024548) do
     t.integer  "exam_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "upload_started", default: false
   end
 
   create_table "identities", force: true do |t|
@@ -132,6 +133,7 @@ ActiveRecord::Schema.define(version: 20131025024548) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "f_type"
+    t.string   "file"
   end
 
   create_table "users", force: true do |t|

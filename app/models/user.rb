@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
 	has_many :authentications
 	has_many :role,:through=>:users_roles_relations
 
+
 	REST_AUTH_SITE_KEY         = 'dffec9f93a1e566d545fc11590b50bd408e40624'
 	REST_AUTH_DIGEST_STRETCHES = 10
 
@@ -25,6 +26,11 @@ class User < ActiveRecord::Base
     def make_token
       secure_digest(Time.now, (1..10).map{ rand.to_s })
     end
+
+	def school
+		School.find(self.school_id) if self.is_school?
+	end
+
 
 	def is_school?
 		! school_id.nil?

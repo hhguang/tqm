@@ -60,4 +60,9 @@ class SfUploader < CarrierWave::Uploader::Base
       "#{@name}.#{file.extension}"
     end
   end
+
+  before :cache, :save_original_filename
+  def save_original_filename(file)
+    model.filename ||= file.original_filename if file.respond_to?(:original_filename)
+  end
 end

@@ -53,6 +53,7 @@ gem 'carrierwave'
 # gem 'faye-rails'
 gem 'thin'
 gem 'simple_form', "3.0.0"
+gem 'iconv'
 
 group :production do
  #gem 'mysql2'
