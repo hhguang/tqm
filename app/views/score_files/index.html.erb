@@ -1,1 +1,45 @@
 <%= render '/exams/nav' %>
+
+<div class="panel panel-defautl">
+	<div class="panel-body"></div>
+	<table class="table table-bordered">
+        <thead>
+          <tr>
+            
+            <th>学校</th>
+            <% Exam::GROUPS[@exam.exam_type-1].each do |s| %>
+            <th><%= s[:name] %></th>
+            <% end %>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @schools.each do |school| %>
+            <% files = school.score_files_for(@exam).index_by{|f|f.f_type} %>
+            
+            <td>
+            	<%= school.name %>
+            </td>
+
+            <% Exam::GROUPS[@exam.exam_type-1].each do |s| %>
+            	<td>
+            		<% if file=files[s[:f_type]] %>
+	            		<%=  file.filename  %>
+	            		<span class="label label-info">
+	            		<%= file.confirmed? ? '已确认' : '未确认' %>
+	            		</span>
+	            		<%= link_to '删除',exam_score_files_path(@exam,file.id), :confirm => 'Are you sure?', :method => :delete %>
+            		<% else %>
+            			未上传
+            		<% end %>
+            	</td>
+            <% end %>
+
+            
+             
+            </tr>
+            
+          <% end %>
+        </tbody>
+      </table>
+</div>

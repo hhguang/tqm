@@ -3,6 +3,7 @@ class ScoreFilesController < ApplicationController
 
   def index
     @score_files=@exam.score_files
+    @schools=School.all
   end
 
   def show

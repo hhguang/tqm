@@ -7,6 +7,29 @@ class Exam < ActiveRecord::Base
 	    ["毕业班",2]
 	  ]
 
+	GROUPS=[		
+		[{
+			:f_type=>0,
+			:name=>'高一'
+			},
+		{
+			:f_type=>1,
+			:name=>'高二理科'
+			},
+		{
+			:f_type=>2,
+			:name=>'高二文科'
+			}],			
+		[{
+			:f_type=>3,
+			:name=>'高三理科'
+			},
+		{
+			:f_type=>4,
+			:name=>'高三文科'
+			}]
+			
+	]
   	# accepts_nested_attributes_for :paper_order
 
   	
