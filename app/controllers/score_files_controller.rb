@@ -12,12 +12,12 @@ class ScoreFilesController < ApplicationController
 
   def by_school
   	
-  	
+  	@school=School.find(params[:school_id])
     @f_type=params[:f_type] || '0'
-    if current_user.is_school?
-      @school=current_user.school
+    
+      # @school=current_user.school
       @score_file = ScoreFile.find(:first,
-      :conditions=>{:exam_id=>@exam,:school_id=>current_user.school,:f_type=>@f_type}
+      :conditions=>{:exam_id=>@exam,:school_id=>@school,:f_type=>@f_type}
       )
     #@score_file =current_user.school.score_file_for(@exam) || ScoreFile.new
       if @score_file        
@@ -29,10 +29,10 @@ class ScoreFilesController < ApplicationController
         
         @score_file= ScoreFile.new
       end
-    else
-      @school=School.find(params[:school_id])
-      @score_file= ScoreFile.new
-    end
+
+  rescue
+    @file_error="无法读取上传的文件"
+    
   end
 
   def new
@@ -47,10 +47,11 @@ class ScoreFilesController < ApplicationController
   def create
   	params.permit!
   	@school=School.find(params[:score_file][:school_id])
+    @f_type=params[:score_file][:f_type]
   	@score_file=ScoreFile.new(params[:score_file])
     @score_file.user_id=current_user.id
   	if @score_file.save
-  	 redirect_to :action=>'by_school',:exam_id=>@exam.id,:school_id=>@school.id
+  	 redirect_to :action=>'by_school',:exam_id=>@exam.id,:school_id=>@school.id,:f_type=>@f_type
     else
       render :by_school
     end

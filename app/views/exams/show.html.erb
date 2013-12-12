@@ -91,12 +91,24 @@
 				  	<% end %>
 			  	<% end %>
 			  </div>
-			  <div class="panel-body" style="min-height:276px;">
-			    
+			  	<div class="panel-body" style="min-height:276px;">
+			    	<% if @exam.upload_started? %>
+			    		<h3>流程</h3>
+			          	<ol>
+						  	<li>下载模板，填充数据。</li>
+						  	<li>上传文件。</li>
+						  	<li>查看文件监测和数据。</li>
+						  	<li>修改或确认。</li>						  
+						</ol>
+						<% if @current_user.is_school? %>
+						<%= link_to '上传文件',exam_school_files_path(@exam,@current_user.school),{:class=>"btn btn-primary btn-lg btn-block"} %>  
+						<% end %>
+			    	<% else %>
 			          <h2>未开始请等候</h2>
+			        <% end %>
 			       <hr/>
 			          <a class="btn btn-default" href="#">详细帮助 &raquo;</a>
-			  </div>
+			  	</div>
 			</div>
       	</div>
 

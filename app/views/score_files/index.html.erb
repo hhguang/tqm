@@ -1,7 +1,9 @@
 <%= render '/exams/nav' %>
 
-<div class="panel panel-defautl">
-	<div class="panel-body"></div>
+<div class="panel panel-default">
+	<div class="panel-body">
+        <button class="btn btn-default">上传文件</button>   
+    </div>
 	<table class="table table-bordered">
         <thead>
           <tr>
@@ -10,13 +12,15 @@
             <% Exam::GROUPS[@exam.exam_type-1].each do |s| %>
             <th><%= s[:name] %></th>
             <% end %>
+            <th>操作</th>
           </tr>
         </thead>
 
         <tbody>
+
           <% @schools.each do |school| %>
             <% files = school.score_files_for(@exam).index_by{|f|f.f_type} %>
-            
+            <tr>
             <td>
             	<%= school.name %>
             </td>
@@ -28,14 +32,16 @@
 	            		<span class="label label-info">
 	            		<%= file.confirmed? ? '已确认' : '未确认' %>
 	            		</span>
-	            		<%= link_to '删除',exam_score_files_path(@exam,file.id), :confirm => 'Are you sure?', :method => :delete %>
+	            		<%#= link_to '删除',exam_score_files_path(@exam,file.id), :confirm => '确定要删除吗?', :method => :delete %>
             		<% else %>
             			未上传
             		<% end %>
             	</td>
             <% end %>
 
-            
+            <td>
+                <%= link_to '管理',exam_school_files_path(@exam,school) %>
+            </td>
              
             </tr>
             

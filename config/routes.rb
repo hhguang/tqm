@@ -38,7 +38,7 @@ Tqm::Application.routes.draw do
     resources :score_files
   end
   
-  get "/exams/:exam_id/school/:school_id/score_files"=>'score_files#by_school'
+  get "/exams/:exam_id/school/:school_id/score_files"=>'score_files#by_school',as: :exam_school_files
 
   resources :qxes
   resources :users

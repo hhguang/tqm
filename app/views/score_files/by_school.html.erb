@@ -2,21 +2,17 @@
 
 
 <ul class="nav nav-tabs">
-  <li <%= 'class="active"'.html_safe if @f_type=='0' %> >
-    <a href="?f_type=0">
-      高一
-    </a>
-  </li>
-  <li <%= "class='active'".html_safe if @f_type=='1' %> ><a href="?f_type=1">高二理科</a></li>
-  <li <%= "class='active'".html_safe if @f_type=='2' %> ><a href="?f_type=2">高二文科</a></li>
+  <% Exam::GROUPS[@exam.exam_type-1].each do |s| %>
+    <li <%= 'class="active"'.html_safe if @f_type==s[:f_type].to_s %> >
+      <%= link_to s[:name], :action=>'by_school',:exam_id=>@exam,:school_id=>@school,:f_type=>s[:f_type].to_s %>
+    </li>
+  <% end -%>  
 </ul>
-<div class="well" style="margin:5px;">
+<div class="panel panel-default" >
+  <div class="panel-body">
   <p>
         <a href="/<%= @f_type %>.csv" class="btn">下载<%= ScoreFile::EXCELCONFIG[@f_type.to_i][:name] %>模板<i class="icon-download-alt"></i></a>
   </p>
-  
-<%= form_for(@score_file,:url=>exam_score_files_path(@exam.id),:html=>{ :multipart => true} ) do |f| %>
-          <%#= f.error_messages %>
   <% if @score_file.errors.any? %>
     <div id="error_explanation">
       <div class="alert alert-error">
@@ -29,69 +25,75 @@
       </ul>
     </div>
   <% end %>
-          <%= f.hidden_field :exam_id,:value=>@exam.id %>
-          <%= f.hidden_field :school_id,:value=>@school.id %>
-          <%= f.hidden_field :f_type,:value=>@f_type %>
+  <% if @score_file.new_record? %>
+    <%= form_for(@score_file,:url=>exam_score_files_path(@exam.id),:html=>{ :multipart => true} ) do |f| %>
+            <%#= f.error_messages %>  
+            <%= f.hidden_field :exam_id,:value=>@exam.id %>
+            <%= f.hidden_field :school_id,:value=>@school.id %>
+            <%= f.hidden_field :f_type,:value=>@f_type %>
+      <div class="form-group">
+      <label for="exampleInputFile"></label>
+      <%= f.file_field :file %>    
+    	</div>                  
+      <button type="submit" class="btn btn-primary" data-loading-text="请稍候，文件上传中...">上传文件</button>
+    <% end %>
+  <% else %>
+    <h3>已经上传文件：<%=  @score_file.filename  %> </h3>
+      <%= form_for(@score_file,:url=>exam_score_file_path(@exam.id,@score_file),:html=>{ :multipart => true} ) do |f| %>
+            <%#= f.error_messages %>  
+            <%= f.hidden_field :exam_id,:value=>@exam.id %>
+            <%= f.hidden_field :school_id,:value=>@school.id %>
+            <%= f.hidden_field :f_type,:value=>@f_type %>
+        <div class="form-group">
+        <label for="exampleInputFile">重新上传</label>
+        <%= f.file_field :file %>    
+        </div>                  
+        <button type="submit" class="btn btn-primary" data-loading-text="请稍候，文件上传中...">上传文件</button>
+      <% end %>
 
-    <div class="form-group">
-    <label for="exampleInputFile"></label>
-    <%= f.file_field :file %>
-    
-  	</div>
-          
-          
-    <button type="submit" class="btn btn-primary" data-loading-text="请稍候，文件上传中...">上传文件</button>
-
-<% end %>
-</div>
-
-
-<% if !@score_file.new_record? and @score_file.errors.size==0 %>
-    <div class="page-header">
-      <h3>已经上传文件：<%=  @score_file.filename  %>
-      </h3>
-    </div>
-
-    <% if @file_error.nil? %>
-              <span class="label label-info">文件检测结果：</span>
-              <% if @error && @error>0 %>
-              上传的文件检测到<span class="badge badge-warning"><%= @error %></span>个错误。详情请看下面列表。
+    <hr/>
+    <% if @file_error %>
+      <div class="alert alert-danger">
+        <span class="label label-danger">文件检测结果：无法读取文件，请检查文件格式，重新上传。</span>
+      </div>
+    <% else %>
+              
+      <% if @error && @error>0 %>
+              <div class="alert alert-danger">文件检测结果：
+              上传的文件检测到<span class="badge "><%= @error %></span>个错误。详情请看下面列表。
               请更正后重新上传文件。
+              </div>
               <% else %>
-              <p>
+              <div class="alert alert-info">
+                <p>
                 上传的文件未检测到错误，请核对下面已读入的文件数据,如无错误请点击下面的按钮确认
-              </p>
-                <%= form_for(:score_file,:url=>{:action=>'update',:id=>@score_file},:html=>{ :multipart => true,:class=>'form-inline'} ) do |f| %>
+                </p>
+                <p>
+                  <%= form_for(:score_file,:url=>{:action=>'update',:id=>@score_file} ) do |f| %>
                   <%= f.hidden_field :confirmed,:value=>true %>
                  <button type="submit" class="btn btn-success ">确认数据无误</button>
                  <% end %>
+                </p>
+              </div>
+                
               <% end %>
-    <% end %>
+    
 
-    <table class="table">
-              <thead >
-                <tr>
-                  <th>#</th>
-                  <% ScoreFile::EXCELCONFIG[@f_type.to_i][:columns].each do |column| %>
-                  <th>
-                    <%= column['name'] %>
-                  </th>
-                  <% end %>
-                </tr>
-              </thead>
-      </table>
+          <table class="table">
+                    <thead >
+                      <tr>
+                        <th>#</th>
+                        <% ScoreFile::EXCELCONFIG[@f_type.to_i][:columns].each do |column| %>
+                        <th>
+                          <%= column['name'] %>
+                        </th>
+                        <% end %>
+                      </tr>
+                    </thead>
+            </table>
 
-    <table class="table">
-              <%#*<thead >%>
-                <%#*<tr>%>
-                  <%#*<th>#</th>%>
-                  <%# ScoreFile::EXCELCONFIG[@f_type.to_i][:columns].each do |column| %>
-                  <%#*<th>%>
-                    <%#= column['name'] %>
-                  <%#*</th>%>
-                  <%# end %>
-                <%#*</tr>%>
-              <%#*</thead>%>
+          <table class="table">
+              
               <tbody>
                  <% i=0 %>
                 <% @data.each do |row| %>
@@ -115,6 +117,8 @@
                 
               </tbody>
             </table>  
-<% end %>
+    <% end %>
 
-   
+  <% end -%>
+  </div>
+</div>
