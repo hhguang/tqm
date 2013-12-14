@@ -38,6 +38,9 @@ class Ability
         can :read,Exam
         can :manage,OrderItem,:school=>{:id=>Qx.find(user.qx_id).schools.map { |s| s.id  }}  
         can [:read,:update],User,:school_id=>Qx.find(user.qx_id).schools.map { |s| s.id  }
+        can :manage,ScoreFile,:school=>{:id=>Qx.find(user.qx_id).schools.map { |s| s.id  }}
+        can :by_school,ScoreFile,:school=>{:id=>Qx.find(user.qx_id).schools.map { |s| s.id  }}
+        can :manage,School,:id=>Qx.find(user.qx_id).schools.map { |s| s.id  }
     elsif user.is_school?
         can :read,Exam
         can [:read,:create,:update,:confirm],OrderItem,:school=>{:id=>user.school_id}

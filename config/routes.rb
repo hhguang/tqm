@@ -35,10 +35,14 @@ Tqm::Application.routes.draw do
       put 'confirm',on: :member
       get 'gather',on: :collection
     end
-    resources :score_files
+    resources :score_files do
+      put 'confirm',on: :member
+      get 'export',on: :collection
+      get 'by_school',on: :collection
+    end
   end
   
-  get "/exams/:exam_id/school/:school_id/score_files"=>'score_files#by_school',as: :exam_school_files
+  # get "/exams/:exam_id/school/:school_id/score_files"=>'score_files#by_school',as: :exam_school_files
 
   resources :qxes
   resources :users

@@ -33,10 +33,12 @@ class ScoreFile < ActiveRecord::Base
         :col_count=>3,
         :columns=>[
          {
-           'name'=>'考生号'
+           'name'=>'考生号',
+           'type'=>'String'
          },
          {
-           'name'=>'姓名'
+           'name'=>'姓名',
+           'type'=>'String'
          },         
          {
            'name'=>'语文全卷',
@@ -373,6 +375,16 @@ class ScoreFile < ActiveRecord::Base
         ]
       }
   ]
+
+  # def open_spreadsheet
+
+  #   case File.extname(self.filename)
+  #   when ".csv" then CSV.new(self.file.current_path, nil, :ignore)
+  #   # when ".xls" then Excel.new(file.path, nil, :ignore)
+  #   # when ".xlsx" then Excelx.new(file.path, nil, :ignore)
+  #   else raise "Unknown file type: #{self.filename}"
+  #   end
+  # end
 
   def check_result
       @check_result||=check      

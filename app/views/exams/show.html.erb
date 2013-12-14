@@ -15,7 +15,7 @@
 				  	<% end %>
 			  	<% end %>
 			  </div>
-			  <div class="panel-body" style="min-height:276px;">
+			  <div class="panel-body" style="min-height:340px;">
 			  	<% if @paper_order.state? %>
 			  		<div class="alert alert-warning">订单提交已关闭</div>
 			  	<% end %>
@@ -58,7 +58,10 @@
 			       <%= link_to '创建订单',new_exam_order_item_path(@exam),{:class=>"btn btn-primary btn-lg btn-block"} %>  
 			    <% end %>
 
-			    
+			    	<% if current_user && current_user.is_admin? %>
+					  	<%= link_to '管理订单',exam_order_items_path(@exam) ,{:class=>"btn btn-primary btn-lg btn-block"} %>
+					  		
+				  	<% end %>
 			       <hr/>
 			          <a class="btn btn-default" href="/welcome/help#order">详细帮助 &raquo;</a>
 			  </div>
@@ -68,7 +71,7 @@
       	<div class="col-md-3">
       		<div class="panel panel-default">
 			  <div class="panel-heading">考场信息</div>
-			  <div class="panel-body" style="min-height:276px;">
+			  <div class="panel-body" style="min-height:340px;">
 			    
 			          <h2>未开始请等候</h2>
 			       <hr/>
@@ -91,7 +94,7 @@
 				  	<% end %>
 			  	<% end %>
 			  </div>
-			  	<div class="panel-body" style="min-height:276px;">
+			  	<div class="panel-body" style="min-height:340px;">
 			    	<% if @exam.upload_started? %>
 			    		<h3>流程</h3>
 			          	<ol>
@@ -102,6 +105,10 @@
 						</ol>
 						<% if @current_user.is_school? %>
 						<%= link_to '上传文件',exam_school_files_path(@exam,@current_user.school),{:class=>"btn btn-primary btn-lg btn-block"} %>  
+						<% end %>
+						<% if @current_user.is_admin? %>
+							<%= link_to '管理成绩文件',exam_score_files_path(@exam),{:class=> "btn btn-primary btn-lg btn-block"}  %>
+						  		
 						<% end %>
 			    	<% else %>
 			          <h2>未开始请等候</h2>
@@ -115,7 +122,7 @@
       	<div class="col-md-3">
       		<div class="panel panel-default">
 			  <div class="panel-heading">成绩分析</div>
-			  <div class="panel-body" style="min-height:276px;">
+			  <div class="panel-body" style="min-height:340px;">
 			    
 			          <h2>未开始请等候</h2>
 			       <hr/>

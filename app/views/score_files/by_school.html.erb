@@ -1,5 +1,8 @@
 <%= render '/exams/nav' %>
 
+<div class="page-header">
+  <h4><%= @school.name %> 成绩文件 </h4>
+</div>
 
 <ul class="nav nav-tabs">
   <% Exam::GROUPS[@exam.exam_type-1].each do |s| %>
@@ -38,7 +41,12 @@
       <button type="submit" class="btn btn-primary" data-loading-text="请稍候，文件上传中...">上传文件</button>
     <% end %>
   <% else %>
-    <h3>已经上传文件：<%=  @score_file.filename  %> </h3>
+    <h3>已经上传文件：<%=  link_to @score_file.filename,exam_score_file_path(@exam,@score_file)  %> </h3>
+    <% if @score_file.confirmed? %>
+      <div class="alert alert-success">
+            你已经确认提交的文件，如仍需要修改数据请联系管理员
+      </div>
+    <% else %>
       <%= form_for(@score_file,:url=>exam_score_file_path(@exam.id,@score_file),:html=>{ :multipart => true} ) do |f| %>
             <%#= f.error_messages %>  
             <%= f.hidden_field :exam_id,:value=>@exam.id %>
@@ -50,8 +58,10 @@
         </div>                  
         <button type="submit" class="btn btn-primary" data-loading-text="请稍候，文件上传中...">上传文件</button>
       <% end %>
-
+    <% end %>
     <hr/>
+
+    <% if @score_file.errors.size==0 %>
     <% if @file_error %>
       <div class="alert alert-danger">
         <span class="label label-danger">文件检测结果：无法读取文件，请检查文件格式，重新上传。</span>
@@ -62,21 +72,24 @@
               <div class="alert alert-danger">文件检测结果：
               上传的文件检测到<span class="badge "><%= @error %></span>个错误。详情请看下面列表。
               请更正后重新上传文件。
-              </div>
-              <% else %>
+              </div>     
+        
+      <% elsif !@score_file.confirmed?  %>
               <div class="alert alert-info">
                 <p>
                 上传的文件未检测到错误，请核对下面已读入的文件数据,如无错误请点击下面的按钮确认
                 </p>
                 <p>
-                  <%= form_for(:score_file,:url=>{:action=>'update',:id=>@score_file} ) do |f| %>
+                  <%= form_for(@score_file,:url=>exam_score_file_path(@exam.id,@score_file)) do |f| %>
+                  <%= f.hidden_field :school_id,:value=>@school.id %>
+                  <%= f.hidden_field :f_type,:value=>@f_type %>
                   <%= f.hidden_field :confirmed,:value=>true %>
                  <button type="submit" class="btn btn-success ">确认数据无误</button>
                  <% end %>
                 </p>
               </div>
                 
-              <% end %>
+      <% end %>
     
 
           <table class="table">
@@ -118,7 +131,7 @@
               </tbody>
             </table>  
     <% end %>
-
+    <% end -%>
   <% end -%>
   </div>
 </div>

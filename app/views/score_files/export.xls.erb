@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <% Exam::GROUPS[@exam.exam_type-1].each do |s| %>
+  <Worksheet ss:Name="<%= s[:name] %>">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">区县代码</Data></Cell>
+        <Cell><Data ss:Type="String">区县</Data></Cell>
+        <Cell><Data ss:Type="String">学校代码</Data></Cell>
+        <Cell><Data ss:Type="String">学校</Data></Cell>
+        
+        <% ScoreFile::EXCELCONFIG[s[:f_type]][:columns].each do |column| %>
+          <Cell><Data ss:Type="String"><%= column['name'] %></Data></Cell>
+        <% end %>
+      </Row>
+      <% if @score_files[s[:f_type]] %>
+    <% @score_files[s[:f_type]].each do |score_file| %>
+      
+      <% CSV.foreach(score_file.file.current_path,:encoding => 'gbk:utf-8',headers: true) do |row| %>
+      
+      <Row>
+        <Cell><Data ss:Type="String"><%= score_file.school.qx.code %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= score_file.school.qx.name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= score_file.school.code %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= score_file.school.name %></Data></Cell>
+        <% i=0 %>
+        <% row.each do |cell| %>
+          
+          <Cell><Data ss:Type="String"><%= cell[1] %></Data></Cell>
+
+        <% end %>
+
+      </Row>
+
+      <% end %>
+
+    <% end %>
+    <% end %>
+    </Table>
+  </Worksheet>
+  <% end %>
+</Workbook>

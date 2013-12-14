@@ -23,7 +23,9 @@
 		  	</p>
 
 		    <ul class="nav navbar-nav">		      
-		      
+		      <li <%= "class=active" if ['exams'].include?(controller_name) && ['show'].include?(action_name) %> >
+		      	<%= link_to "项目首页", exam_path(@exam) %>
+		      </li>
 		    </ul>
 		    
 		    <ul class="nav navbar-nav navbar-right">
