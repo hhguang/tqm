@@ -1,13 +1,7 @@
 Tqm::Application.routes.draw do
   
   
-  # get "orders/new"
-  # get "orders/show"
-  # get "orders/edit"
-  # post "exams/:id/orders"=> "orders#create",as: :exam_orders
-  # get "exams/:id/orders"=>"orders#new"
-  # post "exams/:id/orders/:order_item_id"=>"orders#update"
-
+  
   resources :schools
 
   get "welcome/index"
@@ -40,6 +34,8 @@ Tqm::Application.routes.draw do
       put 'cancel',on: :member
       get 'export',on: :collection
       get 'by_school',on: :collection
+    end
+    resources :reports do
     end
   end
   
