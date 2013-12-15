@@ -1,9 +1,9 @@
 class ScoreFilesController < ApplicationController
 	before_action :set_exam, only: [:index,:new,:create,:show,:update,:edit,:by_school,:export]
-  # before_action :login_required
-  # authorize_resource 
-  def index
-    
+  before_action :login_required
+  authorize_resource 
+
+  def index 
     
     @qx=params[:qx_id]
     @qx=Qx.find(@current_user.qx_id) if @current_user.is_qx_admin?
@@ -16,7 +16,7 @@ class ScoreFilesController < ApplicationController
 
   def show
     @score_file=ScoreFile.find(params[:id])   
-    authorize! :manger, @score_file
+    authorize! :read, @score_file
     send_file @score_file.file.current_path,:filename=>@score_file.filename
     # respond_to do |format|
     #   format.html      
@@ -42,10 +42,10 @@ class ScoreFilesController < ApplicationController
       end
 
     # authorize! :manger, @score_file
-    authorize! :manger, @school
+    
   rescue
     @file_error="无法读取上传的文件"   
-
+  # authorize! :by_school, @school
   end
 
   def new
@@ -59,7 +59,8 @@ class ScoreFilesController < ApplicationController
     @school=School.find(params[:score_file][:school_id])    
     @f_type=params[:score_file][:f_type]
     @score_file=ScoreFile.find(params[:id])    
-    authorize! :manger, @score_file
+    authorize! :update, @score_file
+
     if @score_file.update_attributes(params[:score_file])
       redirect_to :action=>'by_school',:exam_id=>@exam.id,:school_id=>@school.id,:f_type=>@f_type
     else
@@ -70,13 +71,22 @@ class ScoreFilesController < ApplicationController
   def confirm
     
     @score_file=ScoreFile.find(params[:id])  
-    @score_file.update(:confirmed=>!@score_file.confirmed?)
-    flash[:notice]="成绩文件已#{@score_file.confirmed? ? '确认' : '取消确认'}"
-    if @score_file.confirmed?
-      redirect_to :action=>'by_school',:exam_id=>@score_file.exam_id,:school_id=>@score_file.school_id,:f_type=>@score_file.f_type
-    else
-      redirect_to :action=>'index',:exam_id=>@score_file.exam_id
-    end      
+    authorize! :confirm, @score_file
+    if @score_file.update(:confirmed=>true)
+      flash[:notice]="成绩文件已确认"
+    end
+    redirect_to :action=>'by_school',:exam_id=>@score_file.exam_id,:school_id=>@score_file.school_id,:f_type=>@score_file.f_type
+        
+  end
+
+  def cancel
+    @score_file=ScoreFile.find(params[:id])  
+    authorize! :cancel, @score_file
+
+    if @score_file.update(:confirmed=>false)
+      flash[:notice]="成绩文件已取消确认"
+    end
+    redirect_to :action=>'index',:exam_id=>@score_file.exam_id
   end
 
   def create
@@ -85,6 +95,7 @@ class ScoreFilesController < ApplicationController
     @f_type=params[:score_file][:f_type]
   	@score_file=ScoreFile.new(params[:score_file])
     @score_file.user_id=current_user.id
+    authorize! :create, @score_file
   	if @score_file.save
   	 redirect_to :action=>'by_school',:exam_id=>@exam.id,:school_id=>@school.id,:f_type=>@f_type
     else
@@ -94,6 +105,7 @@ class ScoreFilesController < ApplicationController
 
   def export
     @qx=params[:qx_id]
+    @qx=Qx.find(@current_user.qx_id) if @current_user.is_qx_admin?
     if @qx
       @score_files=@exam.score_files.where(confirmed: true,:school_id=>@qx.schools.map { |s|s.id  }).group_by{|f|f.f_type}
     else

@@ -37,6 +37,7 @@ Tqm::Application.routes.draw do
     end
     resources :score_files do
       put 'confirm',on: :member
+      put 'cancel',on: :member
       get 'export',on: :collection
       get 'by_school',on: :collection
     end

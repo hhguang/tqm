@@ -104,7 +104,7 @@
 						  	<li>修改或确认。</li>						  
 						</ol>
 						<% if @current_user.is_school? %>
-						<%= link_to '上传文件',exam_school_files_path(@exam,@current_user.school),{:class=>"btn btn-primary btn-lg btn-block"} %>  
+						<%= link_to '上传文件',by_school_exam_score_files_path(@exam,school_id:@current_user.school),{:class=>"btn btn-primary btn-lg btn-block"} %>  
 						<% end %>
 						<% if @current_user.is_admin? %>
 							<%= link_to '管理成绩文件',exam_score_files_path(@exam),{:class=> "btn btn-primary btn-lg btn-block"}  %>
