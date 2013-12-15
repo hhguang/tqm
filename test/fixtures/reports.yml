@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: MyString
+  exam_id: 1
+  school_id: 1
+  user_id: 1
+  file: MyString
+  file_name: MyString
+  subject_name: MyString
+  group_name: MyString
+
+two:
+  title: MyString
+  exam_id: 1
+  school_id: 1
+  user_id: 1
+  file: MyString
+  file_name: MyString
+  subject_name: MyString
+  group_name: MyString

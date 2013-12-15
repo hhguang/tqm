@@ -1,0 +1,18 @@
+<%= simple_form_for(@report) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :title %>
+    <%= f.input :exam_id %>
+    <%= f.input :school_id %>
+    <%= f.input :user_id %>
+    <%= f.input :file %>
+    <%= f.input :file_name %>
+    <%= f.input :subject_name %>
+    <%= f.input :group_name %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

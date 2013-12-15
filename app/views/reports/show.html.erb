@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @report.title %>
+</p>
+
+<p>
+  <strong>Exam:</strong>
+  <%= @report.exam_id %>
+</p>
+
+<p>
+  <strong>School:</strong>
+  <%= @report.school_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @report.user_id %>
+</p>
+
+<p>
+  <strong>File:</strong>
+  <%= @report.file %>
+</p>
+
+<p>
+  <strong>File name:</strong>
+  <%= @report.file_name %>
+</p>
+
+<p>
+  <strong>Subject name:</strong>
+  <%= @report.subject_name %>
+</p>
+
+<p>
+  <strong>Group name:</strong>
+  <%= @report.group_name %>
+</p>
+
+<%= link_to 'Edit', edit_report_path(@report) %> |
+<%= link_to 'Back', reports_path %>

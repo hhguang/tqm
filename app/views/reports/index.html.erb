@@ -1,0 +1,51 @@
+<%= render "/exams/nav" %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    成绩分析报告
+  </div>
+  <div class="panel-body">
+    <p>模板1</p>
+    <p>模板2</p>
+  </div>
+</div>
+
+<h1>Listing reports</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Exam</th>
+      <th>School</th>
+      <th>User</th>
+      <th>File</th>
+      <th>File name</th>
+      <th>Subject name</th>
+      <th>Group name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @reports.each do |report| %>
+      <tr>
+        <td><%= report.title %></td>
+        <td><%= report.exam_id %></td>
+        <td><%= report.school_id %></td>
+        <td><%= report.user_id %></td>
+        <td><%= report.file %></td>
+        <td><%= report.file_name %></td>
+        <td><%= report.subject_name %></td>
+        <td><%= report.group_name %></td>
+        
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+

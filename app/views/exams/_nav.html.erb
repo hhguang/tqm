@@ -26,6 +26,12 @@
 		      <li <%= "class=active" if ['exams'].include?(controller_name) && ['show'].include?(action_name) %> >
 		      	<%= link_to "项目首页", exam_path(@exam) %>
 		      </li>
+		      <li <%= "class=active" if ['score_files'].include?(controller_name)  %> >
+		      	<%= link_to "成绩文件", exam_score_files_path(@exam) %>
+		      </li>
+		      <li <%= "class=active" if ['reports'].include?(controller_name)  %> >
+		      	<%= link_to "分析报告", exam_reports_path(@exam) %>
+		      </li>
 		    </ul>
 		    
 		    <ul class="nav navbar-nav navbar-right">
