@@ -36,6 +36,7 @@ Tqm::Application.routes.draw do
       get 'by_school',on: :collection
     end
     resources :reports do
+      get 'show_by_school',on: :collection
     end
   end
   

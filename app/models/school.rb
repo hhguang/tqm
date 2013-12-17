@@ -5,6 +5,10 @@ class School < ActiveRecord::Base
 	has_many :order_items
 	has_many :reports
 
+	def exam_reports(exam)
+		self.reports.where(exam_id: exam.id)
+	end
+
 	def score_files_for(exam)
 	    self.score_files.where(:exam_id=>exam.id)
 	end

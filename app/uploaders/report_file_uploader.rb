@@ -56,7 +56,7 @@ class ReportFileUploader < CarrierWave::Uploader::Base
   before :cache, :save_original_filename
   def save_original_filename(file)
     # model.filename ||= file.original_filename if file.respond_to?(:original_filename)
-    model.filename = file.original_filename if file.respond_to?(:original_filename)
+    model.file_name = file.original_filename if file.respond_to?(:original_filename)
   end
 
 end

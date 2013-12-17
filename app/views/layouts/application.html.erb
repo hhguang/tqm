@@ -38,7 +38,7 @@
 	}
 	</style>
   
-  <script src="https://togetherjs.com/togetherjs-min.js"></script>
+  
 </head>
 <body>
 	<div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
@@ -53,16 +53,7 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <!-- <li class="dropdown active">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="width:50px;height:50px;"><span class="glyphicon glyphicon-chevron-down" ></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">首页</a></li>
-                <li><a href="#">公告</a></li>
-                <li><a href="#">帮助</a></li>
-                <li><a href="#">反馈</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li> -->
+            
             <li <%= "class=active" if ['welcome'].include?(controller_name) && ['index'].include?(action_name) %>><a href="/">首页</a></li>
             <li <%= "class=active" if ['welcome'].include?(controller_name) && ['help'].include?(action_name) %>><a href="/welcome/help">帮助</a></li>
             

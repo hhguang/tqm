@@ -47,7 +47,8 @@ class Ability
         cannot :index,OrderItem
         can [:by_school,:read,:create,:update,:confirm],ScoreFile,:school=>{:id=>user.school_id}
         cannot :index,ScoreFile
-        
+        can [:read,:create,:destroy],Report,:school=>{:id=>user.school_id}
+        # can :show_by_shcool,School,:id=>user.school_id
     else
         cannot :manage, :all
     end
