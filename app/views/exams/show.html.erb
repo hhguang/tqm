@@ -120,11 +120,14 @@
       	</div>
 
       	<div class="col-md-3">
-      		<div class="panel panel-default">
+      		<div class="panel panel-<%= (@exam.upload_started? ? 'info' : 'default') %>" >
 			  <div class="panel-heading">分析报告</div>
 			  <div class="panel-body" style="min-height:340px;">
-			    
-			          <h2>未开始请等候</h2>
+			    	<% if @exam.upload_started? %>
+			          	<%= link_to '管理分析报告',exam_reports_path(@exam),{:class=> "btn btn-primary btn-lg btn-block"}  %>
+			        <% else %>
+			        	<h2>未开始请等候</h2>
+			        <% end %>
 			       <hr/>
 			          <a class="btn btn-default" href="#">详细帮助 &raquo;</a>
 			  </div>

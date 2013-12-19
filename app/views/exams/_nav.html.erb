@@ -42,10 +42,13 @@
 			          <li>		          	
 			          	<%= link_to (@exam.closed? ? '启动监测项目' : '关闭监测项目'),start_exam_path(@exam) %>		          	
 			          </li>
-			          <li>
+			          	<li>
 			          	<%= link_to (@exam.paper_order.state? ? '启动试卷订单提交' : '关闭试卷订单提交'),order_on_off_exam_path(@exam) %>
 			          	
 				  		</li>
+				  		<li>		          	
+			          	<%= link_to (@exam.upload_started? ? '关闭成绩与分析文件上传' : '启动成绩与分析文件上传'),set_upload_started_exam_path(@exam) %>		          	
+			          </li>
 			        </ul>
 			    </li>
 		    <% end %>

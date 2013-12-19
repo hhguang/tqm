@@ -8,38 +8,34 @@
     <p>模板1</p>
     <p>模板2</p>
   </div>
-</div>
 
-<h1>Listing reports</h1>
-
-<table>
+  <table class="table">
   <thead>
     <tr>
-      <th>Title</th>
-      <th>Exam</th>
-      <th>School</th>
-      <th>User</th>
-      <th>File</th>
-      <th>File name</th>
-      <th>Subject name</th>
-      <th>Group name</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>区县</th>
+      <th>学校</th>
+      <th>文件</th>
+      <th>管理</th>      
     </tr>
   </thead>
 
   <tbody>
-    <% @reports.each do |report| %>
+    <% @schools.each do |school| %>
       <tr>
-        <td><%= report.title %></td>
-        <td><%= report.exam_id %></td>
-        <td><%= report.school_id %></td>
-        <td><%= report.user_id %></td>
-        <td><%= report.file %></td>
-        <td><%= report.file_name %></td>
-        <td><%= report.subject_name %></td>
-        <td><%= report.group_name %></td>
+        <td><%= school.qx.name %></td>
+        <td><%= school.name %></td>
+        <td>
+          <% if @reports[school.id] %>
+            <% @reports[school.id].each do |report| %>
+              <%= link_to report.file_name,exam_report_path(@exam,report) %><br/>
+            <% end %>
+          <% else %>
+            未上传文件
+          <% end %>
+        </td>
+        <td>
+          <%= link_to "管理", show_by_school_exam_reports_path(@exam, school_id: school) %>
+        </td>
         
       </tr>
     <% end %>
@@ -47,5 +43,10 @@
 </table>
 
 <br>
+</div>
+
+
+
+
 
 

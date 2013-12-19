@@ -14,8 +14,10 @@ class ReportsController < ApplicationController
       @qx=Qx.find(@current_user.qx_id) if @current_user.is_qx_admin?
       if @qx
         @schools=@qx.schools
+        @reports=@exam.reports.where(school_id: @schools).group_by{|report|report.school_id}
       else
         @schools=School.all
+        @reports=@exam.reports.group_by{|report|report.school_id}
       end
     end
 
