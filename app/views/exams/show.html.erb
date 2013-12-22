@@ -124,6 +124,19 @@
 			  <div class="panel-heading">分析报告</div>
 			  <div class="panel-body" style="min-height:340px;">
 			    	<% if @exam.upload_started? %>
+			    		<h3>流程</h3>
+			          	<ol>
+						  	<li>下载模板，填充数据。
+								<p>
+					    			<a href="/ysy.doc">下载语数英质量分析模板</a>
+					    		</p>
+					    		<p>
+					    			<a href="/zsdlhs.doc">下载政史地理化生质量分析模板</a>
+					    		</p>
+						  	</li>
+						  	<li>上传文件。</li>					  
+						</ol>
+			    		
 			          	<%= link_to '管理分析报告',exam_reports_path(@exam),{:class=> "btn btn-primary btn-lg btn-block"}  %>
 			        <% else %>
 			        	<h2>未开始请等候</h2>

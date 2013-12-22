@@ -8,19 +8,12 @@
 	            <span class="icon-bar"></span>
 	          </button>
 	          <!-- <a class="navbar-brand" href="#">汕头市2012-2013学年度非毕业班教学质量监测</a> -->
-	          <%= link_to @exam.name,exam_path(@exam),class: "navbar-brand" %>
+	          <%= link_to "#{@exam.name}(#{(@exam.closed? ? '已关闭' : '已启动')})",exam_path(@exam),class: "navbar-brand" %>
 	        </div>
 
 		  <!-- Collect the nav links, forms, and other content for toggling -->
 		  <div class="collapse navbar-collapse navbar-ex1-collapse">
-		  	<p class=" text-danger navbar-text">状态：
-		  		<% if can? :manage,@exam %>
-		  		<%= link_to (@exam.closed? ? '已关闭' : '已启动'),start_exam_path(@exam),title: '点击切换状态' %>
-		  		<% else %>
-		  		<%= (@exam.closed? ? '已关闭' : '已启动') %>
-		  		<% end %>
-
-		  	</p>
+		  	
 
 		    <ul class="nav navbar-nav">		      
 		      <li <%= "class=active" if ['exams'].include?(controller_name) && ['show'].include?(action_name) %> >

@@ -3,7 +3,8 @@
 zh-CN:
   activerecord:
     models:
-      score_file: "成绩文件"         
+      score_file: "成绩文件" 
+      article: "文章"        
     attributes:
       score_file:
         filename: "文件"

@@ -2,6 +2,7 @@ class Exam < ActiveRecord::Base
 	has_many :score_files
 	has_one :paper_order
 	has_many :reports
+	has_many	:articles
 	validates :name ,:presence => true
 	EXAM_TYPES=[
 	    ["非毕业班",1],
