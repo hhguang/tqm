@@ -4,7 +4,8 @@ class CreateAttachments < ActiveRecord::Migration
       t.string :file
       t.string :file_name
       t.integer :file_size
-      t.integer :article_id
+      # t.integer :article_id
+      t.references :attachable, polymorphic: true
 
       t.timestamps
     end

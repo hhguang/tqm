@@ -1,0 +1,25 @@
+<%= javascript_include_tag "nested_form" %>
+<%= simple_nested_form_for([@exam,@topic],:html=>{:multipart => true }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :title,label: '标题' %>
+    <%= f.input :content, label: '内容' %>
+    <%= f.fields_for :attachments do |attachment_form|  %>
+      <p>
+      <%= attachment_form.object.file_name if attachment_form.object.file? %>
+      </p>
+      <%= attachment_form.input :file,label: '上传附件' %>
+      <p class="help-block">
+      <%= attachment_form.link_to_remove "删除附件" %>
+      </p>
+    <% end %>
+    <div class="form-group">
+      <%= f.link_to_add "增加附件", :attachments %>    
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit,class: 'btn btn-primary' %>
+  </div>
+<% end %>

@@ -11,21 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131222080339) do
-
-  create_table "articles", force: true do |t|
-    t.string   "title"
-    t.text     "content"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(version: 20131223033427) do
 
   create_table "attachments", force: true do |t|
     t.string   "file"
     t.string   "file_name"
     t.integer  "file_size"
-    t.integer  "article_id"
+    t.integer  "attachable_id"
+    t.string   "attachable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -123,6 +116,17 @@ ActiveRecord::Schema.define(version: 20131222080339) do
     t.datetime "updated_at"
   end
 
+  create_table "replies", force: true do |t|
+    t.text     "content"
+    t.integer  "user_id"
+    t.integer  "topic_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "replies", ["topic_id"], name: "index_replies_on_topic_id"
+  add_index "replies", ["user_id"], name: "index_replies_on_user_id"
+
   create_table "reports", force: true do |t|
     t.string   "title"
     t.integer  "exam_id"
@@ -166,6 +170,18 @@ ActiveRecord::Schema.define(version: 20131222080339) do
     t.integer  "f_type"
     t.string   "file"
   end
+
+  create_table "topics", force: true do |t|
+    t.string   "title"
+    t.text     "content"
+    t.integer  "user_id"
+    t.integer  "exam_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "topics", ["exam_id"], name: "index_topics_on_exam_id"
+  add_index "topics", ["user_id"], name: "index_topics_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "name"

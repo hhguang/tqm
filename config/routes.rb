@@ -1,4 +1,6 @@
-Tqm::Application.routes.draw do  
+Tqm::Application.routes.draw do    
+
+  resources :replies
 
   resources :schools
 
@@ -36,7 +38,7 @@ Tqm::Application.routes.draw do
     resources :reports do
       get 'show_by_school',on: :collection
     end
-    resources :articles
+    resources :topics
   end
   
   # get "/exams/:exam_id/school/:school_id/score_files"=>'score_files#by_school',as: :exam_school_files
