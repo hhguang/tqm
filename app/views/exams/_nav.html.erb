@@ -19,6 +19,12 @@
 		      <li <%= "class=active" if ['exams'].include?(controller_name) && ['show'].include?(action_name) %> >
 		      	<%= link_to "项目首页", exam_path(@exam) %>
 		      </li>
+		      <li <%= "class=active" if ['order_items'].include?(controller_name)  %> >
+		      	<%= link_to "试卷订单", exam_order_items_path(@exam) %>
+		      </li>
+		      <li <%= "class=active" if ['topics'].include?(controller_name)  %> >
+		      	<%= link_to "考场信息", exam_topics_path(@exam) %>
+		      </li>
 		      <li <%= "class=active" if ['score_files'].include?(controller_name)  %> >
 		      	<%= link_to "成绩文件", exam_score_files_path(@exam) %>
 		      </li>

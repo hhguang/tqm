@@ -2,9 +2,11 @@
 
 <div class="panel panel-default">
   <div class="panel-body">
+    <% if can? :manage,@topic %>
     <div class="btn-group">
       <%= link_to "创建文章", new_exam_topic_path(@exam),class: 'btn btn-primary' %>
     </div>
+    <% end %>
   </div>
   <ul class="list-group">
     <% @topics.each do |topic| %>    
@@ -18,7 +20,7 @@
           <small>
             <%= topic.user.name %>.
             于<%= distance_of_time_in_words_to_now(topic.created_at) %>之前发布
-            .回复：<span class="badge"><%= topic.replies.size %></span>
+            
           </small>
         </h4>
       </div>     

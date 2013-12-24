@@ -42,6 +42,7 @@ class Ability
         can :by_school,School,:school=>{:id=>Qx.find(user.qx_id).schools.map { |s| s.id  }}
         can :manage,School,:id=>Qx.find(user.qx_id).schools.map { |s| s.id  }
         can :manage,Report,:school=>{:id=>Qx.find(user.qx_id).schools.map { |s| s.id  }}
+        can :read,Topic
     elsif user.is_school?
         can :read,Exam
         can [:read,:create,:update,:confirm],OrderItem,:school=>{:id=>user.school_id}
@@ -49,6 +50,7 @@ class Ability
         can [:by_school,:read,:create,:update,:confirm],ScoreFile,:school=>{:id=>user.school_id}
         cannot :index,ScoreFile
         can [:read,:create,:destroy],Report,:school=>{:id=>user.school_id}
+        can :read,Topic
         # can :show_by_shcool,School,:id=>user.school_id
     else
         cannot :manage, :all

@@ -3,19 +3,9 @@
       	
       	<div class="col-md-3">
       		<div class="panel panel-<%= (@paper_order.state? ? 'default' : 'info') %>">
-			  <div class="panel-heading">试卷订单
-			  	<% if current_user && current_user.is_s_admin? %>
-				  	<%= link_to order_on_off_exam_path(@exam),title: (@paper_order.state? ? "开启" : "关闭") do %>
-				  		<span class="glyphicon glyphicon-<%= (@paper_order.state? ? "play" : "stop") %> " ></span>
-				  	<% end %>
-			  	<% end %>
-			  	<% if current_user && current_user.is_admin? %>
-				  	<%= link_to exam_order_items_path(@exam) ,title: '管理订单' do %>
-				  		<span class="glyphicon glyphicon-wrench pull-right" ></span>
-				  	<% end %>
-			  	<% end %>
+			  <div class="panel-heading">试卷订单			  	
 			  </div>
-			  <div class="panel-body" style="min-height:340px;">
+			  <div class="panel-body" style="min-height:285px;">
 			  	<% if @paper_order.state? %>
 			  		<div class="alert alert-warning">订单提交已关闭</div>
 			  	<% end %>
@@ -62,39 +52,44 @@
 					  	<%= link_to '管理订单',exam_order_items_path(@exam) ,{:class=>"btn btn-primary btn-lg btn-block"} %>
 					  		
 				  	<% end %>
-			       <hr/>
-			          <a class="btn btn-default" href="/welcome/help#order">详细帮助 &raquo;</a>
+			  </div>
+			  <div class="panel-footer">
+			  		<a class="btn btn-default" href="/welcome/help#order">详细帮助 &raquo;</a>
 			  </div>
 			</div>
       	</div>
 
       	<div class="col-md-3">
-      		<div class="panel panel-default">
+      		<div class="panel panel-info" >
 			  <div class="panel-heading">考场信息</div>
-			  <div class="panel-body" style="min-height:340px;">
-			    
-			          <h2>未开始请等候</h2>
-			       <hr/>
-			          <a class="btn btn-default" href="#">详细帮助 &raquo;</a>
+			  
+			  <div class="list-group" style="min-height:285px;">
+			        <% @exam.topics.order('created_at desc').limit(4).each do |topic| %>			        	
+			        	<%= link_to exam_topic_path(@exam, topic),class:'list-group-item' do %>
+							<h4 class="list-group-item-heading">
+								<%= topic.title %>
+							</h4>
+							<p class="list-group-item-text">
+								<%= topic.user.name %>.
+            				于<%= distance_of_time_in_words_to_now(topic.created_at) %>之前发布
+							</p>
+			        	<% end %>			        	
+			        <% end %>
+			    </div>
+
+			  <div class="panel-footer">			  	
+			  	<%= link_to exam_topics_path(@exam),class: 'btn btn-primary' do %>
+			  		<span class="glyphicon glyphicon-wrench"></span> 所有信息&管理
+			  	<% end %>
 			  </div>
 			</div>
       	</div>
 
       	<div class="col-md-3">
       		<div class="panel panel-<%= (@exam.upload_started? ? 'info' : 'default') %>">
-			  <div class="panel-heading">成绩上传
-			  	<% if current_user && current_user.is_s_admin? %>
-				  	<%= link_to set_upload_started_exam_path(@exam),title: (@exam.upload_started? ? "关闭" : "开启") do %>
-				  		<span class="glyphicon glyphicon-<%= (@exam.upload_started? ? "stop" : "play") %> " ></span>
-				  	<% end %>
-			  	<% end %>
-			  	<% if current_user && current_user.is_admin? %>
-				  	<%= link_to exam_score_files_path(@exam) ,title: '管理成绩文件' do %>
-				  		<span class="glyphicon glyphicon-wrench pull-right" ></span>
-				  	<% end %>
-			  	<% end %>
+			  <div class="panel-heading">成绩上传			  	
 			  </div>
-			  	<div class="panel-body" style="min-height:340px;">
+			  	<div class="panel-body" style="min-height:285px;">
 			    	<% if @exam.upload_started? %>
 			    		<h3>流程</h3>
 			          	<ol>
@@ -113,16 +108,18 @@
 			    	<% else %>
 			          <h2>未开始请等候</h2>
 			        <% end %>
-			       <hr/>
-			          <a class="btn btn-default" href="#">详细帮助 &raquo;</a>
+			      
 			  	</div>
+			  	<div class="panel-footer">
+			  		<a class="btn btn-default" href="/welcome/help#order">详细帮助 &raquo;</a>
+			  </div>
 			</div>
       	</div>
 
       	<div class="col-md-3">
       		<div class="panel panel-<%= (@exam.upload_started? ? 'info' : 'default') %>" >
 			  <div class="panel-heading">分析报告</div>
-			  <div class="panel-body" style="min-height:340px;">
+			  <div class="panel-body" style="min-height:285px;">
 			    	<% if @exam.upload_started? %>
 			    		<h3>流程</h3>
 			          	<ol>
@@ -141,8 +138,10 @@
 			        <% else %>
 			        	<h2>未开始请等候</h2>
 			        <% end %>
-			       <hr/>
-			          <a class="btn btn-default" href="#">详细帮助 &raquo;</a>
+			      
+			  </div>
+			  <div class="panel-footer">
+			  		<a class="btn btn-default" href="/welcome/help#order">详细帮助 &raquo;</a>
 			  </div>
 			</div>
       	</div>

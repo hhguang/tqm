@@ -1,11 +1,11 @@
 class TopicsController < ApplicationController
   before_action :set_topic, only: [:show, :edit, :update, :destroy]
   before_action :set_exam
-
+  authorize_resource 
   # GET /topics
   # GET /topics.json
   def index
-    @topics = Topic.all.order('updated_at desc')
+    @topics = @exam.topics.order('updated_at desc')
   end
 
   # GET /topics/1
@@ -15,8 +15,7 @@ class TopicsController < ApplicationController
 
   # GET /topics/new
   def new
-    @topic = Topic.new
-    @topic.attachments.build
+    @topic = Topic.new    
   end
 
   # GET /topics/1/edit
@@ -26,7 +25,7 @@ class TopicsController < ApplicationController
   # POST /topics
   # POST /topics.json
   def create
-    @topic = Topic.new(topic_params)
+    @topic = @exam.topics.build(topic_params)    
     @topic.user_id=current_user.id
     respond_to do |format|
       if @topic.save
