@@ -65,9 +65,9 @@
 			  
 			  <div class="list-group" style="min-height:285px;">
 			        <% @exam.topics.order('created_at desc').limit(4).each do |topic| %>			        	
-			        	<%= link_to exam_topic_path(@exam, topic),class:'list-group-item' do %>
+			        	<%= link_to exam_topic_path(@exam, topic),class:'list-group-item',title:topic.title do %>
 							<h4 class="list-group-item-heading">
-								<%= topic.title %>
+								<%= truncate(topic.title,length:20) %>
 							</h4>
 							<p class="list-group-item-text">
 								<%= topic.user.name %>.

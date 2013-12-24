@@ -3,7 +3,7 @@
   <div class="panel-body">
     <div style="padding: 10px;"  class="btn-group">
       <%= link_to '订单列表',exam_order_items_path(@exam),:class=>'btn btn-default' %>
-      <%= link_to '订单汇总',gather_exam_order_items_path(@exam),{:class=>'btn btn-default'} %>
+      <%= link_to '汇总打印',gather_exam_order_items_path(@exam),{:class=>'btn btn-success'} %>
     </div>
   </div>
   <% if @paper_order.item_type==1 %>
