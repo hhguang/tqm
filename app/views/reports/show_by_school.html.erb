@@ -3,9 +3,67 @@
 <div class="page-header">
   <h4><%= @school.name %> 成绩分析报告 </h4>
 </div>
-
+<div class="row">
+	<% Exam::GROUPS[@exam.exam_type-1].each do |group| %>
+			<% if group[:subjects] %>
+			<% group[:subjects].each do |subject| %>
+			<div class=" col-md-3">
+			<div class="panel panel-default ">
+				<div class="panel-heading">					
+					<%= subject %>
+				</div>
+				<div class="panel-body">
+					已上传文件：
+					<ul>
+						<% @reports.each do |report| %>
+							<li>
+								<%= link_to report.file_name,exam_report_path(@exam,report) %>
+								<%= link_to "删除", exam_report_path(@exam,report),method: 'delete' %>
+							</li>
+						<% end %>
+					</ul>
+					<% if @report && @report.errors.any? %>
+				    <div id="error_explanation">
+				      <div class="alert alert-error">
+				        提交文件出现 <%= pluralize(@report.errors.count, "error") %>.
+				      </div>
+				      <ul>
+				      <% @report.errors.full_messages.each do |msg| %>
+				        <li>* <%= msg %></li>
+				      <% end %>
+				      </ul>
+				    </div>
+				  <% end %>
+					<%= form_for(Report.new,:url=>exam_reports_path(@exam.id),:html=>{ :multipart => true} ) do |f| %>
+			            <%#= f.error_messages %>  
+			            <%= f.hidden_field :exam_id,:value=>@exam.id %>
+			            <%= f.hidden_field :school_id,:value=>@school.id %>            			          	
+				      <div class="form-group">
+				      <label for="exampleInputFile"></label>
+				      <%= f.file_field :file %>    
+				    	</div>                  
+				      <button type="submit" class="btn btn-primary" data-loading-text="请稍候，文件上传中...">上传文件</button>
+				      <button class="btn btn-success" data-loading-text="请稍候，文件上传中...">确认文件</button>
+				    <% end %>
+				</div>
+			</div>
+			</div>
+			<% end %>
+			<% end %>
+	<% end %>
+	
+</div>
 <div class="panel panel-default">
 	<div class="panel-body">
+		<p>
+			<a href="/ysy.doc">下载语数英质量分析模板</a>
+		</p>
+		<p>
+			<a href="/zsdlhs.doc">下载政史地理化生质量分析模板</a>
+		</p>
+		
+		<hr/>
+		
 		<% if @report && @report.errors.any? %>
 	    <div id="error_explanation">
 	      <div class="alert alert-error">

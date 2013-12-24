@@ -12,7 +12,8 @@ class Exam < ActiveRecord::Base
 	GROUPS=[		
 		[{
 			:f_type=>0,
-			:name=>'高一'
+			:name=>'高一',
+			:subjects=>['语文','数学','英语','政治','历史','地理','物理','化学','生物']
 			},
 		{
 			:f_type=>1,
