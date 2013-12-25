@@ -33,7 +33,7 @@ class ReportsController < ApplicationController
 
   def show_by_school
     @school=School.find(params[:school_id])
-    @reports=@school.exam_reports(@exam)
+    @reports=@school.exam_reports(@exam).index_by{|report| report.subject_name}
     # authorize! :show_by_school, @school
   end
 
@@ -51,7 +51,7 @@ class ReportsController < ApplicationController
   def create
     @report = Report.new(report_params)
     @school=  @report.school
-    @reports=@school.exam_reports(@exam)
+    @reports=@school.exam_reports(@exam).index_by{|report| report.subject_name}
     authorize! :create, @report
     respond_to do |format|
       if @report.save
@@ -67,12 +67,14 @@ class ReportsController < ApplicationController
   # PATCH/PUT /reports/1
   # PATCH/PUT /reports/1.json
   def update
+    @school=  @report.school
+    @reports=@school.exam_reports(@exam).index_by{|report| report.subject_name}
     respond_to do |format|
       if @report.update(report_params)
-        format.html { redirect_to @report, notice: 'Report was successfully updated.' }
+        format.html { redirect_to show_by_school_exam_reports_path(@exam,school_id: @report.school_id), notice: 'Report was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: 'edit' }
+        format.html { render action: 'show_by_school' }
         format.json { render json: @report.errors, status: :unprocessable_entity }
       end
     end

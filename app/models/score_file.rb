@@ -7,8 +7,8 @@ class ScoreFile < ActiveRecord::Base
   belongs_to :school
   belongs_to :user
   
-  # validates_presence_of  :filename
-  # # validates_length_of :filename, :maximum => 255
+  validates_presence_of  :filename
+  validates_length_of :filename, :maximum => 255
   # validates_length_of :disk_filename, :maximum => 255
   
 
