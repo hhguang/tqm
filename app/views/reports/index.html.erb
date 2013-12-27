@@ -24,15 +24,38 @@
         <td><%= school.name %></td>
         <td>
           <% if @reports[school.id] %>
-            <% @reports[school.id].each do |report| %>
-              <%= link_to report.file_name,exam_report_path(@exam,report) %><br/>
+          <% Exam::SUBJECTS[@exam.exam_type-1].each do |group| %>
+          <div style="margin:2px;">
+            <% if group[:name] %>
+            <%= group[:grade] %>
+            <% group[:name].each do |subject| %>
+            <% if current_user.manage_subject?(subject) %>
+              <% school_reports=@reports[school.id].index_by{|report| "#{report.grade}#{report.subject_name}"} %>
+              <% if report=school_reports["#{group[:grade]}#{subject}"] %>
+                <%= link_to exam_report_path(@exam,report),class:'btn btn-default',title: report.file_name do %>
+                <%= "#{subject}" %> <span class="glyphicon glyphicon-download"></span> 
+              <% end %>
+              
+              <% else %>
+                <button disabled="disabled" class="btn btn-danger"><%= "#{subject}" %></button>
+              <% end %>
+
+              <% end %><!-- end if jyy  -->
+
             <% end %>
+            
+            <% end %>
+          </div>
+          <% end %>
+            
           <% else %>
             未上传文件
           <% end %>
         </td>
         <td>
+          <% if can? :manage,Report %>
           <%= link_to "管理", show_by_school_exam_reports_path(@exam, school_id: school) %>
+          <% end %>
         </td>
         
       </tr>

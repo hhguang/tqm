@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131223033427) do
+ActiveRecord::Schema.define(version: 20131226064131) do
 
   create_table "attachments", force: true do |t|
     t.string   "file"
@@ -138,6 +138,8 @@ ActiveRecord::Schema.define(version: 20131223033427) do
     t.string   "group_name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "grade"
+    t.boolean  "confirmed",    default: false
   end
 
   create_table "roles", force: true do |t|
@@ -197,6 +199,7 @@ ActiveRecord::Schema.define(version: 20131223033427) do
     t.boolean  "is_admin",                             default: false
     t.integer  "qx_id"
     t.string   "telephone"
+    t.text     "subjects"
   end
 
   add_index "users", ["login"], name: "index_users_on_login", unique: true

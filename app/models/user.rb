@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
 	has_many :authentications
 	has_many :role,:through=>:users_roles_relations
 
+	serialize :subjects
+
 
 	REST_AUTH_SITE_KEY         = 'dffec9f93a1e566d545fc11590b50bd408e40624'
 	REST_AUTH_DIGEST_STRETCHES = 10
@@ -14,14 +16,18 @@ class User < ActiveRecord::Base
 
 	accepts_nested_attributes_for :authentications
 
+	before_save :clean_subjects
 	before_save :encrypt_password
 
 	def encrypt_password
         return if password.blank?
         self.salt = self.make_token if new_record?
         self.crypted_password = encrypt(password)
-      end
+    end
     
+    def clean_subjects
+    	subjects.delete("")
+    end
 
     def make_token
       secure_digest(Time.now, (1..10).map{ rand.to_s })
@@ -31,7 +37,21 @@ class User < ActiveRecord::Base
 		School.find(self.school_id) if self.is_school?
 	end
 
+	def is_jyy?
+		subjects && subjects.any?
+	end
 
+	def manage_subject?(subject)
+		
+		if is_admin? 
+			return true
+		elsif is_jyy?			
+			subjects.include?(subject)
+		else
+			false
+		end
+	end
+	
 	def is_school?
 		! school_id.nil?
 	end

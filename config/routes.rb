@@ -37,6 +37,8 @@ Tqm::Application.routes.draw do
     end
     resources :reports do
       get 'show_by_school',on: :collection
+      put 'confirm',on: :member
+      put 'cancel',on: :member
     end
     resources :topics
   end

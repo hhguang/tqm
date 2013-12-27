@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-  before_action :set_report, only: [:show, :edit, :update, :destroy]
+  before_action :set_report, only: [:show, :edit, :update, :destroy,:confirm,:cancel]
   before_action :set_exam
   before_action :login_required
   # authorize_resource
@@ -33,7 +33,7 @@ class ReportsController < ApplicationController
 
   def show_by_school
     @school=School.find(params[:school_id])
-    @reports=@school.exam_reports(@exam).index_by{|report| report.subject_name}
+    @reports=@school.exam_reports(@exam).index_by{|report| "#{report.grade}#{report.subject_name}"}
     # authorize! :show_by_school, @school
   end
 
@@ -93,6 +93,21 @@ class ReportsController < ApplicationController
     end
   end
 
+  def confirm
+    if @report.update(:confirmed=>true)
+      flash[:notice]="上传的文件已确认"
+    end
+    redirect_to show_by_school_exam_reports_path(@exam,school_id: @report.school_id) 
+    
+  end
+
+  def cancel
+    if @report.update confirmed: false
+      flash[:notice]="上传的文件已取消确认"           
+    end
+    redirect_to show_by_school_exam_reports_path(@exam,school_id: @report.school_id)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_exam
@@ -104,6 +119,6 @@ class ReportsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def report_params
-      params.require(:report).permit(:title, :exam_id, :school_id, :user_id, :file, :file_name, :subject_name, :group_name)
+      params.require(:report).permit(:confirmed,:title, :exam_id, :school_id, :user_id, :file, :file_name, :subject_name, :group_name)
     end
 end

@@ -4,14 +4,14 @@
   <h4><%= @school.name %> 成绩分析报告   	
   </h4>
 </div>
-<p>
-			<a href="/ysy.doc">下载语数英质量分析模板</a>
-		</p>
-		<p>
-			<a href="/zsdlhs.doc">下载政史地理化生质量分析模板</a>
-		</p>
+<div class="alert alert-danger">
+	<a href="/ysy.doc">下载语数英质量分析模板</a>
+	<a href="/zsdlhs.doc">下载政史地理化生质量分析模板</a>
+	请提交文件后确认。确认后如需修改请联系负责人。
+</div>
+
 <% if @report && @report.errors.any? %>
-				    <div id="error_explanation">
+				    <div id="error_explanation" >
 				      <div class="alert alert-error">
 				        提交文件出现 <%= pluralize(@report.errors.count, "error") %>.
 				      </div>
@@ -31,6 +31,7 @@
 <% end %>
 </ul>
 <div class="tab-content">
+	
 	<% Exam::SUBJECTS[@exam.exam_type-1].each do |group| %>
 		<div class="tab-pane row" id="<%= group[:id] %>">
 			
@@ -38,38 +39,56 @@
 			<% group[:name].each do |subject| %>
 			<div class=" col-md-3">
 			<div class="panel panel-default ">
-				<div class="panel-heading">					
+				<div class="panel-heading">		
 					<%= subject %>
 				</div>
 				<div class="panel-body" style="min-height:155px;">
 					
 					<% if @reports[group[:grade]+subject] %>
-						<span class="label label-warning">已上传文件</span>
+						<% @report=@reports[group[:grade]+subject] %>
+						
 						<div class="btn-group">
+						<% if !@report.confirmed? %>
+							
 							<%= link_to exam_report_path(@exam,@report),class:'btn btn-default',title:@reports[group[:grade]+subject].file_name do %>
-								<span class="glyphicon glyphicon-download"></span> 下载
+								文件已上传 <span class="glyphicon glyphicon-download"></span> 
+							<% end %>
+
+							<%= link_to '确认',confirm_exam_report_path(@exam,@report),method: :put,class: 'btn btn-success' %>
+						<% else %>
+							<%= link_to exam_report_path(@exam,@report),class:'btn btn-success',title:@reports[group[:grade]+subject].file_name do %>
+								文件已确认 <span class="glyphicon glyphicon-download"></span> 
 							<% end %>
 							
-							<button class="btn btn-success" >确认</button>
+							<%= link_to '取消确认',cancel_exam_report_path(@exam,@report),method: :put,class: 'btn btn-default' if can? :cancel,@report %>
+
+						<% end %>
 						</div>
-						<% @report=@reports[group[:grade]+subject] %>
+						
+						
 					<% else %>
-						<span class="label label-default">未上传文件</span>
+						<button disabled="disabled" class="btn btn-default">文件未上传</button>
 						<% @report=Report.new %>
 					<% end %>
 					
-					
+					<% if @report.confirmed? %>
+						<!-- <div class="alert alert-info">
+							提交的文件已确认，如需更改请联系负责人
+						</div> -->
+					<% else %>
 					<%= form_for( [@exam,@report],:html=>{ :multipart => true} ) do |f| %>
-			            <%#= f.error_messages %>  
+			            
 			            <%= f.hidden_field :exam_id,:value=>@exam.id %>
 			            <%= f.hidden_field :school_id,:value=>@school.id %> 
-						<%= f.hidden_field :subject_name,:value=>group[:grade]+subject %> 			                       			          	
+			            <%= f.hidden_field :grade,:value=>group[:grade] %> 
+						<%= f.hidden_field :subject_name,:value=>subject %> 			                       			          	
 				      <div class="form-group">
 				      <label for="exampleInputFile"></label>
 				      <%= f.file_field :file %>    
 				    	</div>                  
 				      <button type="submit" class="btn btn-primary" data-loading-text="请稍候，文件上传中...">上传文件</button>
 				      
+				    <% end %>
 				    <% end %>
 				</div>
 			</div>
