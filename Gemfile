@@ -56,6 +56,8 @@ gem 'simple_form', "3.0.0"
 gem 'iconv'
 gem 'nested_form'
 
+gem 'rubyzip'
+
 group :production do
  gem 'mysql2'
 end

@@ -108,6 +108,35 @@ class ReportsController < ApplicationController
     redirect_to show_by_school_exam_reports_path(@exam,school_id: @report.school_id)
   end
 
+  def export
+    
+    if current_user.is_jyy?
+      @reports=@exam.reports.where(subject_name: current_user.subjects)
+
+    end
+    # folder = "Users/me/Desktop/stuff_to_zip"
+    # input_filenames = @reports.map { |report| report.file.current_path  }
+    timestamp = DateTime.now.strftime("%y%m%d%H%M%S")
+    
+    while File.exist?("#{Rails.root}/files/archives/#{DateTime.now.strftime("%y%m%d%H%M%S")}.zip")
+      timestamp.succ!
+    end
+    zipfile_name = "#{Rails.root}/files/archives/#{DateTime.now.strftime("%y%m%d%H%M%S")}.zip"
+
+    Zip::File.open(zipfile_name, Zip::File::CREATE) do |zipfile|
+      @reports.each do |report|
+        # Two arguments:
+        # - The name of the file as it will appear in the archive
+        # - The original file, including the path to find it
+        filename=Iconv.iconv("GBK//IGNORE", "UTF-8//IGNORE", "#{report.school.name}#{report.grade}#{report.subject_name}")
+        zipfile.add("#{report.id}.doc", report.file.current_path )
+
+      end
+      # zipfile.get_output_stream("myFile") { |os| os.write "myFile contains just this" }
+    end
+    send_file zipfile_name,:filename=>"#{current_user.subjects[0]}.zip"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_exam
@@ -119,6 +148,6 @@ class ReportsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def report_params
-      params.require(:report).permit(:confirmed,:title, :exam_id, :school_id, :user_id, :file, :file_name, :subject_name, :group_name)
+      params.require(:report).permit(:confirmed,:title, :exam_id, :school_id, :user_id, :file, :file_name, :subject_name, :group_name,:grade)
     end
 end

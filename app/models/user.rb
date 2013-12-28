@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
     end
     
     def clean_subjects
-    	subjects.delete("")
+    	subjects.delete('')
     end
 
     def make_token

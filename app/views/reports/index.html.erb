@@ -5,6 +5,11 @@
     成绩分析报告
   </div>
   <div class="panel-body">
+    <div class="btn-group">
+      <%= link_to export_exam_reports_path(@exam),class:'btn btn-primary' do %>
+        导出 <span class='glyphicon glyphicon-export'></span> 
+      <% end %>
+    </div>
   </div>
 
   <table class="table">
