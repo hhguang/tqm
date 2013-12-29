@@ -54,6 +54,8 @@ class Ability
         # can :show_by_shcool,School,:id=>user.school_id
     elsif user.is_jyy?
         can :read,Exam
+        can :read,Topic
+        can [:create,:update,:destroy],Topic,:user_id=>user.id
         can [:read],Report
     else
         cannot :manage, :all
