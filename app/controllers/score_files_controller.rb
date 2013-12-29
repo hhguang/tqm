@@ -4,14 +4,18 @@ class ScoreFilesController < ApplicationController
   authorize_resource 
 
   def index 
-    
-    @qx=params[:qx_id]
-    @qx=Qx.find(@current_user.qx_id) if @current_user.is_qx_admin?
-    if @qx
-      @schools=@qx.schools
-    else
-      @schools=School.all
+    if current_user.is_admin?
+      @qx=params[:qx_id]
+      @qx=Qx.find(@current_user.qx_id) if @current_user.is_qx_admin?
+      if @qx
+        @schools=@qx.schools
+      else
+        @schools=School.all
+      end
+    elsif current_user.is_school?
+      redirect_to :action=>'by_school',:exam_id=>@exam.id,:school_id=>@current_user.school.id
     end
+        
   end
 
   def show

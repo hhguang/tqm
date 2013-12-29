@@ -112,6 +112,15 @@ class ReportsController < ApplicationController
     
     if current_user.is_jyy?
       @reports=@exam.reports.where(subject_name: current_user.subjects)
+    elsif @current_user.is_admin?
+      @qx=params[:qx_id]
+      @qx=Qx.find(@current_user.qx_id) if @current_user.is_qx_admin?
+      if @qx        
+        @schools=@qx.schools
+        @reports=@exam.reports.where(school_id: @schools)
+      else        
+        @reports=@exam.reports
+      end
 
     end
     # folder = "Users/me/Desktop/stuff_to_zip"
@@ -134,7 +143,7 @@ class ReportsController < ApplicationController
       end
       # zipfile.get_output_stream("myFile") { |os| os.write "myFile contains just this" }
     end
-    send_file zipfile_name,:filename=>"#{current_user.subjects[0]}.zip"
+    send_file zipfile_name,:filename=>"分析报告打包.zip"
   end
 
   private
