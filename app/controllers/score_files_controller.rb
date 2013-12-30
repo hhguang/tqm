@@ -31,7 +31,7 @@ class ScoreFilesController < ApplicationController
   def by_school  	
   	@school=School.find(params[:school_id])
 
-    @f_type=params[:f_type] || '0'          
+    @f_type=params[:f_type] || @exam.exam_type==1 ? '0' : '3'
     # @score_file = ScoreFile.find(:first,
     #   :conditions=>{:exam_id=>@exam,:school_id=>@school,:f_type=>@f_type}
     #   )

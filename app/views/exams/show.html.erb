@@ -61,7 +61,7 @@
 
       	<div class="col-md-3">
       		<div class="panel panel-info" >
-			  <div class="panel-heading">考场信息</div>
+			  <div class="panel-heading">信息动态</div>
 			  
 			  <div class="list-group" style="min-height:285px;">
 			        <% @exam.topics.order('created_at desc').limit(4).each do |topic| %>			        	
@@ -96,7 +96,8 @@
 						  	<li>下载模板，填充数据。</li>
 						  	<li>上传文件。</li>
 						  	<li>查看文件监测和数据。</li>
-						  	<li>修改或确认。</li>						  
+						  	<li>修改或确认。</li>	
+						  	<li class="text-danger">截止时间：2014年1月6日。</li>					  
 						</ol>
 						<% if @current_user.is_school? %>
 						<%= link_to '上传文件',by_school_exam_score_files_path(@exam,school_id:@current_user.school),{:class=>"btn btn-primary btn-lg btn-block"} %>  
@@ -131,7 +132,8 @@
 					    			<a href="/zsdlhs.doc">下载政史地理化生质量分析模板</a>
 					    		</p>
 						  	</li>
-						  	<li>上传文件。</li>					  
+						  	<li>上传文件。</li>	
+						  	<li class="text-danger">截止时间：2014年1月8日。</li>					  
 						</ol>
 			    		
 			          	<%= link_to '管理分析报告',exam_reports_path(@exam),{:class=> "btn btn-primary btn-lg btn-block"}  %>
@@ -142,7 +144,7 @@
 			  </div>
 			  <div class="panel-footer">
 			  		<a class="btn btn-default" href="/welcome/help#order" target="blank">详细帮助 &raquo;</a>
-			  		<%= link_to '管理',exam_reports_path(@exam),{:class=> "btn btn-primary pull-right"}  %>
+			  		<%#= link_to '管理',exam_reports_path(@exam),{:class=> "btn btn-primary pull-right"}  %>
 			  </div>
 			</div>
       	</div>

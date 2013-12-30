@@ -37,9 +37,9 @@
             <% if current_user.manage_subject?(subject) %>
               <% school_reports=@reports[school.id].index_by{|report| "#{report.grade}#{report.subject_name}"} %>
               <% if report=school_reports["#{group[:grade]}#{subject}"] %>
-                <%= link_to exam_report_path(@exam,report),class:'btn btn-default',title: report.file_name do %>
+                <%= link_to exam_report_path(@exam,report),class:"btn btn-#{(report.confirmed? ? 'success' : 'default')}",title: report.file_name do %>
                 <%= "#{subject}" %> <span class="glyphicon glyphicon-download"></span> 
-              <% end %>
+                <% end %>
               
               <% else %>
                 <button disabled="disabled" class="btn btn-danger"><%= "#{subject}" %></button>

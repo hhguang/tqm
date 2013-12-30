@@ -65,6 +65,9 @@ class ExamsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_exam
       @exam = Exam.find(params[:id])
+      redirect_to root_url, :alert => '你查询的项目已关闭' if @exam.closed? && !current_user.is_s_admin?
+    rescue
+    	redirect_to root_url, :alert => '你查询的项目不存在'
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

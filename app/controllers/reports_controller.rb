@@ -138,7 +138,7 @@ class ReportsController < ApplicationController
         # - The name of the file as it will appear in the archive
         # - The original file, including the path to find it
         filename=Iconv.iconv("GBK//IGNORE", "UTF-8//IGNORE", "#{report.school.name}#{report.grade}#{report.subject_name}")
-        zipfile.add("#{report.id}.doc", report.file.current_path )
+        zipfile.add("#{report.school.code}-#{report.id}.doc", report.file.current_path )
 
       end
       # zipfile.get_output_stream("myFile") { |os| os.write "myFile contains just this" }
