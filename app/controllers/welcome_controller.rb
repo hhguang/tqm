@@ -36,6 +36,7 @@ class WelcomeController < ApplicationController
   end
 
   def help
+    @tab=params[:id] || 'score'
   end
 
   def person

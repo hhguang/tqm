@@ -1,34 +1,20 @@
-<div class="tabbable tabs-left">
-  <ul class="nav nav-tabs">
-    <li class="active">
-      <a href="#score" data-toggle="tab">
-        成绩文件提交流程及注意事项
-      </a>
-      
-    </li>
-    <li>
-      <a href="#order" data-toggle="tab">
-        试卷订单提交流程及注意事项
-      </a>      
-    </li>
-    <li>
-      <a href="#person" data-toggle="tab">
-        学校联系人信息完善说明
-      </a>
-    </li>
-  </ul>
-  <div class="tab-content">
-    <div class="tab-pane active" id="score">
-      <%= render '/share/score_help' %>
-    </div>
-
-    <div class="tab-pane " id="order">
-      <%= render '/share/order_help' %>
-    </div>
-
-    <div class="tab-pane " id="person">
-      <%= render '/share/person_help' %>
-    </div>
-  </div>
+<ul class="nav nav-tabs">
+  <li class=<%= "active" if @tab=='score' %> >
+    <%= link_to '成绩文件提交流程及注意事项', help_path(id:'score') %>    
+  </li>
+  <li class=<%= "active" if @tab=='order' %> >
+    <%= link_to '试卷订单提交流程及注意事项', help_path(id:'order') %>    
+  </li>
+  <li class=<%= "active" if @tab=='person' %> >
+    <%= link_to '学校联系人信息完善说明', help_path(id:'person') %>    
+  </li>
+  <li class=<%= "active" if @tab=='report' %> >
+    <%= link_to '成绩分析报告提交流程及注意事项', help_path(id:'report') %>    
+  </li>
+  
+</ul>
+<div>
+  <%= render "/share/#{@tab}_help" %>
 </div>
+
 

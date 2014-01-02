@@ -9,7 +9,7 @@ Tqm::Application.routes.draw do
   post "welcome/create"
   get "welcome/destroy"
   root to: "welcome#index"
-  get "welcome/help"
+  get "help/(:id)"=>"welcome#help",as: :help
   get "person/:id"=>'welcome#person', as: :person
   post "welcome/person_update"
 
