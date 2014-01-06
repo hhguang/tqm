@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131226064131) do
+ActiveRecord::Schema.define(version: 20140103091610) do
 
   create_table "attachments", force: true do |t|
     t.string   "file"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20131226064131) do
     t.datetime "updated_at"
     t.boolean  "upload_started", default: false
     t.text     "report_demand"
+    t.boolean  "report_started"
   end
 
   create_table "identities", force: true do |t|

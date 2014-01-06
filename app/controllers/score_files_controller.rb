@@ -1,5 +1,6 @@
 class ScoreFilesController < ApplicationController
 	before_action :set_exam, only: [:index,:new,:create,:show,:update,:edit,:by_school,:export]
+  before_action :check_upload_started,only: [:create,:edit,:update,:destroy,:confirm,:cancel]
   before_action :login_required
   authorize_resource 
 
@@ -127,7 +128,13 @@ class ScoreFilesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_exam
       @exam = Exam.find(params[:exam_id])
-      
+      redirect_to root_url, :alert => '项目已关闭' if @exam.closed? && !current_user.is_s_admin?      
+    rescue
+      redirect_to root_url, :alert => '项目不存在'
+    end
+
+    def check_upload_started
+      redirect_to root_url, :alert => '模块已关闭' if !@exam.upload_started? && !current_user.is_s_admin?
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

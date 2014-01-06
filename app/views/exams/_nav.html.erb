@@ -38,7 +38,7 @@
 		    	<li class="dropdown">
 			        <a href="#" class="dropdown-toggle" data-toggle="dropdown">设置 <b class="caret"></b></a>
 			        <ul class="dropdown-menu">
-			          <li>		          	
+			          	<li>		          	
 			          	<%= link_to (@exam.closed? ? '启动监测项目' : '关闭监测项目'),start_exam_path(@exam) %>		          	
 			          </li>
 			          	<li>
@@ -46,8 +46,11 @@
 			          	
 				  		</li>
 				  		<li>		          	
-			          	<%= link_to (@exam.upload_started? ? '关闭成绩与分析文件上传' : '启动成绩与分析文件上传'),set_upload_started_exam_path(@exam) %>		          	
+			          	<%= link_to (@exam.upload_started? ? '关闭成绩文件上传' : '启动成绩文件上传'),set_upload_started_exam_path(@exam) %>		          	
 			          </li>
+			          	<li>		          	
+				          	<%= link_to (@exam.report_started? ? '关闭分析文件上传' : '启动分析文件上传'),set_report_started_exam_path(@exam) %>		          	
+				        </li>
 			        </ul>
 			    </li>
 		    <% end %>

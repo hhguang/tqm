@@ -1,5 +1,5 @@
 class ExamsController < ApplicationController
-	before_action :set_exam, only: [:start,:order_on_off,:show, :edit, :update, :destroy,:set_upload_started]
+	before_action :set_exam, only: [:set_report_started,:start,:order_on_off,:show, :edit, :update, :destroy,:set_upload_started]
 	authorize_resource
 	def index
 		@exams=Exam.all.order 'created_at desc'
@@ -61,13 +61,19 @@ class ExamsController < ApplicationController
 		redirect_to(exam_url(@exam), :notice => "试卷订单已#{@paper_order.state? ? '关闭' : '启动'}")	
 	end
 
+	def set_report_started
+		@exam.update :report_started=>!@exam.report_started?
+		redirect_to(exam_url(@exam), :notice => "分析报告上传已#{@exam.report_started? ? '启动' : '关闭'}")	
+	
+	end
+
 	private
     # Use callbacks to share common setup or constraints between actions.
     def set_exam
       @exam = Exam.find(params[:id])
-      redirect_to root_url, :alert => '你查询的项目已关闭' if @exam.closed? && !current_user.is_s_admin?
+      redirect_to root_url, :alert => '项目已关闭' if @exam.closed? && !current_user.is_s_admin?
     rescue
-    	redirect_to root_url, :alert => '你查询的项目不存在'
+    	redirect_to root_url, :alert => '项目不存在'
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

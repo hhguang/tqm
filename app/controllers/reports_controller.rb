@@ -1,6 +1,9 @@
 class ReportsController < ApplicationController
-  before_action :set_report, only: [:show, :edit, :update, :destroy,:confirm,:cancel]
   before_action :set_exam
+  before_action :check_report_started,only: [:create,:edit,:update,:destroy,:confirm,:cancel]
+
+  before_action :set_report, only: [:show, :edit, :update, :destroy,:confirm,:cancel]
+  
   before_action :login_required
   # authorize_resource
   # GET /reports
@@ -52,6 +55,7 @@ class ReportsController < ApplicationController
     @report = Report.new(report_params)
     @school=  @report.school
     @reports=@school.exam_reports(@exam).index_by{|report| report.subject_name}
+    @report.user_id=current_user.id
     authorize! :create, @report
     respond_to do |format|
       if @report.save
@@ -149,10 +153,18 @@ class ReportsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_exam
-      @exam=Exam.find(params[:exam_id])
+      @exam=Exam.find(params[:exam_id])      
+      redirect_to root_url, :alert => '项目已关闭' if @exam.closed? && !current_user.is_s_admin?      
+    rescue
+      redirect_to root_url, :alert => '项目不存在'
     end
+
+    def check_report_started
+      redirect_to root_url, :alert => '模块已关闭' if !@exam.report_started? && !current_user.is_s_admin?
+    end
+
     def set_report
-      @report = Report.find(params[:id])
+      @report = Report.find(params[:id])      
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

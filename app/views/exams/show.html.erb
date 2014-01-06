@@ -120,10 +120,10 @@
       	</div>
 
       	<div class="col-md-3">
-      		<div class="panel panel-<%= (@exam.upload_started? ? 'info' : 'default') %>" >
+      		<div class="panel panel-<%= (@exam.report_started? ? 'info' : 'default') %>" >
 			  <div class="panel-heading">分析报告</div>
 			  <div class="panel-body" style="min-height:285px;">
-			    	<% if @exam.upload_started? %>
+			    	<% if @exam.report_started? %>
 			    		<h3>流程</h3>
 			          	<ol>
 						  	<li>下载模板，填充数据。
