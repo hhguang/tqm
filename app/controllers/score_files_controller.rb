@@ -1,9 +1,9 @@
 class ScoreFilesController < ApplicationController
 	before_action :set_exam, only: [:index,:new,:create,:show,:update,:edit,:by_school,:export]
-  before_action :check_upload_started,only: [:create,:edit,:update,:destroy,:confirm,:cancel]
+  
   before_action :login_required
   authorize_resource 
-
+  # before_action :check_upload_started,only: [:create,:edit,:update,:destroy,:confirm,:cancel]
   def index 
     if current_user.is_admin?
       @qx=params[:qx_id]
@@ -134,6 +134,7 @@ class ScoreFilesController < ApplicationController
     end
 
     def check_upload_started
+      @score_file=ScoreFile.find(params[:id])  
       redirect_to root_url, :alert => '模块已关闭' if !@exam.upload_started? && !current_user.is_s_admin?
     end
 

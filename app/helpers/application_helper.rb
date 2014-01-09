@@ -22,4 +22,16 @@ module ApplicationHelper
       return "#{Qx.find(current_user.qx_id).name}管理员" if current_user.is_qx_admin?
     end
   end
+
+  def controller_javascript_include_tag
+    fname = 
+    case controller_name
+    when "pages","topics","notes"
+      fname = "#{controller_name}.js"
+    when "replies"
+      fname = "topics.js"
+    end
+    return "" if fname.blank?
+    raw %(<script src="#{asset_path(fname)}" data-turbolinks-track></script>)
+  end
 end

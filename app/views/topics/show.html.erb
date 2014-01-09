@@ -1,14 +1,14 @@
 <%= render '/exams/nav' %>
 
-<div class="panel panel-default">
+<div class="panel panel-default" >
 	<div class="panel-body">
-		<div class="btn-group" style="margin-top:20px;">
+		<div class="btn-group" style="margin-top:20px;" data-no-turbolink>
 			<%= link_to exam_topics_path(@exam),class: 'btn btn-default' do %>
 				<span class="glyphicon glyphicon-home"></span> 所有文章
 			<% end %>
 			<% if can? :update,@topic %>
 			<%= link_to "编辑文章", edit_exam_topic_path(@exam, @topic),class: 'btn btn-default' %>		
-			<%= link_to "删除文章", exam_topic_path(@exam, @topic),method: 'delete',confirm:'确定要删除吗？',class: 'btn btn-danger' %>			
+			<%= link_to "删除文章", exam_topic_path(@exam, @topic),method: 'delete',data: { confirm: '确定要删除吗？' },class: 'btn btn-danger' %>			
 			<% end %>
 		</div>
 		<div class="page-header">
@@ -21,7 +21,7 @@
 		  </h3>
 		</div>
 		<div>
-			<%= @topic.content %>
+			<%= sanitize @topic.content %>
 			
 		</div>
 		<div>			

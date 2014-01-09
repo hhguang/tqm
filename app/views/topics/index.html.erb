@@ -3,7 +3,7 @@
 <div class="panel panel-default">
   <div class="panel-body">
     <% if can? :create,Topic %>
-    <div class="btn-group">
+    <div class="btn-group" data-no-turbolink>
       <%= link_to "创建文章", new_exam_topic_path(@exam),class: 'btn btn-primary' %>
     </div>
     <% end %>

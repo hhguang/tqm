@@ -24,5 +24,6 @@ module Tqm
     # config.i18n.default_locale = :de
     config.encoding = "utf-8"
     config.i18n.default_locale = "zh-CN"
+    config.action_view.sanitized_allowed_attributes = 'id', 'class', 'style'
   end
 end

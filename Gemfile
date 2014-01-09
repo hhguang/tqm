@@ -58,6 +58,8 @@ gem 'nested_form'
 
 gem 'rubyzip'
 
+# gem 'ckeditor'
+
 group :production do
  gem 'mysql2'
 end

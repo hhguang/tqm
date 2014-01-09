@@ -1,10 +1,14 @@
 <%= javascript_include_tag "nested_form" %>
+<script type="text/javascript" charset="utf-8" src="/javascripts/ueditor/ueditor.config.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/javascripts/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/javascripts/ueditor/lang/zh-cn/zh-cn.js"></script>
 <%= simple_nested_form_for([@exam,@topic],:html=>{:multipart => true }) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
     <%= f.input :title,label: '标题' %>
-    <%= f.input :content, label: '内容' %>
+    <%#= f.input :content, label: '内容' %>
+    <%= f.text_area :content %>
     <%= f.fields_for :attachments do |attachment_form|  %>
       <% if attachment_form.object.file? %>
       <p>
@@ -24,6 +28,13 @@
 
   <div class="form-actions">
     <%= f.button :submit,class: 'btn btn-primary' %>
-    <%= link_to "取消", :back %>
+    <%= link_to "取消", exam_topics_path %>
   </div>
 <% end %>
+
+<script type="text/javascript">
+ UE.getEditor('topic_content',{
+    toolbars:[['FullScreen', 'Source','Bold','italic', 'underline','forecolor', 'fontsize','link']]
+ });
+
+</script>
