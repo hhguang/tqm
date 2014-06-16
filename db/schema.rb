@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140103091610) do
+ActiveRecord::Schema.define(version: 20140616091856) do
 
   create_table "attachments", force: true do |t|
     t.string   "file"
@@ -172,6 +172,18 @@ ActiveRecord::Schema.define(version: 20140103091610) do
     t.datetime "updated_at"
     t.integer  "f_type"
     t.string   "file"
+  end
+
+  create_table "small_scores", force: true do |t|
+    t.integer  "bh"
+    t.decimal  "average",         precision: 6, scale: 2, default: 0.0
+    t.decimal  "scoring_average", precision: 6, scale: 2, default: 0.0
+    t.integer  "exam_id"
+    t.integer  "school_id"
+    t.string   "subject_name"
+    t.string   "grade_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "topics", force: true do |t|

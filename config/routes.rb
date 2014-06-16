@@ -1,5 +1,6 @@
-Tqm::Application.routes.draw do    
+Tqm::Application.routes.draw do
 
+  get "small_scores/index"
   resources :replies
 
   resources :schools
@@ -17,7 +18,7 @@ Tqm::Application.routes.draw do
   post "/auth/:provider/callback", :to => 'sessions#create'
   get "/auth/failure", to: "sessions#failure"
 
-  
+
 
   resources :exams do
     get 'start', on: :member
@@ -43,8 +44,9 @@ Tqm::Application.routes.draw do
       get 'export',on: :collection
     end
     resources :topics
+    resources :small_scores
   end
-  
+
   # get "/exams/:exam_id/school/:school_id/score_files"=>'score_files#by_school',as: :exam_school_files
 
   resources :qxes
@@ -92,7 +94,7 @@ Tqm::Application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-  
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'

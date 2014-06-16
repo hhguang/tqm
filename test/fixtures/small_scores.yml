@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  bh: 1
+  average: 9.99
+  scoring_average: 9.99
+  exam_id: 1
+  school_id: 1
+  subject_name: MyString
+  grade_name: MyString
+
+two:
+  bh: 1
+  average: 9.99
+  scoring_average: 9.99
+  exam_id: 1
+  school_id: 1
+  subject_name: MyString
+  grade_name: MyString
