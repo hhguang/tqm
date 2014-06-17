@@ -12,38 +12,76 @@
     <div class="collapse navbar-collapse navbar-ex1-collapse">
       <ul class="nav navbar-nav">
         <li class='active' >
-          <%= link_to "高一" %>
+          <%= link_to "全市平均" %>
         </li>
         <li  >
-          <%= link_to "高二" %>
+          <%= link_to "全区平均" %>
         </li>
         <li >
-          <%= link_to "高三" %>
+          <%= link_to "各校明细" %>
         </li>
       </ul>
     </div>
   </nav>
 </div>
 
-<table class="table table-bordered">
-  <% (0..4).each do |j|%>
-  <tr>
-    <td>题号</td>
-    <% (1..15).each do |i| %>
-    <td><%= j*15+i %></td>
-    <% end %>
-  </tr>
-  <tr>
-    <td>平均分</td>
-    <% (1..15).each do |i| %>
-    <td><input type="text" size=2 /></td>
-    <% end %>
-  </tr>
-  <tr>
-    <td>得分率</td>
-    <% (1..15).each do |i| %>
-    <td><input type="text" size=2 /></td>
-    <% end %>
-  </tr>
-  <% end %>
-</table>
+<div class="panel panel-default">
+  <div class="panel-heading">各校情况</div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>区县</th>
+        <th>学校</th>
+        <th>小题分</th>
+        <th>管理</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @schools.each do |school| %>
+      <tr>
+        <td><%= school.qx.name %></td>
+        <td><%= school.name %></td>
+        <td>
+          <% if @small_scores[school.id] %>
+          <% Exam::SUBJECTS[@exam.exam_type-1].each do |group| %>
+          <div style="margin:2px;">
+            <% if group[:name] %>
+            <%= group[:grade] %>
+            <% group[:name].each do |subject| %>
+            <% if current_user.manage_subject?(subject) %>
+            <% school_reports=@small_scores[school.id].index_by{|report| "#{report.grade_name}#{report.subject_name}"} %>
+            <% if report=school_reports["#{group[:grade]}#{subject}"] %>
+            <%= link_to exam_report_path(@exam,report),class:"btn btn-#{(report.confirmed? ? 'success' : 'default')}",title: report.file_name do %>
+            <%= "#{subject}" %> <span class="glyphicon glyphicon-download"></span>
+            <% end %>
+
+            <% else %>
+            <button disabled="disabled" class="btn btn-danger"><%= "#{subject}" %></button>
+            <% end %>
+
+            <% end %><!-- end if jyy  -->
+
+            <% end %>
+
+            <% end %>
+          </div>
+          <% end %>
+        <% else %>
+            未填写小题平均分
+        <% end %>
+
+
+        </td>
+        <td>
+          <% if can? :manage,Report %>
+          <%= link_to "管理", exam_small_score_path(@exam, id: school) %>
+          <% end %>
+        </td>
+
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+

@@ -1,0 +1,69 @@
+<div>
+  <nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">小题分</a>
+    </div>
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+      <ul class="nav navbar-nav">
+        <li class='active' >
+          <%= link_to "全市平均" %>
+        </li>
+        <li  >
+          <%= link_to "全区平均" %>
+        </li>
+        <li >
+          <%= link_to "各校明细" %>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<div style="padding: 0 0 10px 0 ;">
+<ul class="nav nav-tabs">
+
+  <li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      高一 <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      <% Exam::SUBJECTS[0][0][:name].each do |subject| %>
+      <li><%= link_to subject %></li>
+      <% end %>
+    </ul>
+  </li>
+
+</ul>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">年级科目</div>
+  <table class="table table-bordered">
+    <% (0..4).each do |j|%>
+    <tr>
+      <td>题号</td>
+      <% (1..15).each do |i| %>
+      <td><%= j*15+i %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td>平均分</td>
+      <% (1..15).each do |i| %>
+      <td><input type="text" size=2 /></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td>得分率</td>
+      <% (1..15).each do |i| %>
+      <td><input type="text" size=2 /></td>
+      <% end %>
+    </tr>
+    <% end %>
+  </table>
+</div>
