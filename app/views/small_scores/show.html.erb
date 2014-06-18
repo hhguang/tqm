@@ -1,3 +1,13 @@
+
+<style type="text/css">
+<!--
+.field_with_errors input {
+  border-color: #a94442;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+-->
+</style>
 <div>
   <nav class="navbar navbar-default" role="navigation">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -12,12 +22,6 @@
     <div class="collapse navbar-collapse navbar-ex1-collapse">
       <ul class="nav navbar-nav">
         <li class='active' >
-          <%= link_to "全市平均" %>
-        </li>
-        <li  >
-          <%= link_to "全区平均" %>
-        </li>
-        <li >
           <%= link_to "各校明细" %>
         </li>
       </ul>
@@ -43,8 +47,25 @@
 </div>
 
 <div class="panel panel-default">
-  <div class="panel-heading">年级科目</div>
+  <div class="panel-heading"><%= @grade_name %><%= @subject_name %></div>
+  <%= form_tag exam_small_scores_path(@exam) do %>
+  <% errors = @small_scores.sum { |item| (item && item.errors.any?) ? item.errors.count : 0 } %>
+  <% if errors > 0  %>
+    <div class="alert alert-block alert-error">
+      <a class="close" data-dismiss='alert' href="#">×</a>
+      <p><strong>有 <%= errors %> 处问题导至无法提交:</strong></p>
+    </div>
+  <% else %>
+    <div class="alert alert-block alert-success">
+      <a class="close" data-dismiss='alert' href="#">×</a>
+      <p><strong>已成功保存</strong></p>
+    </div>
+  <% end %>
+  <%= hidden_field_tag 'school_id', @school.id %>
+  <%= hidden_field_tag 'subject_name', @subject_name %>
+  <%= hidden_field_tag 'grade_name', @grade_name %>
   <table class="table table-bordered">
+
     <% (0..4).each do |j|%>
     <tr>
       <td>题号</td>
@@ -55,15 +76,28 @@
     <tr>
       <td>平均分</td>
       <% (1..15).each do |i| %>
-      <td><input type="text" size=2 /></td>
+      <td>
+        <%= fields_for "small_scores[#{j*15+i}]", @small_scores[j*15+i] do |f| %>
+        <%= f.text_field :average, size: 2 %>
+        <%= f.hidden_field :bh %>
+        <% end %>
+      </td>
       <% end %>
     </tr>
     <tr>
       <td>得分率</td>
       <% (1..15).each do |i| %>
-      <td><input type="text" size=2 /></td>
+      <td>
+        <%= fields_for "small_scores[#{j*15+i}]", @small_scores[j*15+i] do |f| %>
+        <%= f.text_field :scoring_average, size: 2 %>
+        <% end %>
+      </td>
       <% end %>
     </tr>
     <% end %>
   </table>
+  <div style="padding:10px;">
+    <button type="submit" class="btn btn-primary">保存</button>
+  </div>
+  <% end %>
 </div>

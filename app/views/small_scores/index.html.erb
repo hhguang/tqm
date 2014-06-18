@@ -52,7 +52,7 @@
             <% if current_user.manage_subject?(subject) %>
             <% school_reports=@small_scores[school.id].index_by{|report| "#{report.grade_name}#{report.subject_name}"} %>
             <% if report=school_reports["#{group[:grade]}#{subject}"] %>
-            <%= link_to exam_report_path(@exam,report),class:"btn btn-#{(report.confirmed? ? 'success' : 'default')}",title: report.file_name do %>
+            <%= link_to exam_report_path(@exam,report), class: "btn btn-success" do %>
             <%= "#{subject}" %> <span class="glyphicon glyphicon-download"></span>
             <% end %>
 

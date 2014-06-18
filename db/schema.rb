@@ -176,8 +176,8 @@ ActiveRecord::Schema.define(version: 20140616091856) do
 
   create_table "small_scores", force: true do |t|
     t.integer  "bh"
-    t.decimal  "average",         precision: 6, scale: 2, default: 0.0
-    t.decimal  "scoring_average", precision: 6, scale: 2, default: 0.0
+    t.decimal  "average",         precision: 6, scale: 2
+    t.decimal  "scoring_average", precision: 6, scale: 2
     t.integer  "exam_id"
     t.integer  "school_id"
     t.string   "subject_name"

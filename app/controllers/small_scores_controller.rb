@@ -10,6 +10,24 @@ class SmallScoresController < ApplicationController
     @school = School.find(params[:id])
     @grade_name = '高一'
     @subject_name = '语文'
+    @small_scores = []
+    (1..75).each { |i| @small_scores[i] = SmallScore.new(bh: i) }
+  end
+
+  def create
+    @school = School.find(params[:school_id])
+    @grade_name = params[:grade_name]
+    @subject_name = params[:subject_name]
+    @small_scores = []
+    params[:small_scores].each do |key, item|
+      @small_scores[key.to_i] = SmallScore.find_or_initialize_by(grade_name: @grade_name,
+       subject_name: @subject_name, school_id: @school.id, exam_id: @exam.id, bh: item[:bh])
+      @small_scores[key.to_i].average = item[:average]
+      @small_scores[key.to_i].scoring_average = item[:scoring_average]
+      @small_scores[key.to_i].save
+    end
+
+    render action: "show"
   end
 
   private
