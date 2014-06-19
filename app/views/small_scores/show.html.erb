@@ -31,18 +31,25 @@
 
 <div style="padding: 0 0 10px 0 ;">
 <ul class="nav nav-tabs">
-
+  <% Exam::SUBJECTS[@exam.exam_type-1].each do |group| %>
   <li class="dropdown">
+    <% if group[:name] %>
+
     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-      高一 <span class="caret"></span>
+
+      <%= group[:grade] %><span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
-      <% Exam::SUBJECTS[0][0][:name].each do |subject| %>
-      <li><%= link_to subject %></li>
+      <% group[:name].each do |subject| %>
+      <li>
+        <%= link_to subject, exam_small_score_path(@exam, id: @school,
+         grade_name: group[:grade], subject_name: subject) %>
+      </li>
       <% end %>
     </ul>
+    <% end %>
   </li>
-
+  <% end %>
 </ul>
 </div>
 
@@ -55,12 +62,8 @@
       <a class="close" data-dismiss='alert' href="#">×</a>
       <p><strong>有 <%= errors %> 处问题导至无法提交:</strong></p>
     </div>
-  <% else %>
-    <div class="alert alert-block alert-success">
-      <a class="close" data-dismiss='alert' href="#">×</a>
-      <p><strong>已成功保存</strong></p>
-    </div>
   <% end %>
+
   <%= hidden_field_tag 'school_id', @school.id %>
   <%= hidden_field_tag 'subject_name', @subject_name %>
   <%= hidden_field_tag 'grade_name', @grade_name %>

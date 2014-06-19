@@ -8,10 +8,12 @@ class SmallScoresController < ApplicationController
 
   def show
     @school = School.find(params[:id])
-    @grade_name = '高一'
-    @subject_name = '语文'
+    @grade_name = params[:grade_name] || Exam::SUBJECTS[@exam.exam_type-1][0][:grade]
+    @subject_name = params[:subject_name] || Exam::SUBJECTS[@exam.exam_type-1][0][:name][0]
     @small_scores = []
-    (1..75).each { |i| @small_scores[i] = SmallScore.new(bh: i) }
+    (1..75).each { |i| @small_scores[i] = SmallScore.find_or_initialize_by(grade_name: @grade_name,
+       subject_name: @subject_name, school_id: @school.id, exam_id: @exam.id, bh: i) }
+
   end
 
   def create
@@ -26,8 +28,14 @@ class SmallScoresController < ApplicationController
       @small_scores[key.to_i].scoring_average = item[:scoring_average]
       @small_scores[key.to_i].save
     end
+    @errors = @small_scores.sum { |item| (item && item.errors.any?) ? item.errors.count : 0 }
+    if @errors==0
+      flash[:notice] = "已成功保存"
+      redirect_to action: "show", id: @school
+    else
+      render action: "show", id: @school
+    end
 
-    render action: "show"
   end
 
   private

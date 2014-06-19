@@ -13,9 +13,9 @@
 
 		  <!-- Collect the nav links, forms, and other content for toggling -->
 		  <div class="collapse navbar-collapse navbar-ex1-collapse">
-		  	
 
-		    <ul class="nav navbar-nav">		      
+
+		    <ul class="nav navbar-nav">
 		      <li <%= "class=active" if ['exams'].include?(controller_name) && ['show'].include?(action_name) %> >
 		      	<%= link_to "项目首页", exam_path(@exam) %>
 		      </li>
@@ -31,35 +31,38 @@
 		      <li <%= "class=active" if ['reports'].include?(controller_name)  %> >
 		      	<%= link_to "分析报告", exam_reports_path(@exam) %>
 		      </li>
+		      <li <%= "class=active" if ['small_scores'].include?(controller_name)  %> >
+		      	<%= link_to "小题分", exam_small_scores_path(@exam) %>
+		      </li>
 		    </ul>
-		    
+
 		    <ul class="nav navbar-nav navbar-right">
-			<% if can? :manage, @exam %>		    	
+			<% if can? :manage, @exam %>
 		    	<li class="dropdown">
 			        <a href="#" class="dropdown-toggle" data-toggle="dropdown">设置 <b class="caret"></b></a>
 			        <ul class="dropdown-menu">
-			          	<li>		          	
-			          	<%= link_to (@exam.closed? ? '启动监测项目' : '关闭监测项目'),start_exam_path(@exam) %>		          	
+			          	<li>
+			          	<%= link_to (@exam.closed? ? '启动监测项目' : '关闭监测项目'),start_exam_path(@exam) %>
 			          </li>
 			          	<li>
 			          	<%= link_to (@exam.paper_order.state? ? '启动试卷订单提交' : '关闭试卷订单提交'),order_on_off_exam_path(@exam) %>
-			          	
+
 				  		</li>
-				  		<li>		          	
-			          	<%= link_to (@exam.upload_started? ? '关闭成绩文件上传' : '启动成绩文件上传'),set_upload_started_exam_path(@exam) %>		          	
+				  		<li>
+			          	<%= link_to (@exam.upload_started? ? '关闭成绩文件上传' : '启动成绩文件上传'),set_upload_started_exam_path(@exam) %>
 			          </li>
-			          	<li>		          	
-				          	<%= link_to (@exam.report_started? ? '关闭分析文件上传' : '启动分析文件上传'),set_report_started_exam_path(@exam) %>		          	
+			          	<li>
+				          	<%= link_to (@exam.report_started? ? '关闭分析文件上传' : '启动分析文件上传'),set_report_started_exam_path(@exam) %>
 				        </li>
 			        </ul>
 			    </li>
 		    <% end %>
-		    <% if can? :create,@exam %>  
+		    <% if can? :create,@exam %>
 		      <li class="dropdown">
 		        <a href="#" class="dropdown-toggle" data-toggle="dropdown">管理 <b class="caret"></b></a>
 		        <ul class="dropdown-menu">
 		          <li>
-		          	<%= link_to '所有项目',exams_path %>		          	
+		          	<%= link_to '所有项目',exams_path %>
 		          </li>
 		          <li role="presentation" class="divider">
 		          <li>
@@ -69,7 +72,7 @@
 		      </li>
 		    <% end %>
 		    </ul>
-		    
+
 		  </div><!-- /.navbar-collapse -->
 		</nav>
 </div>
