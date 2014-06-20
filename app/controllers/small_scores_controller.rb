@@ -1,9 +1,11 @@
 class SmallScoresController < ApplicationController
+  before_action :login_required
   before_action :set_exam
 
   def index
-    @schools = School.all
-    @small_scores = @exam.small_scores.group_by{|report|report.school_id}
+    @schools = @current_user.own_shools
+    @small_scores = @exam.small_scores.where(school_id: @schools).
+      group_by{|report|report.school_id}
   end
 
   def show
@@ -36,6 +38,10 @@ class SmallScoresController < ApplicationController
       render action: "show", id: @school
     end
 
+  end
+
+  def export
+    @school = School.find(params[:school_id])
   end
 
 

@@ -4,8 +4,9 @@
   xmlns:x="urn:schemas-microsoft-com:office:excel"
   xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
   xmlns:html="http://www.w3.org/TR/REC-html40">
-
-  <Worksheet ss:Name="<%= @grade_name %>">
+  <% Exam::SUBJECTS[@exam.exam_type-1].each do |group| %>
+  <% if group[:name] %>
+  <Worksheet ss:Name="<%= group[:grade] %>">
     <Table>
       <Row>
         <Cell><Data ss:Type="String">区县代码</Data></Cell>
@@ -13,13 +14,14 @@
         <Cell><Data ss:Type="String">学校代码</Data></Cell>
         <Cell><Data ss:Type="String">学校</Data></Cell>
         <Cell><Data ss:Type="String">题号</Data></Cell>
-        <Cell><Data ss:Type="String"><%= @subject_name %>平均分</Data></Cell>
-        <Cell><Data ss:Type="String"><%= @subject_name %>得分率</Data></Cell>
-
+        <% group[:name].each do |subject| %>
+          <Cell><Data ss:Type="String"><%= subject %>平均分</Data></Cell>
+          <Cell><Data ss:Type="String"><%= subject %>得分率</Data></Cell>
+        <% end %>
       </Row>
       <% (1..75).each do |i| %>
-      <%# score = SmallScore.where(exam_id: @exam.id,
-       school_id: @school.id, bh: i, grade_name: @grade_name, subject_name: @subject_name) %>
+      <% scores = SmallScore.where(exam_id: @exam.id,
+       school_id: @school.id, bh: i, grade_name: group[:grade]).index_by{|s| s.subject_name} %>
 
       <Row>
         <Cell><Data ss:Type="String"><%= @school.qx.code %></Data></Cell>
@@ -27,15 +29,19 @@
         <Cell><Data ss:Type="String"><%= @school.code %></Data></Cell>
         <Cell><Data ss:Type="String"><%= @school.name %></Data></Cell>
         <Cell><Data ss:Type="String"><%= i %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= @small_scores[i].average if @small_scores[i] %></Data>
+        <% group[:name].each do |subject| %>
+
+          <Cell><Data ss:Type="String"><%= scores[subject].average if scores[subject] %></Data>
           </Cell>
-        <Cell><Data ss:Type="String"><%= @small_scores[i].scoring_average if @small_scores[i] %>
+          <Cell><Data ss:Type="String"><%= scores[subject].scoring_average if scores[subject] %>
           </Data></Cell>
+        <% end %>
+
       </Row>
 
       <% end %>
     </Table>
   </Worksheet>
-
-
+  <% end %>
+  <% end %>
 </Workbook>

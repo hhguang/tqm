@@ -24,10 +24,10 @@
             <% if group[:name] %>
             <%= group[:grade] %>
             <% group[:name].each do |subject| %>
-            <% if current_user.manage_subject?(subject) %>
+            <% unless current_user.is_jyy? && !current_user.manage_subject?(subject) %>
             <% school_reports=@small_scores[school.id].index_by{|report| "#{report.grade_name}#{report.subject_name}"} %>
             <% if report=school_reports["#{group[:grade]}#{subject}"] %>
-            <%= link_to exam_report_path(@exam,report), class: "btn btn-success" do %>
+            <%= link_to exam_small_score_path(@exam,id: school.id, grade_name: group[:grade], subject_name: subject, format: 'xls'), class: "btn btn-success" do %>
             <%= "#{subject}" %> <span class="glyphicon glyphicon-download"></span>
             <% end %>
 
@@ -49,8 +49,9 @@
 
         </td>
         <td>
-          <% if can? :manage,Report %>
-          <%= link_to "管理", exam_small_score_path(@exam, id: school) %>
+          <% if can? :manage, SmallScore %>
+            <%= link_to "管理", exam_small_score_path(@exam, id: school) %> |
+            <%= link_to "汇总", export_exam_small_scores_path(@exam, school_id: school, format: 'xls') %>
           <% end %>
         </td>
 

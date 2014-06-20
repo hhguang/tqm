@@ -34,7 +34,11 @@
 </div>
 
 <div class="panel panel-default">
-  <div class="panel-heading"><%= @grade_name %><%= @subject_name %></div>
+  <div class="panel-heading">
+    <%= @school.name %>
+    <%= @grade_name %>
+    <%= @subject_name %>
+  </div>
   <%= form_tag exam_small_scores_path(@exam) do %>
   <% errors = @small_scores.sum { |item| (item && item.errors.any?) ? item.errors.count : 0 } %>
   <% if errors > 0  %>

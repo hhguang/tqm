@@ -44,7 +44,9 @@ Tqm::Application.routes.draw do
       get 'export',on: :collection
     end
     resources :topics
-    resources :small_scores
+    resources :small_scores do
+      get 'export', on: :collection
+    end
   end
 
   # get "/exams/:exam_id/school/:school_id/score_files"=>'score_files#by_school',as: :exam_school_files

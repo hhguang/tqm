@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
         self.salt = self.make_token if new_record?
         self.crypted_password = encrypt(password)
     end
-    
+
     def clean_subjects
     	subjects.delete('')
     end
@@ -42,16 +42,16 @@ class User < ActiveRecord::Base
 	end
 
 	def manage_subject?(subject)
-		
-		if is_admin? 
+
+		if is_admin?
 			return true
-		elsif is_jyy?			
+		elsif is_jyy?
 			subjects.include?(subject)
 		else
 			false
 		end
 	end
-	
+
 	def is_school?
 		! school_id.nil?
 	end
@@ -64,8 +64,18 @@ class User < ActiveRecord::Base
 		is_admin? && (! qx_id.nil?)
 	end
 
+  def own_shools
+    if self.is_school?
+      return School.where(id: self.school_id)
+    elsif self.is_qx_admin?
+      return School.where(qx_id: self.qx_id)
+    elsif self.is_admin? || self.is_jyy?
+      return School.all
+    end
+  end
+
 	def self.from_auth(auth)
-	    locate_auth(auth) 
+	    locate_auth(auth)
 	end
 
 	def self.locate_auth(auth)
@@ -73,7 +83,7 @@ class User < ActiveRecord::Base
 	                                              auth[:uid]).try(:user)
 	end
 
-	
+
 
 	  def self.create_with_omniauth(auth)
 	    create!(
@@ -85,7 +95,7 @@ class User < ActiveRecord::Base
                               ).attributes
       ])
 	  end
-	  
+
 
 	  def self.authenticate(login, password)
 	    return nil if login.blank? || password.blank?
@@ -97,8 +107,8 @@ class User < ActiveRecord::Base
         crypted_password == encrypt(password)
       end
 
-      def encrypt(password)      	
-      	
+      def encrypt(password)
+
         digest = REST_AUTH_SITE_KEY
         REST_AUTH_DIGEST_STRETCHES.times do
           digest = secure_digest(digest, salt, password, REST_AUTH_SITE_KEY)
