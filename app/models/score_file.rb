@@ -6,26 +6,12 @@ class ScoreFile < ActiveRecord::Base
   belongs_to :exam
   belongs_to :school
   belongs_to :user
-  
+
   validates_presence_of  :filename
   validates_length_of :filename, :maximum => 255
-  # validates_length_of :disk_filename, :maximum => 255
-  
 
   before_save :update_asset_attributes
-  
-  
-  
-  
 
-  # cattr_accessor :storage_path
-  # @@storage_path =  "#{RAILS_ROOT}/files"
-  # cattr_accessor :max_size
-  # @@max_size=5000
-  # cattr_accessor :check_result
-
-
-  
   EXCELCONFIG=[
       {
         :name=>'高一成绩',
@@ -39,7 +25,7 @@ class ScoreFile < ActiveRecord::Base
          {
            'name'=>'姓名',
            'type'=>'String'
-         },         
+         },
          {
            'name'=>'语文全卷',
            'max'=>150
@@ -376,18 +362,8 @@ class ScoreFile < ActiveRecord::Base
       }
   ]
 
-  # def open_spreadsheet
-
-  #   case File.extname(self.filename)
-  #   when ".csv" then CSV.new(self.file.current_path, nil, :ignore)
-  #   # when ".xls" then Excel.new(file.path, nil, :ignore)
-  #   # when ".xlsx" then Excelx.new(file.path, nil, :ignore)
-  #   else raise "Unknown file type: #{self.filename}"
-  #   end
-  # end
-
   def check_result
-      @check_result||=check      
+      @check_result||=check
   end
 
   def validate
@@ -402,7 +378,7 @@ class ScoreFile < ActiveRecord::Base
   def book1
     Spreadsheet.client_encoding = "GBK//IGNORE"
     book = Spreadsheet.open "#{RAILS_ROOT}/files/#{disk_filename}"
-    
+
   end
 
   def sheet1_name
@@ -493,11 +469,11 @@ class ScoreFile < ActiveRecord::Base
         i+=1
       end
     end
-    
+
     files.each do |file|
       Spreadsheet.open "#{RAILS_ROOT}/files/#{file.disk_filename}" do |book|
         book.worksheets.each do |sheet|
-          
+
           sheet_new = book_new.worksheet sheet.name
           if sheet_new
 
@@ -554,7 +530,7 @@ class ScoreFile < ActiveRecord::Base
       puts  sheet.name
       j=0
       sheet1 = book1.create_worksheet :name => sheet.name
-        
+
         sheet.each  do |row|
           next if row[0].is_a?(NilClass) && row[1].is_a?(NilClass)
           if j==0
@@ -576,7 +552,7 @@ class ScoreFile < ActiveRecord::Base
           j+=1
         end
       end
-      
+
     end
     book1.write self.diskfile1
   end
@@ -589,21 +565,21 @@ class ScoreFile < ActiveRecord::Base
     tmp="你上传了文件<#{filename}><br/>"
     Spreadsheet.client_encoding = "GBK//IGNORE"
     Spreadsheet.open "#{RAILS_ROOT}/files/#{disk_filename}" do |book|
-    book.worksheets.each do |sheet|      
-      
+    book.worksheets.each do |sheet|
+
       errors={}
       j=0
-      
+
       if Iconv.conv('utf-8//IGNORE','gbk//IGNORE', sheet.name)==ScoreFile::EXCELCONFIG[s][:name]
         tmp+="工作表：#{Iconv.conv('utf-8//IGNORE','gbk//IGNORE', sheet.name)}<br/>包含了#{sheet.row_count-1}条记录<br/>"
       begin
       sheet.each 1 do |row|
         next if row[0].is_a?(NilClass) && row[1].is_a?(NilClass)
         j+=1
-        i=0        
+        i=0
           #tmp+="记录#{j}："
           while i<sheet.column_count
-            
+
             if i==0 && row[i].is_a?(NilClass)
               errors[j]||=[]
               errors[j]<<i
@@ -616,11 +592,11 @@ class ScoreFile < ActiveRecord::Base
               errors[j]||=[]
               errors[j]<<i
             end
-            
+
             i+=1
           end
           #tmp+="<br/>"
-        
+
       end
       rescue
         tmp+="第#{j+1}条记录以后无法读取<hr/>"
@@ -662,7 +638,7 @@ class ScoreFile < ActiveRecord::Base
       :e_count=>e_count,
       :text=>tmp
     }
-    
+
     res
 
   end
@@ -677,9 +653,9 @@ class ScoreFile < ActiveRecord::Base
         sheet.each do |row|
           i=0
           tmp_row=[]
-          while i<sheet.column_count            
+          while i<sheet.column_count
             tmp_row<<cell_show(row[i])
-            i+=1          
+            i+=1
           end
           sheet_rows<<tmp_row
         end
@@ -693,7 +669,7 @@ class ScoreFile < ActiveRecord::Base
       end
     end
     data
-    
+
   end
 
   def csv_data
@@ -784,7 +760,7 @@ class ScoreFile < ActiveRecord::Base
   #         self.content_type = Redmine::MimeType.of(filename)
   #       end
   #       self.filesize = @temp_file.size
-        
+
   #     end
   #   end
   # end
@@ -912,7 +888,7 @@ private
 
   def check_num(cell,column,sheet)
      cell.is_a?(Float) && cell>=0 && cell<=ScoreFile::EXCELCONFIG[0][:columns][column]['max']
-    
+
   end
 
   def cell_show(cell)

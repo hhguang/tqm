@@ -32,7 +32,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    
+
   end
 
   def update
@@ -47,6 +47,12 @@ class UsersController < ApplicationController
         format.xml  { render :xml => @exam.errors, :status => :unprocessable_entity }
       end
     end
+  end
+
+  def destroy
+    @user.destroy
+    flash[:notice]='用户已经删除'
+    redirect_to :action=>'index'
   end
 
   private

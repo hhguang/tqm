@@ -39,6 +39,11 @@
     <%= @grade_name %>
     <%= @subject_name %>
   </div>
+  <div class="panel-body">
+    <p class="text-danger">
+    说明：得分率单位为%，示例,10%填写为10。
+    </p>
+  </div>
   <%= form_tag exam_small_scores_path(@exam) do %>
   <% errors = @small_scores.sum { |item| (item && item.errors.any?) ? item.errors.count : 0 } %>
   <% if errors > 0  %>
@@ -72,7 +77,7 @@
       <% end %>
     </tr>
     <tr>
-      <td>得分率</td>
+      <td>得分率(%)</td>
       <% (1..15).each do |i| %>
       <td>
         <%= fields_for "small_scores[#{j*15+i}]", @small_scores[j*15+i] do |f| %>
