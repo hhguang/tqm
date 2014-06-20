@@ -9,9 +9,9 @@
     respond_to do |format|
       format.html {redirect_to root_url, :alert => exception.message}
       format.js { render :template =>'/share/msg',:locals=>{:alert_msg=> exception.message} }
-
+      format.any {redirect_to root_url, :alert => exception.message}
     end
-    
+
   end
 
   def login_required
@@ -33,13 +33,13 @@
         end
       end
     end
-  
+
   private
 
     def current_user
       @current_user ||= User.find(session[:user_id]) if session[:user_id]
     end
-  
+
   	def current_user=(new_user)
       session[:user_id] = new_user ? new_user.id : nil
       @current_user = new_user || false

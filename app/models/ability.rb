@@ -52,6 +52,7 @@ class Ability
         can [:read,:create,:destroy,:confirm],Report,:school=>{:id=>user.school_id}
         can :read,Topic
         can :manage, SmallScore, :school => {:id=>user.school_id}
+        can :manage, School, :id=>user.school_id
     elsif user.is_jyy?
         can :read,Exam
         can :read,Topic

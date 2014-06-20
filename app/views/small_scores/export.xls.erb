@@ -19,7 +19,7 @@
           <Cell><Data ss:Type="String"><%= subject %>得分率</Data></Cell>
         <% end %>
       </Row>
-      <% (1..75).each do |i| %>
+      <% (1..105).each do |i| %>
       <% scores = SmallScore.where(exam_id: @exam.id,
        school_id: @school.id, bh: i, grade_name: group[:grade]).index_by{|s| s.subject_name} %>
 

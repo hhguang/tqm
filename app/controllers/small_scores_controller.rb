@@ -10,16 +10,18 @@ class SmallScoresController < ApplicationController
 
   def show
     @school = School.find(params[:id])
+    authorize! :manage, @school
     @grade_name = params[:grade_name] || Exam::SUBJECTS[@exam.exam_type-1][0][:grade]
     @subject_name = params[:subject_name] || Exam::SUBJECTS[@exam.exam_type-1][0][:name][0]
     @small_scores = []
-    (1..75).each { |i| @small_scores[i] = SmallScore.find_or_initialize_by(grade_name: @grade_name,
+    (1..105).each { |i| @small_scores[i] = SmallScore.find_or_initialize_by(grade_name: @grade_name,
        subject_name: @subject_name, school_id: @school.id, exam_id: @exam.id, bh: i) }
 
   end
 
   def create
     @school = School.find(params[:school_id])
+    authorize! :manage, @school
     @grade_name = params[:grade_name]
     @subject_name = params[:subject_name]
     @small_scores = []
@@ -42,6 +44,7 @@ class SmallScoresController < ApplicationController
 
   def export
     @school = School.find(params[:school_id])
+    authorize! :manage, @school
   end
 
 
