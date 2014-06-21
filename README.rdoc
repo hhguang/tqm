@@ -26,3 +26,4 @@ Things you may want to cover:
 
 Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
+[ ![Codeship Status for hhguang/tqm](https://www.codeship.io/projects/9b9ad5a0-db3e-0131-2b90-6af439033b51/status)](https://www.codeship.io/projects/24428)
