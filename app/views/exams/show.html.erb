@@ -1,9 +1,9 @@
 <%= render 'nav' %>
       <div class="row">
-      	
+
       	<div class="col-md-3">
       		<div class="panel panel-<%= (@paper_order.state? ? 'default' : 'info') %>">
-			  <div class="panel-heading">试卷订单			  	
+			  <div class="panel-heading">试卷订单
 			  </div>
 			  <div class="panel-body" style="min-height:285px;">
 			  	<% if @paper_order.state? %>
@@ -19,38 +19,38 @@
 							  <li>步骤二：确认或修改订单。<span class="glyphicon glyphicon-ok"></span></li>
 							  <li><p class="text-danger">步骤三：查看打印订单</p></li>
 							  </ol>
-							  <%= link_to '打印订单',exam_orders_path(@exam),{:class=>"btn btn-primary btn-lg btn-block"} %> 
+							  <%= link_to '打印订单',exam_orders_path(@exam),{:class=>"btn btn-primary btn-lg btn-block"} %>
 						  <% else %>
 						  		<li><p class="text-danger">步骤二：确认或修改订单。</li>
 						  		<li>步骤三：查看打印订单</li>
 						  		</ol>
-						  		<%= link_to '确认或修改订单',edit_exam_order_item_path(@exam,@order_item),{:class=>"btn btn-primary btn-lg btn-block"} %> 
+						  		<%= link_to '确认或修改订单',edit_exam_order_item_path(@exam,@order_item),{:class=>"btn btn-primary btn-lg btn-block"} %>
 						  <% end  %>
 						 <% else %>
 						 	<li><p class="text-danger">步骤一：新建订单。</p></li>
 						 	<li>步骤二：确认或修改订单。</li>
 						 	<li>步骤三：查看打印订单</li>
-						 	</ol>						 	
-						 	<%= link_to '创建订单',new_exam_order_item_path(@exam),{:class=>"btn btn-primary btn-lg btn-block "} if !@paper_order.state? %> 
+						 	</ol>
+						 	<%= link_to '创建订单',new_exam_order_item_path(@exam),{:class=>"btn btn-primary btn-lg btn-block "} if !@paper_order.state? %>
 						 <% end %>
-						  
-						  
-						
-			        
+
+
+
+
 			    <% else %>
 			          <h3>流程</h3>
 			          <ol>
 						  <li>步骤一：新建订单。</li>
 						  <li>步骤二：确认或修改订单。</li>
 						  <li>步骤三：查看打印订单</li>
-						  
+
 						</ol>
-			       <%= link_to '创建订单',new_exam_order_item_path(@exam),{:class=>"btn btn-primary btn-lg btn-block"} %>  
+			       <%= link_to '创建订单',new_exam_order_item_path(@exam),{:class=>"btn btn-primary btn-lg btn-block"} %>
 			    <% end %>
 
 			    	<% if current_user && current_user.is_admin? %>
 					  	<%= link_to '管理订单',exam_order_items_path(@exam) ,{:class=>"btn btn-primary btn-lg btn-block"} %>
-					  		
+
 				  	<% end %>
 			  </div>
 			  <div class="panel-footer">
@@ -62,9 +62,9 @@
       	<div class="col-md-3">
       		<div class="panel panel-info" >
 			  <div class="panel-heading">信息动态</div>
-			  
+
 			  <div class="list-group" style="min-height:285px;">
-			        <% @exam.topics.order('created_at desc').limit(4).each do |topic| %>			        	
+			        <% @exam.topics.order('created_at desc').limit(4).each do |topic| %>
 			        	<%= link_to exam_topic_path(@exam, topic),class:'list-group-item',title:topic.title do %>
 							<h4 class="list-group-item-heading">
 								<%= truncate(topic.title,length:20) %>
@@ -73,11 +73,11 @@
 								<%= topic.user.name %>.
             				于<%= distance_of_time_in_words_to_now(topic.created_at) %>之前发布
 							</p>
-			        	<% end %>			        	
+			        	<% end %>
 			        <% end %>
 			    </div>
 
-			  <div class="panel-footer">			  	
+			  <div class="panel-footer">
 			  	<%= link_to exam_topics_path(@exam),class: 'btn btn-primary' do %>
 			  		<span class="glyphicon glyphicon-wrench"></span> 所有信息&管理
 			  	<% end %>
@@ -87,7 +87,7 @@
 
       	<div class="col-md-3">
       		<div class="panel panel-<%= (@exam.upload_started? ? 'info' : 'default') %>">
-			  <div class="panel-heading">成绩上传			  	
+			  <div class="panel-heading">成绩上传
 			  </div>
 			  	<div class="panel-body" style="min-height:285px;">
 			    	<% if @exam.upload_started? %>
@@ -98,20 +98,20 @@
 						  	</li>
 						  	<li>上传文件。</li>
 						  	<li>查看文件监测和数据。</li>
-						  	<li>修改或确认。</li>	
-						  	<li class="text-danger">截止时间：2014年1月6日。</li>					  
+						  	<li>修改或确认。</li>
+						  	<li class="text-danger">截止时间：2014年7月11日24时。</li>
 						</ol>
 						<% if @current_user.is_school? %>
-						<%= link_to '上传文件',by_school_exam_score_files_path(@exam,school_id:@current_user.school),{:class=>"btn btn-primary btn-lg btn-block"} %>  
+						<%= link_to '上传文件',by_school_exam_score_files_path(@exam,school_id:@current_user.school),{:class=>"btn btn-primary btn-lg btn-block"} %>
 						<% end %>
 						<% if @current_user.is_admin? %>
 							<%= link_to '管理成绩文件',exam_score_files_path(@exam),{:class=> "btn btn-primary btn-lg btn-block"}  %>
-						  		
+
 						<% end %>
 			    	<% else %>
 			          <h2>未开始请等候</h2>
 			        <% end %>
-			      
+
 			  	</div>
 			  	<div class="panel-footer">
 			  		<a class="btn btn-default" href="/help/score" target="blank">详细帮助 &raquo;</a>
@@ -128,21 +128,19 @@
 			          	<ol>
 						  	<li>下载模板，填充数据。
 								<p>
-					    			<a href="/ysy.doc">下载语数英质量分析模板</a>
+					    			<a href="/zlfxb.doc">下载质量分析表模板</a>
 					    		</p>
-					    		<p>
-					    			<a href="/zsdlhs.doc">下载政史地理化生质量分析模板</a>
-					    		</p>
+
 						  	</li>
-						  	<li>上传文件。</li>	
-						  	<li class="text-danger">截止时间：2014年1月8日。</li>					  
+						  	<li>上传文件。</li>
+						  	<li class="text-danger">截止时间：2014年7月12日24时。</li>
 						</ol>
-			    		
+
 			          	<%= link_to '管理分析报告',exam_reports_path(@exam),{:class=> "btn btn-primary btn-lg btn-block"}  %>
 			        <% else %>
 			        	<h2>未开始请等候</h2>
 			        <% end %>
-			      
+
 			  </div>
 			  <div class="panel-footer">
 			  		<a class="btn btn-default" href="/help/report" target="blank">详细帮助 &raquo;</a>
@@ -151,5 +149,5 @@
 			</div>
       	</div>
 
-      	
+
  </div>
