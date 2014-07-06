@@ -70,7 +70,7 @@
 								<%= truncate(topic.title,length:20) %>
 							</h4>
 							<p class="list-group-item-text">
-								<%= topic.user.name %>.
+								<%= topic.user.name if topic.user %>.
             				于<%= distance_of_time_in_words_to_now(topic.created_at) %>之前发布
 							</p>
 			        	<% end %>

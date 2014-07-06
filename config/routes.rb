@@ -1,5 +1,6 @@
 Tqm::Application.routes.draw do
 
+  # get "attachments/show"
   get "small_scores/index"
   resources :replies
 
@@ -13,6 +14,7 @@ Tqm::Application.routes.draw do
   get "help/(:id)"=>"welcome#help",as: :help
   get "person/:id"=>'welcome#person', as: :person
   post "welcome/person_update"
+
 
   # root to: "sessions#new"
   post "/auth/:provider/callback", :to => 'sessions#create'
@@ -54,6 +56,7 @@ Tqm::Application.routes.draw do
   resources :qxes
   resources :users
 
+  resources :attachments
 
   # faye_server '/faye', :timeout => 25
   # The priority is based upon order of creation: first created -> highest priority.

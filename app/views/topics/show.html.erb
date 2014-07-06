@@ -7,12 +7,12 @@
 				<span class="glyphicon glyphicon-home"></span> 所有文章
 			<% end %>
 			<% if can? :update,@topic %>
-			<%= link_to "编辑文章", edit_exam_topic_path(@exam, @topic),class: 'btn btn-default' %>		
-			<%= link_to "删除文章", exam_topic_path(@exam, @topic),method: 'delete',data: { confirm: '确定要删除吗？' },class: 'btn btn-danger' %>			
+			<%= link_to "编辑文章", edit_exam_topic_path(@exam, @topic),class: 'btn btn-default' %>
+			<%= link_to "删除文章", exam_topic_path(@exam, @topic),method: 'delete',data: { confirm: '确定要删除吗？' },class: 'btn btn-danger' %>
 			<% end %>
 		</div>
 		<div class="page-header">
-		  <h1><%= @topic.title %>		  	
+		  <h1><%= @topic.title %>
 		  </h1>
 		  <h3>
 		  	<small>
@@ -22,13 +22,13 @@
 		</div>
 		<div>
 			<%= sanitize @topic.content %>
-			
+
 		</div>
-		<div>			
+		<div>
 			<% @topic.attachments.each do |attachment| %>
-				附件：<%= link_to attachment.file_name %><br/>
+				附件：<%= link_to attachment.file_name, attachment_path(attachment)  %><br/>
 			<% end %>
 		</div>
-		
+
 	</div>
 </div>
